@@ -1,0 +1,145 @@
+[project]
+  name = "cosmology.api"
+  version = "0.1.0"
+  description = "Cosmology API standard"
+  readme = "README.rst"
+  requires-python = ">=3.9"
+  license = {file = "LICENSE"}
+  keywords = ["cosmology", "API"]
+  authors = [
+    {name = "Nathaniel Starkman", email = "n.starkman@mail.utoronto.ca"},
+    {name = "Nicolas Tessore", email = "n.tessore@ucl.ac.uk"}
+  ]
+  maintainers = [
+    {name = "Nathaniel Starkman", email = "n.starkman@mail.utoronto.ca"},
+    {name = "Nicolas Tessore", email = "n.tessore@ucl.ac.uk"}
+  ]
+  classifiers = [
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+  ]
+  dependencies = [
+  ]
+
+[project.optional-dependencies]
+  all = [
+  ]
+  test = [
+    "coverage[toml]",
+    "numpy>=1.18",
+    "pytest",
+    "pytest-astropy",
+  ]
+  docs = [
+    "graphviz",
+    "IPython",
+    "jupyter_client",
+    "nbsphinx",
+    "pydata-sphinx-theme",
+    "sphinx",
+    "sphinx-astropy",
+    "sphinxcontrib.bibtex < 2.0.0",
+    "tomlkit",
+  ]
+
+[project.urls]
+  homepage = "https://cosmology.readthedocs.org/api"
+  repository = "https://github.com/python-cosmology/cosmology-api"
+  documentation = "https://cosmology.readthedocs.org/api"
+
+
+[build-system]
+  requires = [
+    "mypy>=0.991",
+    "setuptools>=45.0",
+    "setuptools_scm[toml]>=6.3.1",
+    "wheel",
+  ]
+
+  build-backend = 'setuptools.build_meta'
+
+
+[tool.setuptools]
+  package-dir = {"" = "src"}
+
+[tool.setuptools_scm]
+
+
+[tool.coverage.run]
+  omit = ["tests/*"]
+
+[tool.coverage.report]
+  exclude_lines = [
+    # Have to re-enable the standard pragma
+    # and branches that don't pertain to this version of Python
+    "pragma: no cover",
+    "pragma: py{ignore_python_version}",
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+    # Don't complain if non-runnable code isn't run
+    "if __name__ == .__main__.:",
+    # Don't complain about abstract methods, they aren't run:
+    '@(abc\.)?abstractmethod',
+    # Exclude type check blocks and Protocol contents, they aren't run:
+    "if TYPE_CHECKING:",
+    '\.\.\.',
+    # Don't complain about IPython completion helper
+    "def _ipython_key_completions_",
+  ]
+
+
+[tool.isort]
+  profile = "black"
+  include_trailing_comma = "True"
+  use_parentheses = "True"
+  ensure_newline_before_comments = "True"
+  known_localfolder = [
+    "cosmology.api",
+  ]
+  known_third_party = ["numpy", "pytest"]
+  import_heading_stdlib = "STDLIB"
+  import_heading_firstparty = "FIRST-PARTY"
+  import_heading_thirdparty = "THIRD-PARTY"
+  import_heading_localfolder = "LOCAL"
+
+
+[tool.mypy]
+  namespace_packages = true
+  explicit_package_bases = true
+
+  strict = true
+  disallow_subclassing_any = false
+  disallow_untyped_defs = true
+  ignore_missing_imports = true
+  no_implicit_optional = true
+  warn_return_any = true
+  warn_redundant_casts = true
+  warn_unused_configs = true
+  warn_unreachable = true
+  exclude = '''(^|/)tests/'''
+  plugins = ["numpy.typing.mypy_plugin",]
+
+  [[tool.mypy.overrides]]
+    module = "tests/*"
+    ignore_errors = true
+
+
+[tool.ruff]
+line-length = 88
+select = ["ALL"]
+ignore = [
+  "ANN101", "ANN102", "ANN401",
+  "ARG001", "ARG002",
+  "D105", "D107", "D203", "D213",
+  "FBT003",
+  "I001",
+  "PD",
+  "RET505", "RET506", "RET507",
+]
+
+[tool.ruff.per-file-ignores]
+"src/cosmology/api/_array_api/*.py" = ["A002", "A003", "D212", "D205", "E501", "N801"]
