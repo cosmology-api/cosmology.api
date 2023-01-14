@@ -14,7 +14,7 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 # LOCAL
-from .constants import CosmologyConstantsAPINamespace
+from cosmology.api.constants import CosmologyConstantsAPINamespace
 
 __all__: list[str] = []
 

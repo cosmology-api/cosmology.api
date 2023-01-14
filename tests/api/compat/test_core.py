@@ -35,9 +35,7 @@ def test_noncompliant_cosmology_wrapper():
     # TODO: more examples?
 
 
-def test_compliant_cosmology(
-    cosmology_ns: CosmologyAPINamespace, cosmology: CosmologyAPIConformant
-):
+def test_compliant_cosmology(cosmology_ns: CosmologyAPINamespace):
     """
     Test that a compliant instance is a
     `cosmology.api.CosmologyAPIConformantWrapper`. In particular, this tests
@@ -61,7 +59,7 @@ def test_compliant_cosmology(
         def __getattr__(self, name: str) -> object:
             return getattr(self.cosmo, name)
 
-    wrapper = CosmologyWrapper(cosmology)
+    wrapper = CosmologyWrapper(object())
 
     assert isinstance(wrapper, CosmologyAPIConformant)
     assert isinstance(wrapper, CosmologyAPIConformantWrapper)
@@ -69,7 +67,9 @@ def test_compliant_cosmology(
 
 class Test_CosmologyAPIConformantWrapper:
     @pytest.fixture(scope="class")
-    def wrapper_cls(self, cosmology_ns):
+    def wrapper_cls(
+        self, cosmology_ns: CosmologyAPINamespace
+    ) -> type[CosmologyAPIConformantWrapper]:
         @dataclass(frozen=True)
         class CosmologyWrapper(CosmologyAPIConformantWrapper):
 
@@ -87,7 +87,9 @@ class Test_CosmologyAPIConformantWrapper:
         return CosmologyWrapper
 
     @pytest.fixture(scope="class")
-    def wrapper(self, cosmology, wrapper_cls):
+    def wrapper(
+        self, cosmology: object, wrapper_cls: type[CosmologyAPIConformantWrapper]
+    ) -> CosmologyAPIConformantWrapper:
         return wrapper_cls(cosmology)
 
     # =========================================================================

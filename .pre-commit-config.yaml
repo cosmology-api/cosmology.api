@@ -54,3 +54,4 @@ repos:
       - id: mypy
         args:
           - --strict
+          - --allow-subclassing-any
