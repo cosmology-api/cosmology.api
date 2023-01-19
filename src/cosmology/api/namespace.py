@@ -1,4 +1,12 @@
-"""The Cosmology API Namespace."""
+"""The Cosmology API Namespace.
+
+This module describes the namespace of a Cosmology-API compatible library. There
+should be the following required objects:
+
+- constants: a module of constants. See :mod:`cosmology.api.constants` for
+  details.
+
+"""
 
 from __future__ import annotations
 
