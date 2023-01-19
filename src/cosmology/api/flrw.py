@@ -47,7 +47,6 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
     """Baryon density parameter at redshift 0."""
 
     # ==============================================================
-    # Derived properties
 
     @property
     def scale_factor0(self) -> Array:
@@ -393,6 +392,22 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
 
     def rho_k(self, z: Array, /) -> Array:
         """Redshift-dependent curvature density in Msol Mpc-3."""
+        ...
+
+    def rho_gamma(self, z: Array, /) -> Array:
+        """Redshift-dependent photon density in Msol Mpc-3."""
+        ...
+
+    def rho_nu(self, z: Array, /) -> Array:
+        """Redshift-dependent neutrino density in Msol Mpc-3."""
+        ...
+
+    def rho_b(self, z: Array, /) -> Array:
+        """Redshift-dependent baryon density in Msol Mpc-3."""
+        ...
+
+    def rho_dm(self, z: Array, /) -> Array:
+        """Redshift-dependent dark matter density in Msol Mpc-3."""
         ...
 
     # ----------------------------------------------
