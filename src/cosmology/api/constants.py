@@ -1,4 +1,10 @@
-"""The cosmology constants API."""
+"""The cosmology constants API.
+
+The list of required constants is:
+
+- G: Gravitational constant G in pc km2 s-2 Msol-1.
+
+"""
 
 from __future__ import annotations
 
