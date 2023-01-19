@@ -17,23 +17,23 @@ from cosmology.api import (
 )
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def constants_ns() -> CosmologyConstantsAPINamespace:
     """The cosmology constants API namespace."""
     return SimpleNamespace(G=1)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def cosmology_ns(constants_ns: CosmologyConstantsAPINamespace) -> CosmologyAPINamespace:
     """The cosmology API namespace."""
     return SimpleNamespace(constants=constants_ns)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> CosmologyAPIConformant:
     """An example cosmology API class."""
 
-    @dataclass
+    @dataclass(frozen=True)
     class ExampleCosmology(CosmologyAPIConformant):
         """An example cosmology API class."""
 
@@ -44,10 +44,16 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> CosmologyAPIConformant
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
+        # === not CosmologyAPI ===
+
+        @property
+        def not_cosmology_api(self) -> int:
+            return 1
+
     return ExampleCosmology
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def cosmology(cosmology_cls: type[CosmologyAPIConformant]) -> CosmologyAPIConformant:
     """An example cosmology API instance."""
     return cosmology_cls()

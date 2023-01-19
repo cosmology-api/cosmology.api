@@ -26,3 +26,18 @@ class CosmologyAPIConformantWrapper(CosmologyAPIConformant, Protocol):
     """
 
     cosmo: object
+
+    def __getattr__(self, name: str) -> object:
+        """Pass all non Cosmology API to the wrapped object.
+
+        Parameters
+        ----------
+        name: str
+            The name of the attribute to get.
+
+        Returns
+        -------
+        object
+            The attribute of the wrapped object.
+        """
+        return getattr(self.cosmo, name)
