@@ -121,7 +121,6 @@
   warn_unused_configs = true
   warn_unreachable = true
   exclude = '''(^|/)tests/'''
-  plugins = ["numpy.typing.mypy_plugin",]
 
   [[tool.mypy.overrides]]
     module = "tests/*"
