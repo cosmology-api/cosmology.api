@@ -30,7 +30,7 @@ def test_noncompliant_cosmology():
     # TODO: more examples?
 
 
-def test_compliant_cosmology(cosmology_ns: CosmologyAPINamespace):
+def test_compliant_cosmology(cosmology_ns):
     """
     Test that a compliant instance is a
     `cosmology.api.CosmologyAPIConformant`.
@@ -50,7 +50,7 @@ def test_compliant_cosmology(cosmology_ns: CosmologyAPINamespace):
     assert isinstance(cosmo, CosmologyAPIConformant)
 
 
-def test_fixture(cosmology: CosmologyAPIConformant):
+def test_fixture(cosmology):
     """
     Test that the ``cosmology`` fixture is a
     `cosmology.api.CosmologyAPIConformant`.

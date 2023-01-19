@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 # STDLIB
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, make_dataclass
 from types import SimpleNamespace
 
 # THIRD-PARTY
@@ -99,173 +99,119 @@ def cosmology_wrapper_cls(
 # FLRW API
 
 
+def _default_one() -> Array:
+    return xp.ones((), dtype=xp.int32)
+
+
+def _return_one(self, /) -> Array:
+    return _default_one()
+
+
+def _return_1arg(self, z: Array, /) -> Array:
+    return z
+
+
 @pytest.fixture(scope="session")
-def flrw_cls(cosmology_cls: type[CosmologyAPIConformant]) -> type[FLRWAPIConformant]:
+def flrw_attrs() -> set[str]:
+    """The FLRW API atributes."""
+    return {
+        "H0",
+        "Om0",
+        "Ode0",
+        "Tcmb0",
+        "Neff",
+        "m_nu",
+        "Ob0",
+        "scale_factor0",
+        "h",
+        "hubble_distance",
+        "hubble_time",
+        "Otot0",
+        "Odm0",
+        "Ok0",
+        "Ogamma0",
+        "Onu0",
+        "rho_critical0",
+        "rho_tot0",
+        "rho_m0",
+        "rho_de0",
+        "rho_b0",
+        "rho_dm0",
+        "rho_k0",
+        "rho_gamma0",
+        "rho_nu0",
+    }
+
+
+@pytest.fixture(scope="session")
+def flrw_meths() -> set[str]:
+    """The FLRW API methods."""
+    return {
+        "scale_factor",
+        "H",
+        "efunc",
+        "inv_efunc",
+        "Otot",
+        "Om",
+        "Ob",
+        "Odm",
+        "Ok",
+        "Ode",
+        "Ogamma",
+        "Onu",
+        "rho_critical",
+        "rho_tot",
+        "rho_m",
+        "rho_de",
+        "rho_k",
+        "age",
+        "lookback_time",
+        "comoving_distance",
+        "comoving_transverse_distance",
+        "comoving_volume",
+        "differential_comoving_volume",
+        "angular_diameter_distance",
+        "luminosity_distance",
+    }
+
+
+@pytest.fixture(scope="session")
+def flrw_cls(
+    cosmology_cls: type[CosmologyAPIConformant],
+    flrw_attrs: set[str],
+    flrw_meths: set[str],
+) -> type[FLRWAPIConformant]:
     """An example FLRW API class."""
+    fields = ("H0", "Om0", "Ode0", "Tcmb0", "Neff", "m_nu", "Ob0")
 
-    def default_one() -> Array:
-        return xp.ones((), dtype=xp.int32)
-
-    def return_one(self, /) -> Array:
-        return default_one()
-
-    def return_1arg(self, z: Array, /) -> Array:
-        return z
-
-    @dataclass(frozen=True)
-    class ExampleFLRW(FLRWAPIConformant, cosmology_cls):
-
-        H0: Array = field(default_factory=default_one)
-        Om0: Array = field(default_factory=default_one)
-        Ode0: Array = field(default_factory=default_one)
-        Tcmb0: Array = field(default_factory=default_one)
-        Neff: Array = field(default_factory=default_one)
-        m_nu: Array = field(default_factory=default_one)
-        Ob0: Array = field(default_factory=default_one)
-
-        scale_factor0 = property(return_one)
-        h = property(return_one)
-        hubble_distance = property(return_one)
-        hubble_time = property(return_one)
-        Otot0 = property(return_one)
-        Odm0 = property(return_one)
-        Ok0 = property(return_one)
-        Ogamma0 = property(return_one)
-        Onu0 = property(return_one)
-
-        critical_density0 = property(return_one)
-        rho_tot0 = property(return_one)
-        rho_m0 = property(return_one)
-        rho_de0 = property(return_one)
-        rho_b0 = property(return_one)
-        rho_dm0 = property(return_one)
-        rho_k0 = property(return_one)
-        rho_gamma0 = property(return_one)
-        rho_nu0 = property(return_one)
-
-        scale_factor = return_1arg
-        H = return_1arg
-        efunc = return_1arg
-        inv_efunc = return_1arg
-        Otot = return_1arg
-        Om = return_1arg
-        Ob = return_1arg
-        Odm = return_1arg
-        Ok = return_1arg
-        Ode = return_1arg
-        Ogamma = return_1arg
-        Onu = return_1arg
-
-        rho_critical = return_1arg
-        rho_tot = return_1arg
-        rho_m = return_1arg
-        rho_de = return_1arg
-        rho_k = return_1arg
-
-        age = return_1arg
-        lookback_time = return_1arg
-        comoving_distance = return_1arg
-        comoving_transverse_distance = return_1arg
-        comoving_volume = return_1arg
-        differential_comoving_volume = return_1arg
-
-        angular_diameter_distance = return_1arg
-        luminosity_distance = return_1arg
-
-    return ExampleFLRW
+    return make_dataclass(
+        "ExampleFLRW",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(FLRWAPIConformant, cosmology_cls),
+        namespace={n: property(_return_one) for n in flrw_attrs - set(fields)}
+        | {n: _return_1arg for n in flrw_meths},
+        frozen=True,
+    )
 
 
 @pytest.fixture(scope="session")
 def flrw(flrw_cls: type[FLRWAPIConformant]) -> FLRWAPIConformant:
     """An example FLRW API instance."""
-    return flrw_cls(
-        H0=1,
-        Om0=1,
-        Ode0=1,
-        Tcmb0=1,
-        Neff=1,
-        m_nu=1,
-        Ob0=1,
-        name="example",
-    )
+    return flrw_cls()
 
 
 @pytest.fixture(scope="session")
 def flrw_wrapper_cls(
     cosmology_wrapper_cls: type[CosmologyAPIConformantWrapper],
+    flrw_attrs: set[str],
+    flrw_meths: set[str],
 ) -> type[FLRWAPIConformantWrapper]:
     """An example FLRW API wrapper class."""
-
-    def default_one() -> Array:
-        return xp.ones((), dtype=xp.int32)
-
-    def return_one(self, /) -> Array:
-        return default_one()
-
-    def return_1arg(self, z: Array, /) -> Array:
-        return z
-
-    @dataclass(frozen=True)
-    class FLRWWrapper(cosmology_wrapper_cls, FLRWAPIConformantWrapper):
-        """An example FLRW API wrapper class."""
-
-        cosmo: object
-
-        H0: Array = field(default_factory=default_one)
-        Om0: Array = field(default_factory=default_one)
-        Ode0: Array = field(default_factory=default_one)
-        Tcmb0: Array = field(default_factory=default_one)
-        Neff: Array = field(default_factory=default_one)
-        m_nu: Array = field(default_factory=default_one)
-        Ob0: Array = field(default_factory=default_one)
-
-        scale_factor0 = property(return_one)
-        h = property(return_one)
-        hubble_distance = property(return_one)
-        hubble_time = property(return_one)
-        Otot0 = property(return_one)
-        Odm0 = property(return_one)
-        Ok0 = property(return_one)
-        Ogamma0 = property(return_one)
-        Onu0 = property(return_one)
-
-        critical_density0 = property(return_one)
-        rho_tot0 = property(return_one)
-        rho_m0 = property(return_one)
-        rho_de0 = property(return_one)
-        rho_b0 = property(return_one)
-        rho_dm0 = property(return_one)
-        rho_k0 = property(return_one)
-        rho_gamma0 = property(return_one)
-        rho_nu0 = property(return_one)
-
-        scale_factor = return_1arg
-        H = return_1arg
-        efunc = return_1arg
-        inv_efunc = return_1arg
-        Otot = return_1arg
-        Om = return_1arg
-        Ob = return_1arg
-        Odm = return_1arg
-        Ok = return_1arg
-        Ode = return_1arg
-        Ogamma = return_1arg
-        Onu = return_1arg
-
-        rho_critical = return_1arg
-        rho_tot = return_1arg
-        rho_m = return_1arg
-        rho_de = return_1arg
-        rho_k = return_1arg
-
-        age = return_1arg
-        lookback_time = return_1arg
-        comoving_distance = return_1arg
-        comoving_transverse_distance = return_1arg
-        comoving_volume = return_1arg
-        differential_comoving_volume = return_1arg
-
-        angular_diameter_distance = return_1arg
-        luminosity_distance = return_1arg
-
-    return FLRWWrapper
+    return make_dataclass(
+        "FLRWWrapper",
+        [("cosmo", object)],
+        bases=(cosmology_wrapper_cls, FLRWAPIConformantWrapper),
+        namespace={n: property(_return_one) for n in flrw_attrs}
+        | {n: _return_1arg for n in flrw_meths},
+        frozen=True,
+    )

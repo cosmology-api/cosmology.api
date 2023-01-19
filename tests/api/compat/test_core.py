@@ -35,7 +35,7 @@ def test_noncompliant_cosmology_wrapper():
     # TODO: more examples?
 
 
-def test_compliant_cosmology(cosmology_ns: CosmologyAPINamespace):
+def test_compliant_cosmology(cosmology_ns):
     """
     Test that a compliant instance is a
     `cosmology.api.CosmologyAPIConformantWrapper`. In particular, this tests

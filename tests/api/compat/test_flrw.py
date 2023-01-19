@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 # STDLIB
-from dataclasses import dataclass, field
+from dataclasses import dataclass, make_dataclass
 
 # THIRD-PARTY
 import numpy.array_api as xp
@@ -14,6 +14,8 @@ from cosmology.api import (
     CosmologyAPIConformant,
     CosmologyAPIConformantWrapper,
     CosmologyAPINamespace,
+    FLRWAPIConformant,
+    FLRWAPIConformantWrapper,
 )
 from cosmology.api._array_api.array import ArrayAPIConformant as Array
 
@@ -38,110 +40,56 @@ def test_noncompliant_cosmology_wrapper():
     # TODO: more examples?
 
 
-def test_compliant_flrw(
-    cosmology_ns: CosmologyAPINamespace,
-    cosmology_cls: type[CosmologyAPIConformant],
-):
+def test_compliant_flrw_wrapper(cosmology_ns, flrw_attrs, flrw_meths):
     """
     Test that a compliant instance is a
     `cosmology.api.CosmologyAPIConformantWrapper`. In particular, this tests
     that the class does not need to inherit from the Protocol to be compliant.
     """
 
-    def default_one() -> Array:
+    def _return_one(self, /) -> Array:
         return xp.ones((), dtype=xp.int32)
 
-    def return_one(self, /) -> Array:
-        return default_one()
-
-    def return_1arg(self, z: Array, /) -> Array:
+    def _return_1arg(self, z: Array, /) -> Array:
         return z
 
-    @dataclass
-    class CosmologyWrapper:
+    def _cosmology_namespace_(
+        self, /, *, api_version: str | None = None
+    ) -> CosmologyAPINamespace:
+        return cosmology_ns
 
-        cosmo: object
+    def name(self) -> str | None:
+        return None
 
-        def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
-        ) -> CosmologyAPINamespace:
-            return cosmology_ns
+    def _getattr_(self, name: str) -> object:
+        return getattr(self.cosmo, name)
 
-        @property
-        def name(self) -> str | None:
-            return None
+    FLRWWrapper = make_dataclass(
+        "FLRWWrapper",
+        [("cosmo", object)],
+        namespace={n: property(_return_one) for n in flrw_attrs}
+        | {n: _return_1arg for n in flrw_meths}
+        | {
+            "__cosmology_namespace__": _cosmology_namespace_,
+            "name": property(name),
+            "__getattr__": _getattr_,
+        },
+        frozen=True,
+    )
 
-        def __getattr__(self, name: str) -> object:
-            return getattr(self.cosmo, name)
-
-        H0: Array = field(default_factory=default_one)
-        Om0: Array = field(default_factory=default_one)
-        Ode0: Array = field(default_factory=default_one)
-        Tcmb0: Array = field(default_factory=default_one)
-        Neff: Array = field(default_factory=default_one)
-        m_nu: Array = field(default_factory=default_one)
-        Ob0: Array = field(default_factory=default_one)
-
-        scale_factor0 = property(return_one)
-        h = property(return_one)
-        hubble_distance = property(return_one)
-        hubble_time = property(return_one)
-        Otot0 = property(return_one)
-        Odm0 = property(return_one)
-        Ok0 = property(return_one)
-        Ogamma0 = property(return_one)
-        Onu0 = property(return_one)
-
-        critical_density0 = property(return_one)
-        rho_tot0 = property(return_one)
-        rho_m0 = property(return_one)
-        rho_de0 = property(return_one)
-        rho_b0 = property(return_one)
-        rho_dm0 = property(return_one)
-        rho_k0 = property(return_one)
-        rho_gamma0 = property(return_one)
-        rho_nu0 = property(return_one)
-
-        scale_factor = return_1arg
-        H = return_1arg
-        efunc = return_1arg
-        inv_efunc = return_1arg
-        Otot = return_1arg
-        Om = return_1arg
-        Ob = return_1arg
-        Odm = return_1arg
-        Ok = return_1arg
-        Ode = return_1arg
-        Ogamma = return_1arg
-        Onu = return_1arg
-
-        rho_critical = return_1arg
-        rho_tot = return_1arg
-        rho_m = return_1arg
-        rho_de = return_1arg
-        rho_k = return_1arg
-
-        age = return_1arg
-        lookback_time = return_1arg
-        comoving_distance = return_1arg
-        comoving_transverse_distance = return_1arg
-        comoving_volume = return_1arg
-        differential_comoving_volume = return_1arg
-
-        angular_diameter_distance = return_1arg
-        luminosity_distance = return_1arg
-
-    wrapper = CosmologyWrapper(object())
+    wrapper = FLRWWrapper(object())
 
     assert isinstance(wrapper, CosmologyAPIConformant)
     assert isinstance(wrapper, CosmologyAPIConformantWrapper)
+    assert isinstance(wrapper, FLRWAPIConformant)
+    assert isinstance(wrapper, FLRWAPIConformantWrapper)
 
 
 class Test_CosmologyAPIConformantWrapper:
     @pytest.fixture(scope="class")
     def wrapper_cls(self, cosmology_ns):
         @dataclass(frozen=True)
-        class CosmologyWrapper(CosmologyAPIConformantWrapper):
+        class FLRWWrapper(FLRWAPIConformantWrapper):
 
             cosmo: object
 
@@ -154,11 +102,17 @@ class Test_CosmologyAPIConformantWrapper:
             def name(self) -> str | None:
                 return None
 
-        return CosmologyWrapper
+            # === Not Cosmology API ===
+
+            @property
+            def not_cosmology_api(self) -> int:
+                return 1
+
+        return FLRWWrapper
 
     @pytest.fixture(scope="class")
-    def wrapper(self, cosmology, wrapper_cls):
-        return wrapper_cls(cosmology)
+    def wrapper(self, wrapper_cls):
+        return wrapper_cls(object())
 
     # =========================================================================
     # Tests
@@ -167,6 +121,8 @@ class Test_CosmologyAPIConformantWrapper:
         """Test that the wrapper is compliant."""
         assert isinstance(wrapper, CosmologyAPIConformant)
         assert isinstance(wrapper, CosmologyAPIConformantWrapper)
+        assert isinstance(wrapper, FLRWAPIConformant)
+        assert isinstance(wrapper, FLRWAPIConformantWrapper)
 
     def test_getattr(self, wrapper):
         """Test that the wrapper can access the attributes of the wrapped object."""
