@@ -15,6 +15,70 @@ if TYPE_CHECKING:
 __all__: list[str] = []
 
 
+FLRW_ATTRIBUTES = frozenset(  # TODO: public scope this
+    (
+        "H0",
+        "Om0",
+        "Ode0",
+        "Tcmb0",
+        "Neff",
+        "m_nu",
+        "Ob0",
+        "scale_factor0",
+        "h",
+        "hubble_distance",
+        "hubble_time",
+        "Otot0",
+        "Odm0",
+        "Ok0",
+        "Ogamma0",
+        "Onu0",
+        "rho_critical0",
+        "rho_tot0",
+        "rho_m0",
+        "rho_de0",
+        "rho_b0",
+        "rho_dm0",
+        "rho_k0",
+        "rho_gamma0",
+        "rho_nu0",
+    )
+)
+FLRW_METHODS = frozenset(  # TODO: public scope this
+    (
+        "scale_factor",
+        "H",
+        "efunc",
+        "inv_efunc",
+        "Otot",
+        "Om",
+        "Ob",
+        "Odm",
+        "Ok",
+        "Ode",
+        "Ogamma",
+        "Onu",
+        "rho_critical",
+        "rho_tot",
+        "rho_m",
+        "rho_de",
+        "rho_k",
+        "rho_b",
+        "rho_dm",
+        "rho_gamma",
+        "rho_nu",
+        "age",
+        "lookback_time",
+        "comoving_distance",
+        "comoving_transverse_distance",
+        "comoving_volume",
+        "differential_comoving_volume",
+        "angular_diameter_distance",
+        "luminosity_distance",
+    )
+)
+
+
 @runtime_checkable
 class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
     """Cosmology API Protocol for FLRW-like cosmologies.
