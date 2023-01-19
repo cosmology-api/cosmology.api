@@ -1,12 +1,13 @@
 """The Cosmology API standard."""
 
 # LOCAL
-from cosmology.api.constants import CosmologyConstantsAPINamespace
-from cosmology.api.core import CosmologyAPIConformant
-from cosmology.api.namespace import CosmologyAPINamespace
+from .constants import CosmologyConstantsAPINamespace
+from .core import CosmologyAPIConformant
+from .namespace import CosmologyAPINamespace
 
 __all__ = [
     "CosmologyAPIConformant",
+    # Namespaces
     "CosmologyAPINamespace",
     "CosmologyConstantsAPINamespace",
 ]

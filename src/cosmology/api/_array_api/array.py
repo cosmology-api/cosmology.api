@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Protocol, TypeVar, runtime_checkable
 if TYPE_CHECKING:
     # STDLIB
     from enum import Enum
-    from types import EllipsisType
+    from types import EllipsisType  # type: ignore[attr-defined]
 
     # LOCAL
     from .device import DeviceConformant

@@ -7,8 +7,8 @@ if TYPE_CHECKING:
     # STDLIB
     from collections.abc import Sequence
 
-    # THIRD-PARTY
-    from array_api.array import ArrayAPIConformant
+    # LOCAL
+    from .array import ArrayAPIConformant
 
 __all__: list[str] = []
 

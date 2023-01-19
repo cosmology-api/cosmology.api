@@ -110,11 +110,11 @@
 [tool.mypy]
   namespace_packages = true
   explicit_package_bases = true
+  python_version = 3.9
 
   strict = true
   disallow_subclassing_any = false
   disallow_untyped_defs = true
-  ignore_missing_imports = true
   no_implicit_optional = true
   warn_return_any = true
   warn_redundant_casts = true
@@ -143,3 +143,4 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 "src/cosmology/api/_array_api/*.py" = ["A002", "A003", "D212", "D205", "E501", "N801"]
+"test_*.py" = ["ANN", "D", "S101"]

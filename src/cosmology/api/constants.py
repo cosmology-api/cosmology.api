@@ -1,5 +1,7 @@
 """The cosmology constants API."""
 
+from __future__ import annotations
+
 # STDLIB
 from typing import Any, Protocol, runtime_checkable
 
