@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 # STDLIB
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 # THIRD-PARTY
 import numpy.array_api as xp
@@ -40,21 +40,24 @@ def test_compliant_flrw(cosmology_cls: type[CosmologyAPIConformant]):
     doesn't inherit from `cosmology.api.FLRWAPIConformant`.
     """
 
-    def return_one(self, /) -> Array:
+    def default_one() -> Array:
         return xp.ones((), dtype=xp.int32)
+
+    def return_one(self, /) -> Array:
+        return default_one()
 
     def return_1arg(self, z: Array, /) -> Array:
         return z
 
     @dataclass(frozen=True)
     class FLRW(cosmology_cls):
-        H0: Array = xp.ones((), dtype=xp.int32)
-        Om0: Array = xp.ones((), dtype=xp.int32)
-        Ode0: Array = xp.ones((), dtype=xp.int32)
-        Tcmb0: Array = xp.ones((), dtype=xp.int32)
-        Neff: Array = xp.ones((), dtype=xp.int32)
-        m_nu: Array = xp.ones((), dtype=xp.int32)
-        Ob0: Array = xp.ones((), dtype=xp.int32)
+        H0: Array = field(default_factory=default_one)
+        Om0: Array = field(default_factory=default_one)
+        Ode0: Array = field(default_factory=default_one)
+        Tcmb0: Array = field(default_factory=default_one)
+        Neff: Array = field(default_factory=default_one)
+        m_nu: Array = field(default_factory=default_one)
+        Ob0: Array = field(default_factory=default_one)
         name: str | None = None
 
         scale_factor0 = property(return_one)
