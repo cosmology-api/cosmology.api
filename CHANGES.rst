@@ -18,3 +18,5 @@ Changelog (``cosmology.api``)
 
    - A default implementation is provided for ``__getattr__`` that passes
      through to the wrapped object. (#8) [nstarman]
+
+- Added ``speed_of_light`` to the constants namespace. (#11) [nstarman]

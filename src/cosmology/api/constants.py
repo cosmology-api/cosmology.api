@@ -22,3 +22,8 @@ class CosmologyConstantsAPINamespace(Protocol):
     def G(self) -> Any:
         """Gravitational constant G in pc km2 s-2 Msol-1."""
         ...
+
+    @property
+    def speed_of_light(self) -> Any:
+        """Speed of light in km s-1."""
+        ...

@@ -26,7 +26,7 @@ def test_compliant_namespace():
     Test that a compliant namespace is a
     `cosmology.api.CosmologyConstantsAPINamespace`.
     """
-    example_namespace = SimpleNamespace(G=1)
+    example_namespace = SimpleNamespace(G=1, speed_of_light=2)
 
     assert isinstance(example_namespace, CosmologyConstantsAPINamespace)
 
