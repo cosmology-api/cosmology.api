@@ -6,9 +6,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 # LOCAL
-from cosmology.api import CosmologyAPIConformantWrapper
-from cosmology.api.core import CosmologyAPIConformant
-from cosmology.api.namespace import CosmologyAPINamespace
+from cosmology.api import (
+    CosmologyAPIConformant,
+    CosmologyAPIConformantWrapper,
+    CosmologyAPINamespace,
+)
 
 ################################################################################
 # TESTS
