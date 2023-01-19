@@ -88,8 +88,7 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         -------
         Array
         """
-        # A default implementation is provided for convenience.
-        return self.Om0 + self.Ogamma0 + self.Onu0 + self.Ode0 + self.Ok0
+        ...
 
     @property
     def Odm0(self) -> Array:
@@ -177,7 +176,7 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         -------
         Array
         """
-        return self.scale_factor0 / (z + 1)
+        ...
 
     # ----------------------------------------------
     # Hubble
@@ -194,7 +193,7 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         -------
         Array
         """
-        return self.H0 * self.efunc(z)
+        ...
 
     def efunc(self, z: Array, /) -> Array:
         """Standardised Hubble function :math:`E(z) = H(z)/H_0`.
@@ -247,7 +246,7 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         -------
         Array
         """
-        return self.Om(z) + self.Ogamma(z) + self.Onu(z) + self.Ode(z) + self.Ok(z)
+        ...
 
     def Om(self, z: Array, /) -> Array:
         """Redshift-dependent non-relativistic matter density parameter.
@@ -528,7 +527,7 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         .. [2] Weedman, D. (1986). Quasar astronomy, pp 65-67.
         .. [3] Peebles, P. (1993). Principles of Physical Cosmology, pp 325-327.
         """
-        return self.comoving_transverse_distance(z) / (z + 1.0)
+        ...
 
     # ----------------------------------------------
     # Luminosity distance
@@ -552,4 +551,4 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         ----------
         .. [1] Weinberg, 1972, pp 420-424; Weedman, 1986, pp 60-62.
         """
-        return (z + 1.0) * self.comoving_transverse_distance(z)
+        ...
