@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Protocol, runtime_checkable
 if TYPE_CHECKING:
 
     # LOCAL
-    from cosmology.api.namespace import CosmologyAPINamespace
+    from .namespace import CosmologyAPINamespace
 
 __all__: list[str] = []
 
