@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 # STDLIB
-from dataclasses import dataclass
+from dataclasses import dataclass, make_dataclass
 
+# THIRD-PARTY
+import numpy.array_api as xp
 import pytest
 
 # LOCAL
@@ -12,7 +14,10 @@ from cosmology.api import (
     CosmologyAPIConformant,
     CosmologyAPIConformantWrapper,
     CosmologyAPINamespace,
+    FLRWAPIConformant,
+    FLRWAPIConformantWrapper,
 )
+from cosmology.api._array_api.array import ArrayAPIConformant as Array
 
 ################################################################################
 # TESTS
@@ -22,56 +27,69 @@ from cosmology.api import (
 def test_noncompliant_cosmology_wrapper():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.CosmologyAPIConformantWrapper`.
+    `cosmology.api.FLRWAPIConformantWrapper`.
     """
     # Simple example: missing everything
-    class CosmologyWrapper:
+    class FLRWWrapper:
         pass
 
-    wrapper = CosmologyWrapper()
+    wrapper = FLRWWrapper()
 
     assert not isinstance(wrapper, CosmologyAPIConformantWrapper)
 
     # TODO: more examples?
 
 
-def test_compliant_cosmology(
-    cosmology_ns: CosmologyAPINamespace, cosmology: CosmologyAPIConformant
-):
+def test_compliant_flrw_wrapper(cosmology_ns, flrw_attrs, flrw_meths):
     """
     Test that a compliant instance is a
     `cosmology.api.CosmologyAPIConformantWrapper`. In particular, this tests
     that the class does not need to inherit from the Protocol to be compliant.
     """
 
-    @dataclass
-    class CosmologyWrapper:
+    def _return_one(self, /) -> Array:
+        return xp.ones((), dtype=xp.int32)
 
-        cosmo: object
+    def _return_1arg(self, z: Array, /) -> Array:
+        return z
 
-        def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
-        ) -> CosmologyAPINamespace:
-            return cosmology_ns
+    def _cosmology_namespace_(
+        self, /, *, api_version: str | None = None
+    ) -> CosmologyAPINamespace:
+        return cosmology_ns
 
-        @property
-        def name(self) -> str | None:
-            return None
+    def name(self) -> str | None:
+        return None
 
-        def __getattr__(self, name: str) -> object:
-            return getattr(self.cosmo, name)
+    def _getattr_(self, name: str) -> object:
+        return getattr(self.cosmo, name)
 
-    wrapper = CosmologyWrapper(cosmology)
+    FLRWWrapper = make_dataclass(
+        "FLRWWrapper",
+        [("cosmo", object)],
+        namespace={n: property(_return_one) for n in flrw_attrs}
+        | {n: _return_1arg for n in flrw_meths}
+        | {
+            "__cosmology_namespace__": _cosmology_namespace_,
+            "name": property(name),
+            "__getattr__": _getattr_,
+        },
+        frozen=True,
+    )
+
+    wrapper = FLRWWrapper(object())
 
     assert isinstance(wrapper, CosmologyAPIConformant)
     assert isinstance(wrapper, CosmologyAPIConformantWrapper)
+    assert isinstance(wrapper, FLRWAPIConformant)
+    assert isinstance(wrapper, FLRWAPIConformantWrapper)
 
 
 class Test_CosmologyAPIConformantWrapper:
     @pytest.fixture(scope="class")
     def wrapper_cls(self, cosmology_ns):
         @dataclass(frozen=True)
-        class CosmologyWrapper(CosmologyAPIConformantWrapper):
+        class FLRWWrapper(FLRWAPIConformantWrapper):
 
             cosmo: object
 
@@ -84,11 +102,17 @@ class Test_CosmologyAPIConformantWrapper:
             def name(self) -> str | None:
                 return None
 
-        return CosmologyWrapper
+            # === Not Cosmology API ===
+
+            @property
+            def not_cosmology_api(self) -> int:
+                return 1
+
+        return FLRWWrapper
 
     @pytest.fixture(scope="class")
-    def wrapper(self, cosmology, wrapper_cls):
-        return wrapper_cls(cosmology)
+    def wrapper(self, wrapper_cls):
+        return wrapper_cls(object())
 
     # =========================================================================
     # Tests
@@ -97,6 +121,8 @@ class Test_CosmologyAPIConformantWrapper:
         """Test that the wrapper is compliant."""
         assert isinstance(wrapper, CosmologyAPIConformant)
         assert isinstance(wrapper, CosmologyAPIConformantWrapper)
+        assert isinstance(wrapper, FLRWAPIConformant)
+        assert isinstance(wrapper, FLRWAPIConformantWrapper)
 
     def test_getattr(self, wrapper):
         """Test that the wrapper can access the attributes of the wrapped object."""

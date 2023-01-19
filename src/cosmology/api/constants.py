@@ -19,6 +19,6 @@ class CosmologyConstantsAPINamespace(Protocol):
     """Cosmology constants API Protocol."""
 
     @property
-    def G(self) -> Any:  # noqa: N802
+    def G(self) -> Any:
         """Gravitational constant G in pc km2 s-2 Msol-1."""
         ...

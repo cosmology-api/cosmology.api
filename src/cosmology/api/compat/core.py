@@ -6,7 +6,7 @@ from __future__ import annotations
 from typing import Protocol
 
 # LOCAL
-from .core import CosmologyAPIConformant
+from cosmology.api.core import CosmologyAPIConformant
 
 __all__: list[str] = []
 

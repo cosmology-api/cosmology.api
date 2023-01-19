@@ -31,7 +31,7 @@ def test_compliant_namespace():
     assert isinstance(example_namespace, CosmologyConstantsAPINamespace)
 
 
-def test_fixture(constants_ns: CosmologyConstantsAPINamespace):
+def test_fixture(constants_ns):
     """
     Test that the ``constants_ns`` fixture is a
     `cosmology.api.CosmologyConstantsAPINamespace`.

@@ -49,7 +49,7 @@ class ArrayAPIConformant(Protocol):
         ...
 
     @property
-    def mT(self: Self) -> Self:  # noqa: N802
+    def mT(self: Self) -> Self:
         """
         Transpose of a matrix (or a stack of matrices).
 
@@ -132,7 +132,7 @@ class ArrayAPIConformant(Protocol):
         ...
 
     @property
-    def T(self: Self) -> Self:  # noqa: N802
+    def T(self: Self) -> Self:
         """
         Transpose of the array.
 
