@@ -104,7 +104,7 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
     Neff: Array
     """Effective number of neutrino species."""
 
-    m_nu: Array
+    m_nu: tuple[Array, ...]
     """Neutrino mass in eV."""
 
     Ob0: Array | None
