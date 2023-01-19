@@ -3,6 +3,7 @@
 The list of required constants is:
 
 - G: Gravitational constant G in pc km2 s-2 Msol-1.
+- speed_of_light: Speed of light in km s-1.
 
 """
 
