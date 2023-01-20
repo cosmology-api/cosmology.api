@@ -17,7 +17,7 @@ from cosmology.api import (
     FLRWAPIConformant,
     FLRWAPIConformantWrapper,
 )
-from cosmology.api._array_api.array import ArrayAPIConformant as Array
+from cosmology.api._array_api import Array
 
 ################################################################################
 # TESTS

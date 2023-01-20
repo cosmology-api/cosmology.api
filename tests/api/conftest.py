@@ -19,7 +19,7 @@ from cosmology.api import (
     FLRWAPIConformant,
     FLRWAPIConformantWrapper,
 )
-from cosmology.api._array_api.array import ArrayAPIConformant as Array
+from cosmology.api._array_api import Array
 from cosmology.api.flrw import FLRW_ATTRIBUTES, FLRW_METHODS
 
 # ==============================================================================

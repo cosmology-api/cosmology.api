@@ -10,7 +10,7 @@ import numpy.array_api as xp
 
 # LOCAL
 from cosmology.api import FLRWAPIConformant
-from cosmology.api._array_api.array import ArrayAPIConformant as Array
+from cosmology.api._array_api import Array
 
 ################################################################################
 # TESTS
