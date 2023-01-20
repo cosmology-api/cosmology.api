@@ -47,6 +47,7 @@ FLRW_ATTRIBUTES = frozenset(  # TODO: public scope this
 FLRW_METHODS = frozenset(  # TODO: public scope this
     (
         "scale_factor",
+        "Tcmb",
         "H",
         "efunc",
         "inv_efunc",
