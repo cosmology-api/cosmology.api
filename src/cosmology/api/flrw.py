@@ -256,6 +256,20 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         """
         ...
 
+    def Tcmb(self, z: Array, /) -> Array:
+        """Temperature of the CMB at redshift z in Kelvin.
+
+        Parameters
+        ----------
+        z : Array, positional-only
+            The redshift(s) at which to evaluate the CMB temperature.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
     # ----------------------------------------------
     # Hubble
 
