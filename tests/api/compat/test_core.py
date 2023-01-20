@@ -25,10 +25,10 @@ def test_noncompliant_cosmology_wrapper():
     `cosmology.api.CosmologyWrapper`.
     """
     # Simple example: missing everything
-    class CosmologyWrapper:
+    class ExampleCosmologyWrapper:
         pass
 
-    wrapper = CosmologyWrapper()
+    wrapper = ExampleCosmologyWrapper()
 
     assert not isinstance(wrapper, CosmologyWrapper)
 
@@ -43,7 +43,7 @@ def test_compliant_cosmology(cosmology_ns):
     """
 
     @dataclass
-    class CosmologyWrapper:
+    class ExampleCosmologyWrapper:
 
         cosmo: object
 
@@ -59,7 +59,7 @@ def test_compliant_cosmology(cosmology_ns):
         def __getattr__(self, name: str) -> object:
             return getattr(self.cosmo, name)
 
-    wrapper = CosmologyWrapper(object())
+    wrapper = ExampleCosmologyWrapper(object())
 
     assert isinstance(wrapper, CosmologyAPI)
     assert isinstance(wrapper, CosmologyWrapper)
@@ -71,7 +71,7 @@ class Test_CosmologyWrapper:
         self, cosmology_ns: CosmologyAPINamespace
     ) -> type[CosmologyWrapper]:
         @dataclass(frozen=True)
-        class CosmologyWrapper(CosmologyWrapper):
+        class ExampleCosmologyWrapper(CosmologyWrapper):
 
             cosmo: object
 
@@ -84,7 +84,7 @@ class Test_CosmologyWrapper:
             def name(self) -> str | None:
                 return None
 
-        return CosmologyWrapper
+        return ExampleCosmologyWrapper
 
     @pytest.fixture(scope="class")
     def wrapper(
