@@ -47,6 +47,7 @@ FLRW_ATTRIBUTES = frozenset(  # TODO: public scope this
 FLRW_METHODS = frozenset(  # TODO: public scope this
     (
         "scale_factor",
+        "Tcmb",
         "H",
         "efunc",
         "inv_efunc",
@@ -249,6 +250,20 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         ----------
         z : Array, positional-only
             The redshift(s) at which to evaluate the scale factor.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+    def Tcmb(self, z: Array, /) -> Array:
+        """Temperature of the CMB at redshift z in Kelvin.
+
+        Parameters
+        ----------
+        z : Array, positional-only
+            The redshift(s) at which to evaluate the CMB temperature.
 
         Returns
         -------
