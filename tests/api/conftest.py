@@ -29,7 +29,7 @@ from cosmology.api.flrw import FLRW_ATTRIBUTES, FLRW_METHODS
 @pytest.fixture(scope="session")
 def constants_ns() -> CosmologyConstantsAPINamespace:
     """The cosmology constants API namespace."""
-    return SimpleNamespace(G=1)
+    return SimpleNamespace(G=1, speed_of_light=2)
 
 
 @pytest.fixture(scope="session")
