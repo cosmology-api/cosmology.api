@@ -12,12 +12,12 @@ import pytest
 
 # LOCAL
 from cosmology.api import (
-    CosmologyAPIConformant,
-    CosmologyAPIConformantWrapper,
+    CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyConstantsAPINamespace,
-    FLRWAPIConformant,
-    FLRWAPIConformantWrapper,
+    CosmologyWrapper,
+    FLRWCosmologyAPI,
+    FLRWCosmologyWrapper,
 )
 from cosmology.api._array_api import Array
 from cosmology.api.flrw import FLRW_ATTRIBUTES, FLRW_METHODS
@@ -43,11 +43,11 @@ def cosmology_ns(constants_ns: CosmologyConstantsAPINamespace) -> CosmologyAPINa
 
 
 @pytest.fixture(scope="session")
-def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPIConformant]:
+def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPI]:
     """An example cosmology API class."""
 
     @dataclass(frozen=True)
-    class ExampleCosmology(CosmologyAPIConformant):
+    class ExampleCosmology(CosmologyAPI):
         """An example cosmology API class."""
 
         name: str | None = None
@@ -67,7 +67,7 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPIConfo
 
 
 @pytest.fixture(scope="session")
-def cosmology(cosmology_cls: type[CosmologyAPIConformant]) -> CosmologyAPIConformant:
+def cosmology(cosmology_cls: type[CosmologyAPI]) -> CosmologyAPI:
     """An example cosmology API instance."""
     return cosmology_cls()
 
@@ -75,11 +75,11 @@ def cosmology(cosmology_cls: type[CosmologyAPIConformant]) -> CosmologyAPIConfor
 @pytest.fixture(scope="session")
 def cosmology_wrapper_cls(
     cosmology_ns: CosmologyAPINamespace,
-) -> type[CosmologyAPIConformantWrapper]:
+) -> type[CosmologyWrapper]:
     """An example cosmology API wrapper class."""
 
     @dataclass(frozen=True)
-    class CosmologyWrapper(CosmologyAPIConformantWrapper):
+    class CosmologyWrapper(CosmologyWrapper):
         """An example cosmology API wrapper class."""
 
         cosmo: object
@@ -126,10 +126,10 @@ def flrw_meths() -> frozenset[str]:
 
 @pytest.fixture(scope="session")
 def flrw_cls(
-    cosmology_cls: type[CosmologyAPIConformant],
+    cosmology_cls: type[CosmologyAPI],
     flrw_attrs: set[str],
     flrw_meths: set[str],
-) -> type[FLRWAPIConformant]:
+) -> type[FLRWCosmologyAPI]:
     """An example FLRW API class."""
     fields = ("H0", "Om0", "Ode0", "Tcmb0", "Neff", "m_nu", "Ob0")
 
@@ -144,22 +144,22 @@ def flrw_cls(
 
 
 @pytest.fixture(scope="session")
-def flrw(flrw_cls: type[FLRWAPIConformant]) -> FLRWAPIConformant:
+def flrw(flrw_cls: type[FLRWCosmologyAPI]) -> FLRWCosmologyAPI:
     """An example FLRW API instance."""
     return flrw_cls()
 
 
 @pytest.fixture(scope="session")
 def flrw_wrapper_cls(
-    cosmology_wrapper_cls: type[CosmologyAPIConformantWrapper],
+    cosmology_wrapper_cls: type[CosmologyWrapper],
     flrw_attrs: set[str],
     flrw_meths: set[str],
-) -> type[FLRWAPIConformantWrapper]:
+) -> type[FLRWCosmologyWrapper]:
     """An example FLRW API wrapper class."""
     return make_dataclass(
         "FLRWWrapper",
         [("cosmo", object)],
-        bases=(cosmology_wrapper_cls, FLRWAPIConformantWrapper),
+        bases=(cosmology_wrapper_cls, FLRWCosmologyWrapper),
         namespace={n: property(_return_one) for n in flrw_attrs}
         | {n: _return_1arg for n in flrw_meths},
         frozen=True,

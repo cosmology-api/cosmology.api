@@ -6,7 +6,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
 # LOCAL
-from cosmology.api.core import CosmologyAPIConformant
+from cosmology.api.core import CosmologyAPI
 
 if TYPE_CHECKING:
     # LOCAL
@@ -81,7 +81,7 @@ FLRW_METHODS = frozenset(  # TODO: public scope this
 
 
 @runtime_checkable
-class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
+class FLRWCosmologyAPI(CosmologyAPI, Protocol):
     """Cosmology API Protocol for FLRW-like cosmologies.
 
     This is a protocol class that defines the standard API for FLRW-like
@@ -447,12 +447,6 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
 
     def Onu(self, z: Array, /) -> Array:
         r"""Redshift-dependent neutrino density parameter.
-
-        The energy density of neutrinos relative to the critical density at each
-        redshift. Note that this includes their kinetic energy (if
-        they have mass), so it is not equal to the commonly used :math:`\sum
-        \frac{m_{\nu}}{94 eV}`, which does not include kinetic energy.
-        Returns `float` if the input is scalar.
 
         Parameters
         ----------
