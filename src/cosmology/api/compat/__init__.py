@@ -1,10 +1,10 @@
 """The Cosmology API standard for compatability wrappers."""
 
 # LOCAL
-from cosmology.api.compat.core import CosmologyWrapper
-from cosmology.api.compat.flrw import FLRWCosmologyWrapper
+from cosmology.api.compat.core import CosmologyWrapperAPI
+from cosmology.api.compat.flrw import FLRWCosmologyWrapperAPI
 
 __all__ = [
-    "CosmologyWrapper",
-    "FLRWCosmologyWrapper",
+    "CosmologyWrapperAPI",
+    "FLRWCosmologyWrapperAPI",
 ]

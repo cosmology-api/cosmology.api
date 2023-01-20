@@ -11,7 +11,7 @@ from cosmology.api.core import CosmologyAPI
 __all__: list[str] = []
 
 
-class CosmologyWrapper(CosmologyAPI, Protocol):
+class CosmologyWrapperAPI(CosmologyAPI, Protocol):
     """The Cosmology API standard for compatability wrappers.
 
     This is a protocol class that defines the standard API for Cosmology
