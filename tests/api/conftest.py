@@ -15,9 +15,9 @@ from cosmology.api import (
     CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyConstantsAPINamespace,
-    CosmologyWrapper,
+    CosmologyWrapperAPI,
     FLRWCosmologyAPI,
-    FLRWCosmologyWrapper,
+    FLRWCosmologyWrapperAPI,
 )
 from cosmology.api._array_api import Array
 from cosmology.api.flrw import FLRW_ATTRIBUTES, FLRW_METHODS
@@ -75,11 +75,11 @@ def cosmology(cosmology_cls: type[CosmologyAPI]) -> CosmologyAPI:
 @pytest.fixture(scope="session")
 def cosmology_wrapper_cls(
     cosmology_ns: CosmologyAPINamespace,
-) -> type[CosmologyWrapper]:
+) -> type[CosmologyWrapperAPI]:
     """An example cosmology API wrapper class."""
 
     @dataclass(frozen=True)
-    class CosmologyWrapper(CosmologyWrapper):
+    class CosmologyWrapperAPI(CosmologyWrapperAPI):
         """An example cosmology API wrapper class."""
 
         cosmo: object
@@ -93,7 +93,7 @@ def cosmology_wrapper_cls(
         def name(self) -> str | None:
             return None
 
-    return CosmologyWrapper
+    return CosmologyWrapperAPI
 
 
 # ==============================================================================
@@ -151,15 +151,15 @@ def flrw(flrw_cls: type[FLRWCosmologyAPI]) -> FLRWCosmologyAPI:
 
 @pytest.fixture(scope="session")
 def flrw_wrapper_cls(
-    cosmology_wrapper_cls: type[CosmologyWrapper],
+    cosmology_wrapper_cls: type[CosmologyWrapperAPI],
     flrw_attrs: set[str],
     flrw_meths: set[str],
-) -> type[FLRWCosmologyWrapper]:
+) -> type[FLRWCosmologyWrapperAPI]:
     """An example FLRW API wrapper class."""
     return make_dataclass(
         "FLRWWrapper",
         [("cosmo", object)],
-        bases=(cosmology_wrapper_cls, FLRWCosmologyWrapper),
+        bases=(cosmology_wrapper_cls, FLRWCosmologyWrapperAPI),
         namespace={n: property(_return_one) for n in flrw_attrs}
         | {n: _return_1arg for n in flrw_meths},
         frozen=True,

@@ -6,13 +6,13 @@ from __future__ import annotations
 from typing import Protocol
 
 # LOCAL
-from cosmology.api.compat.core import CosmologyWrapper
+from cosmology.api.compat.core import CosmologyWrapperAPI
 from cosmology.api.flrw import FLRWCosmologyAPI
 
 __all__: list[str] = []
 
 
-class FLRWCosmologyWrapper(CosmologyWrapper, FLRWCosmologyAPI, Protocol):
+class FLRWCosmologyWrapperAPI(CosmologyWrapperAPI, FLRWCosmologyAPI, Protocol):
     """The Cosmology API standard for FLRW compatability wrappers.
 
     This is a protocol class that defines the standard API for FLRW
