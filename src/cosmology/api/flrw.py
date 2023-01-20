@@ -10,7 +10,7 @@ from cosmology.api.core import CosmologyAPIConformant
 
 if TYPE_CHECKING:
     # LOCAL
-    from ._array_api.array import ArrayAPIConformant as Array
+    from ._array_api.array import Array
 
 __all__: list[str] = []
 
