@@ -136,7 +136,7 @@ def flrw_cls(
     return make_dataclass(
         "ExampleFLRW",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(FLRWAPIConformant, cosmology_cls),
+        bases=(cosmology_cls,),
         namespace={n: property(_return_one) for n in flrw_attrs - set(fields)}
         | {n: _return_1arg for n in flrw_meths},
         frozen=True,

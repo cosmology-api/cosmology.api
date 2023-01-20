@@ -89,36 +89,23 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
     define a compatible cosmology class.
     """
 
-    H0: Array
-    """Hubble function at redshift 0 in km s-1 Mpc-1."""
-
-    Om0: Array
-    """Matter density parameter at redshift 0."""
-
-    Ode0: Array
-    """Dark energy density parameter at redshift 0."""
-
-    Tcmb0: Array
-    """Temperature of the CMB at redshift 0 in Kelvin."""
-
-    Neff: Array
-    """Effective number of neutrino species."""
-
-    m_nu: tuple[Array, ...]
-    """Neutrino mass in eV."""
-
-    Ob0: Array | None
-    """Baryon density parameter at redshift 0."""
-
-    # ==============================================================
-
     @property
     def scale_factor0(self) -> Array:
         """Scale factor at z=0."""
         ...
 
+    @property
+    def Tcmb0(self) -> Array:
+        """Temperature of the CMB at redshift 0 in Kelvin."""
+        ...
+
     # ----------------------------------------------
     # Hubble
+
+    @property
+    def H0(self) -> Array:
+        """Hubble function at redshift 0 in km s-1 Mpc-1."""
+        ...
 
     @property
     def h(self) -> Array:
@@ -154,8 +141,23 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
         ...
 
     @property
+    def Om0(self) -> Array:
+        """Omega matter; matter density/critical density at z=0."""
+        ...
+
+    @property
     def Odm0(self) -> Array:
         """Omega dark matter; dark matter density/critical density at z=0."""
+        ...
+
+    @property
+    def Ob0(self) -> Array | None:
+        """Omega baryon; baryon density/critical density at z=0."""
+        ...
+
+    @property
+    def Ode0(self) -> Array:
+        """Omega dark energy; dark energy density/critical density at z=0."""
         ...
 
     @property
@@ -171,6 +173,19 @@ class FLRWAPIConformant(CosmologyAPIConformant, Protocol):
     @property
     def Onu0(self) -> Array:
         """Omega nu; the density/critical density of neutrinos at z=0."""
+        ...
+
+    # ----------------------------------------------
+    # Neutrinos
+
+    @property
+    def Neff(self) -> Array:
+        """Effective number of neutrino species."""
+        ...
+
+    @property
+    def m_nu(self) -> tuple[Array, ...]:
+        """Neutrino mass in eV."""
         ...
 
     # ----------------------------------------------
