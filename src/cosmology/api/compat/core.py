@@ -6,12 +6,12 @@ from __future__ import annotations
 from typing import Protocol
 
 # LOCAL
-from cosmology.api.core import CosmologyAPIConformant
+from cosmology.api.core import CosmologyAPI
 
 __all__: list[str] = []
 
 
-class CosmologyAPIConformantWrapper(CosmologyAPIConformant, Protocol):
+class CosmologyWrapper(CosmologyAPI, Protocol):
     """The Cosmology API standard for compatability wrappers.
 
     This is a protocol class that defines the standard API for Cosmology

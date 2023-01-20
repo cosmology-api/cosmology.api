@@ -9,7 +9,7 @@ from dataclasses import field, make_dataclass
 import numpy.array_api as xp
 
 # LOCAL
-from cosmology.api import FLRWAPIConformant
+from cosmology.api import FLRWCosmologyAPI
 from cosmology.api._array_api import Array
 
 ################################################################################
@@ -20,7 +20,7 @@ from cosmology.api._array_api import Array
 def test_noncompliant_flrw():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.CosmologyAPIConformant`.
+    `cosmology.api.CosmologyAPI`.
     """
     # Simple example: missing everything
 
@@ -29,15 +29,15 @@ def test_noncompliant_flrw():
 
     cosmo = FLRW()
 
-    assert not isinstance(cosmo, FLRWAPIConformant)
+    assert not isinstance(cosmo, FLRWCosmologyAPI)
 
     # TODO: more examples?
 
 
 def test_compliant_flrw(cosmology_cls, flrw_attrs, flrw_meths):
     """
-    Test that an instance is `cosmology.api.FLRWAPIConformant` even if it
-    doesn't inherit from `cosmology.api.FLRWAPIConformant`.
+    Test that an instance is `cosmology.api.FLRWCosmologyAPI` even if it
+    doesn't inherit from `cosmology.api.FLRWCosmologyAPI`.
     """
 
     def _default_one() -> Array:
@@ -62,12 +62,12 @@ def test_compliant_flrw(cosmology_cls, flrw_attrs, flrw_meths):
 
     cosmo = FLRW()
 
-    assert isinstance(cosmo, FLRWAPIConformant)
+    assert isinstance(cosmo, FLRWCosmologyAPI)
 
 
 def test_fixture(flrw):
     """
     Test that the ``flrw`` fixture is a
-    `cosmology.api.FLRWAPIConformant`.
+    `cosmology.api.FLRWCosmologyAPI`.
     """
-    assert isinstance(flrw, FLRWAPIConformant)
+    assert isinstance(flrw, FLRWCosmologyAPI)

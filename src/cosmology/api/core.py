@@ -14,7 +14,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class CosmologyAPIConformant(Protocol):
+class CosmologyAPI(Protocol):
     """Cosmology API Protocol."""
 
     def __cosmology_namespace__(

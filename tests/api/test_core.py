@@ -6,7 +6,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 # LOCAL
-from cosmology.api import CosmologyAPIConformant, CosmologyAPINamespace
+from cosmology.api import CosmologyAPI, CosmologyAPINamespace
 
 ################################################################################
 # TESTS
@@ -16,7 +16,7 @@ from cosmology.api import CosmologyAPIConformant, CosmologyAPINamespace
 def test_noncompliant_cosmology():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.CosmologyAPIConformant`.
+    `cosmology.api.CosmologyAPI`.
     """
     # Simple example: missing everything
 
@@ -25,7 +25,7 @@ def test_noncompliant_cosmology():
 
     cosmo = Cosmology()
 
-    assert not isinstance(cosmo, CosmologyAPIConformant)
+    assert not isinstance(cosmo, CosmologyAPI)
 
     # TODO: more examples?
 
@@ -33,7 +33,7 @@ def test_noncompliant_cosmology():
 def test_compliant_cosmology(cosmology_ns):
     """
     Test that a compliant instance is a
-    `cosmology.api.CosmologyAPIConformant`.
+    `cosmology.api.CosmologyAPI`.
     """
 
     @dataclass
@@ -47,12 +47,12 @@ def test_compliant_cosmology(cosmology_ns):
 
     cosmo = Cosmology()
 
-    assert isinstance(cosmo, CosmologyAPIConformant)
+    assert isinstance(cosmo, CosmologyAPI)
 
 
 def test_fixture(cosmology):
     """
     Test that the ``cosmology`` fixture is a
-    `cosmology.api.CosmologyAPIConformant`.
+    `cosmology.api.CosmologyAPI`.
     """
-    assert isinstance(cosmology, CosmologyAPIConformant)
+    assert isinstance(cosmology, CosmologyAPI)
