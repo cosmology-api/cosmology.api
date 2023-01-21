@@ -14,12 +14,12 @@ __all__: list[str] = []
 class BackgroundCosmologyWrapperAPI(
     CosmologyWrapperAPI[ArrayT], BackgroundCosmologyAPI[ArrayT], Protocol
 ):
-    """The Cosmology API standard for FLRW compatability wrappers.
+    """The standard for ``BacgroundCosmologyAPI`` compatability wrappers.
 
-    This is a protocol class that defines the standard API for FLRW classes. It
-    is not intended to be used directly, and should not be instantiated.
-    Instead, it should be used as a Protocol or ABC for libraries that wish to
-    define a wrapper for the standard API.
+    This is a protocol class that defines an API standard. It is not intended to
+    be used directly, and should not be instantiated. Instead, it should be used
+    as a Protocol or ABC for libraries that wish to define a wrapper for the
+    standard API.
 
     Parameters
     ----------
@@ -28,7 +28,7 @@ class BackgroundCosmologyWrapperAPI(
 
     See Also
     --------
-    cosmology.api.compat.core.StandardCosmologyWrapperAPI
-        The FLRW Cosmology wrapper API, with the standard set of components:
-        matter, radiation, dark energy, dark matter, neutrinos.
+    cosmology.api.compat.standard.StandardCosmologyWrapperAPI
+        The standard cosmology wrapper API, with the expected set of components:
+        matter, radiation, neutrinos, dark matter, and dark energy.
     """

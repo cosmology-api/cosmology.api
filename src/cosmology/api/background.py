@@ -36,7 +36,7 @@ BACKGROUNDCOSMO_METHODS = frozenset(  # TODO: public scope this
 
 @runtime_checkable
 class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
-    """Cosmology API Protocol for background calculations.
+    """Cosmology API protocol for background calculations.
 
     This is a protocol class that defines the standard API for background
     calculations. It is not intended to be instantiaed. Instead, it should be

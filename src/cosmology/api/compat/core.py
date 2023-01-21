@@ -11,12 +11,12 @@ __all__: list[str] = []
 
 
 class CosmologyWrapperAPI(CosmologyAPI[ArrayT_co], Protocol):
-    """The Cosmology API standard for compatability wrappers.
+    """The standard for ``CosmologyAPI`` compatability wrappers.
 
-    This is a protocol class that defines the standard API for Cosmology
-    classes. It is not intended to be used directly, and should not be
-    instantiated. Instead, it should be used as a Protocol or ABC for libraries
-    that wish to define a wrapper for the standard API.
+    This is a protocol class that defines an API standard. It is not intended to
+    be used directly, and should not be instantiated. Instead, it should be used
+    as a Protocol or ABC for libraries that wish to define a wrapper for the
+    standard API.
 
     Parameters
     ----------
