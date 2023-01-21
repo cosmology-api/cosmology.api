@@ -3,7 +3,7 @@
 The list of required constants is:
 
 - G: Gravitational constant G in pc km2 s-2 Msol-1.
-- speed_of_light: Speed of light in km s-1.
+- c: Speed of light in km s-1.
 
 """
 
@@ -25,6 +25,6 @@ class CosmologyConstantsAPINamespace(Protocol):
         ...
 
     @property
-    def speed_of_light(self) -> Any:
+    def c(self) -> Any:
         """Speed of light in km s-1."""
         ...

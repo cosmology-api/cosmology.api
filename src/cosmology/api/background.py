@@ -1,45 +1,27 @@
-"""The Cosmology API."""
+"""The API for background calculations."""
 
 from __future__ import annotations
 
-# STDLIB
-from typing import TYPE_CHECKING, Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable
 
-# LOCAL
+from cosmology.api._array_api import ArrayT
 from cosmology.api.core import CosmologyAPI
-
-if TYPE_CHECKING:
-    # LOCAL
-    from ._array_api.array import Array
 
 __all__: list[str] = []
 
 
-FLRW_ATTRIBUTES = frozenset(  # TODO: public scope this
+BACKGROUNDCOSMO_ATTRIBUTES = frozenset(  # TODO: public scope this
     (
-        "H0",
         "scale_factor0",
-        "h",
-        "hubble_distance",
-        "hubble_time",
         "Otot0",
-        "Ok0",
-        "rho_critical0",
-        "rho_tot0",
-        "rho_k0",
+        "critical_density0",
     )
 )
-FLRW_METHODS = frozenset(  # TODO: public scope this
+BACKGROUNDCOSMO_METHODS = frozenset(  # TODO: public scope this
     (
         "scale_factor",
-        "H",
-        "efunc",
-        "inv_efunc",
         "Otot",
-        "Ok",
-        "rho_critical",
-        "rho_tot",
-        "rho_k",
+        "critical_density",
         "age",
         "lookback_time",
         "comoving_distance",
@@ -53,89 +35,40 @@ FLRW_METHODS = frozenset(  # TODO: public scope this
 
 
 @runtime_checkable
-class FLRWCosmologyAPI(CosmologyAPI, Protocol):
-    """Cosmology API Protocol for FLRW-like cosmologies.
+class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
+    """Cosmology API protocol for background calculations.
 
-    This is a protocol class that defines the standard API for FLRW-like
-    cosmologies. It is not intended to be instantiaed. Instead, it should be
+    This is a protocol class that defines the standard API for background
+    calculations. It is not intended to be instantiaed. Instead, it should be
     used for ``isinstance`` checks or as an ABC for libraries that wish to
     define a compatible cosmology class.
 
     See Also
     --------
-    StandardFLRWCosmologyAPI
-        The FLRW Cosmology API, with the standard set of components: matter,
-        radiation, dark energy, dark matter, neutrinos.
+    StandardCosmologyAPI
+        The standard cosmology API, with the expected set of components: matter,
+        radiation, neutrinos, dark matter, and dark energy.
     """
 
     @property
-    def scale_factor0(self) -> Array:
+    def scale_factor0(self) -> ArrayT:
         """Scale factor at z=0."""
         ...
 
-    # ----------------------------------------------
-    # Hubble
-
     @property
-    def H0(self) -> Array:
-        """Hubble function at redshift 0 in km s-1 Mpc-1."""
+    def Otot0(self) -> ArrayT:
+        r"""Omega total; the total density/critical density at z=0."""
         ...
 
     @property
-    def h(self) -> Array:
-        r"""Dimensionless Hubble parameter, h = H_0 / (100 [km/sec/Mpc])."""
-        ...
-
-    @property
-    def hubble_distance(self) -> Array:
-        """Hubble distance in Mpc."""
-        ...
-
-    @property
-    def hubble_time(self) -> Array:
-        """Hubble time in Gyr."""
-        ...
-
-    # ----------------------------------------------
-    # Omega
-
-    @property
-    def Otot0(self) -> Array:
-        r"""Omega total; the total density/critical density at z=0.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    @property
-    def Ok0(self) -> Array:
-        """Omega curvature; the effective curvature density/critical density at z=0."""
-        ...
-
-    # ----------------------------------------------
-    # Density
-
-    @property
-    def rho_critical0(self) -> Array:
+    def critical_density0(self) -> ArrayT:
         """Critical density at z = 0 in Msol Mpc-3."""
-        ...
-
-    @property
-    def rho_tot0(self) -> Array:
-        """Total density at z = 0 in Msol Mpc-3."""
-        ...
-
-    @property
-    def rho_k0(self) -> Array:
-        """Curvature density at z = 0 in Msol Mpc-3."""
         ...
 
     # ==============================================================
     # Methods
 
-    def scale_factor(self, z: Array, /) -> Array:
+    def scale_factor(self, z: ArrayT, /) -> ArrayT:
         """Redshift-dependenct scale factor.
 
         The scale factor is defined as :math:`a = a_0 / (1 + z)`.
@@ -151,55 +84,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
         """
         ...
 
-    # ----------------------------------------------
-    # Hubble
-
-    def H(self, z: Array, /) -> Array:
-        """Hubble function :math:`H(z)` in km s-1 Mpc-1.
-
-        Parameters
-        ----------
-        z : Array
-            The redshift(s) at which to evaluate the Hubble parameter.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def efunc(self, z: Array, /) -> Array:
-        """Standardised Hubble function :math:`E(z) = H(z)/H_0`.
-
-        Parameters
-        ----------
-        z : Array
-            The redshift(s) at which to evaluate efunc.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def inv_efunc(self, z: Array, /) -> Array:
-        """Inverse of ``efunc``.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    # ----------------------------------------------
-    # Omega
-
-    def Otot(self, z: Array, /) -> Array:
+    def Otot(self, z: ArrayT, /) -> ArrayT:
         r"""Redshift-dependent total density parameter.
 
         Parameters
@@ -213,39 +98,14 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
         """
         ...
 
-    def Ok(self, z: Array, /) -> Array:
-        """Redshift-dependent curvature density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    # ----------------------------------------------
-    # Rho
-
-    def rho_critical(self, z: Array, /) -> Array:
+    def critical_density(self, z: ArrayT, /) -> ArrayT:
         """Redshift-dependent critical density in Msol Mpc-3."""
-        ...
-
-    def rho_tot(self, z: Array, /) -> Array:
-        """Redshift-dependent total density in Msol Mpc-3."""
-        ...
-
-    def rho_k(self, z: Array, /) -> Array:
-        """Redshift-dependent curvature density in Msol Mpc-3."""
         ...
 
     # ----------------------------------------------
     # Time
 
-    def age(self, z: Array, /) -> Array:
+    def age(self, z: ArrayT, /) -> ArrayT:
         """Age of the universe in Gyr at redshift ``z``.
 
         Parameters
@@ -259,7 +119,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
         """
         ...
 
-    def lookback_time(self, z: Array, /) -> Array:
+    def lookback_time(self, z: ArrayT, /) -> ArrayT:
         """Lookback time to redshift ``z`` in Gyr.
 
         The lookback time is the difference between the age of the Universe now
@@ -279,7 +139,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
     # ----------------------------------------------
     # Comoving distance
 
-    def comoving_distance(self, z: Array, /) -> Array:
+    def comoving_distance(self, z: ArrayT, /) -> ArrayT:
         r"""Comoving line-of-sight distance :math:`d_c(z)` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
@@ -296,7 +156,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
         """
         ...
 
-    def comoving_transverse_distance(self, z: Array, /) -> Array:
+    def comoving_transverse_distance(self, z: ArrayT, /) -> ArrayT:
         r"""Transverse comoving distance :math:`d_M(z)` in Mpc.
 
         This value is the transverse comoving distance at redshift ``z``
@@ -315,7 +175,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
         """
         ...
 
-    def comoving_volume(self, z: Array, /) -> Array:
+    def comoving_volume(self, z: ArrayT, /) -> ArrayT:
         r"""Comoving volume in cubic Mpc.
 
         This is the volume of the universe encompassed by redshifts less than
@@ -333,7 +193,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
         """
         ...
 
-    def differential_comoving_volume(self, z: Array, /) -> Array:
+    def differential_comoving_volume(self, z: ArrayT, /) -> ArrayT:
         r"""Differential comoving volume in cubic Mpc per steradian.
 
         If :math:`V_c` is the comoving volume of a redshift slice with solid
@@ -352,7 +212,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
     # ----------------------------------------------
     # Angular diameter distance
 
-    def angular_diameter_distance(self, z: Array, /) -> Array:
+    def angular_diameter_distance(self, z: ArrayT, /) -> ArrayT:
         """Angular diameter distance :math:`d_A(z)` in Mpc.
 
         This gives the proper (sometimes called 'physical') transverse
@@ -379,7 +239,7 @@ class FLRWCosmologyAPI(CosmologyAPI, Protocol):
     # ----------------------------------------------
     # Luminosity distance
 
-    def luminosity_distance(self, z: Array, /) -> Array:
+    def luminosity_distance(self, z: ArrayT, /) -> ArrayT:
         """Redshift-dependent luminosity distance in Mpc.
 
         This is the distance to use when converting between the bolometric flux

@@ -5,6 +5,8 @@ from __future__ import annotations
 # STDLIB
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
+from cosmology.api._array_api import ArrayT_co
+
 if TYPE_CHECKING:
 
     # LOCAL
@@ -14,7 +16,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class CosmologyAPI(Protocol):
+class CosmologyAPI(Protocol[ArrayT_co]):
     """Cosmology API Protocol."""
 
     def __cosmology_namespace__(
