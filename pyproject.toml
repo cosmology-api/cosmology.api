@@ -47,7 +47,7 @@
 
 [project.urls]
   homepage = "https://cosmology.readthedocs.org/api"
-  repository = "https://github.com/python-cosmology/cosmology-api"
+  repository = "https://github.com/cosmology-api/cosmology-api"
   documentation = "https://cosmology.readthedocs.org/api"
 
 

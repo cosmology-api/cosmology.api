@@ -27,11 +27,6 @@ class Array(Protocol):
         ...
 
     @property
-    def mT(self: Self) -> Self:
-        """Transpose of a matrix (or a stack of matrices)."""
-        ...
-
-    @property
     def ndim(self) -> int:
         """Number of array dimensions (axes)."""
         ...
@@ -59,13 +54,6 @@ class Array(Protocol):
         """
         Calculates the sum for each element of an array instance with the
         respective element of the array ``other``.
-        """
-        ...
-
-    def __and__(self: Self, other: int | bool | Self, /) -> Self:
-        """
-        Evaluates ``self_i & other_i`` for each element of an array instance
-        with the respective element of the array ``other``.
         """
         ...
 
