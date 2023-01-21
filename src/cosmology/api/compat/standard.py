@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 
-# STDLIB
 from typing import Protocol
 
-# LOCAL
-from cosmology.api.compat.flrw import FLRWCosmologyWrapperAPI
-from cosmology.api.flrwstandard import StandardFLRWCosmologyAPI
+from cosmology.api._array_api import ArrayT
+from cosmology.api.compat.background import BackgroundCosmologyWrapperAPI
+from cosmology.api.standard import StandardCosmologyAPI
 
 __all__: list[str] = []
 
 
-class StandardFLRWCosmologyWrapperAPI(
-    FLRWCosmologyWrapperAPI, StandardFLRWCosmologyAPI, Protocol
+class StandardCosmologyWrapperAPI(
+    BackgroundCosmologyWrapperAPI[ArrayT], StandardCosmologyAPI[ArrayT], Protocol
 ):
     """The Cosmology API standard for FLRW compatability wrappers.
 

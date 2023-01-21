@@ -9,7 +9,7 @@ from dataclasses import field, make_dataclass
 import numpy.array_api as xp
 
 # LOCAL
-from cosmology.api import FLRWCosmologyAPI
+from cosmology.api import StandardCosmologyAPI
 from cosmology.api._array_api import Array
 
 ################################################################################
@@ -17,27 +17,27 @@ from cosmology.api._array_api import Array
 ################################################################################
 
 
-def test_noncompliant_flrw():
+def test_noncompliant_bkg():
     """
     Test that a non-compliant instance is not a
     `cosmology.api.CosmologyAPI`.
     """
     # Simple example: missing everything
 
-    class FLRW:
+    class StandardCosmology:
         pass
 
-    cosmo = FLRW()
+    cosmo = StandardCosmology()
 
-    assert not isinstance(cosmo, FLRWCosmologyAPI)
+    assert not isinstance(cosmo, StandardCosmologyAPI)
 
     # TODO: more examples?
 
 
-def test_compliant_flrw(cosmology_cls, flrw_attrs, flrw_meths):
+def test_compliant_bkg(cosmology_cls, standard_attrs, standard_meths):
     """
-    Test that an instance is `cosmology.api.FLRWCosmologyAPI` even if it
-    doesn't inherit from `cosmology.api.FLRWCosmologyAPI`.
+    Test that an instance is `cosmology.api.StandardCosmologyAPI` even if it
+    doesn't inherit from `cosmology.api.StandardCosmologyAPI`.
     """
 
     def _default_one() -> Array:
@@ -51,23 +51,23 @@ def test_compliant_flrw(cosmology_cls, flrw_attrs, flrw_meths):
 
     fields = ("H0", "Om0", "Ode0", "Tcmb0", "Neff", "m_nu", "Ob0")
 
-    FLRW = make_dataclass(
-        "FLRW",
+    StandardCosmology = make_dataclass(
+        "StandardCosmology",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
         bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in flrw_attrs - set(fields)}
-        | {n: _return_1arg for n in flrw_meths},
+        namespace={n: property(_return_one) for n in standard_attrs - set(fields)}
+        | {n: _return_1arg for n in standard_meths},
         frozen=True,
     )
 
-    cosmo = FLRW()
+    cosmo = StandardCosmology()
 
-    assert isinstance(cosmo, FLRWCosmologyAPI)
+    assert isinstance(cosmo, StandardCosmologyAPI)
 
 
-def test_fixture(flrw):
+def test_fixture(standardcosmo):
     """
-    Test that the ``flrw`` fixture is a
-    `cosmology.api.FLRWCosmologyAPI`.
+    Test that the ``standardcosmo`` fixture is a
+    `cosmology.api.StandardCosmologyAPI`.
     """
-    assert isinstance(flrw, FLRWCosmologyAPI)
+    assert isinstance(standardcosmo, StandardCosmologyAPI)

@@ -12,15 +12,18 @@ import pytest
 
 # LOCAL
 from cosmology.api import (
+    BackgroundCosmologyAPI,
+    BackgroundCosmologyWrapperAPI,
     CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyConstantsAPINamespace,
     CosmologyWrapperAPI,
-    FLRWCosmologyAPI,
-    FLRWCosmologyWrapperAPI,
+    StandardCosmologyAPI,
+    StandardCosmologyWrapperAPI,
 )
 from cosmology.api._array_api import Array
-from cosmology.api.flrw import FLRW_ATTRIBUTES, FLRW_METHODS
+from cosmology.api.background import BACKGROUNDCOSMO_ATTRIBUTES, BACKGROUNDCOSMO_METHODS
+from cosmology.api.standard import STANDARDCOSMO_ATTRIBUTES, STANDARDCOSMO_METHODS
 
 # ==============================================================================
 # Library API
@@ -29,7 +32,7 @@ from cosmology.api.flrw import FLRW_ATTRIBUTES, FLRW_METHODS
 @pytest.fixture(scope="session")
 def constants_ns() -> CosmologyConstantsAPINamespace:
     """The cosmology constants API namespace."""
-    return SimpleNamespace(G=1, speed_of_light=2)
+    return SimpleNamespace(G=1, c=2)
 
 
 @pytest.fixture(scope="session")
@@ -113,54 +116,114 @@ def _return_1arg(self, z: Array, /) -> Array:
 
 
 @pytest.fixture(scope="session")
-def flrw_attrs() -> frozenset[str]:
+def background_attrs() -> frozenset[str]:
     """The FLRW API atributes."""
-    return FLRW_ATTRIBUTES
+    return BACKGROUNDCOSMO_ATTRIBUTES
 
 
 @pytest.fixture(scope="session")
-def flrw_meths() -> frozenset[str]:
+def background_meths() -> frozenset[str]:
     """The FLRW API methods."""
-    return FLRW_METHODS
+    return BACKGROUNDCOSMO_METHODS
 
 
 @pytest.fixture(scope="session")
-def flrw_cls(
+def bkg_cls(
     cosmology_cls: type[CosmologyAPI],
-    flrw_attrs: set[str],
-    flrw_meths: set[str],
-) -> type[FLRWCosmologyAPI]:
+    background_attrs: set[str],
+    background_meths: set[str],
+) -> type[BackgroundCosmologyAPI]:
+    """An example FLRW API class."""
+    fields = ("H0",)
+
+    return make_dataclass(
+        "ExampleFLRW",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in background_attrs - set(fields)}
+        | {n: _return_1arg for n in background_meths},
+        frozen=True,
+    )
+
+
+@pytest.fixture(scope="session")
+def bkg(bkg_cls: type[BackgroundCosmologyAPI]) -> BackgroundCosmologyAPI:
+    """An example FLRW API instance."""
+    return bkg_cls()
+
+
+@pytest.fixture(scope="session")
+def bkg_wrapper_cls(
+    cosmology_wrapper_cls: type[CosmologyWrapperAPI],
+    background_attrs: set[str],
+    background_meths: set[str],
+) -> type[BackgroundCosmologyWrapperAPI]:
+    """An example FLRW API wrapper class."""
+    return make_dataclass(
+        "FLRWWrapper",
+        [("cosmo", object)],
+        bases=(cosmology_wrapper_cls, BackgroundCosmologyWrapperAPI),
+        namespace={n: property(_return_one) for n in background_attrs}
+        | {n: _return_1arg for n in background_meths},
+        frozen=True,
+    )
+
+
+# ==============================================================================
+# Standard FLRW API
+
+
+@pytest.fixture(scope="session")
+def standard_attrs() -> frozenset[str]:
+    """The Standard FLRW API atributes."""
+    return STANDARDCOSMO_ATTRIBUTES
+
+
+@pytest.fixture(scope="session")
+def standard_meths() -> frozenset[str]:
+    """The Standard FLRW API methods."""
+    return STANDARDCOSMO_METHODS
+
+
+@pytest.fixture(scope="session")
+def standardbkg_cls(
+    bkg_cls: type[BackgroundCosmologyAPI],
+    standard_attrs: set[str],
+    standard_meths: set[str],
+) -> type[StandardCosmologyAPI]:
     """An example FLRW API class."""
     fields = ("H0", "Om0", "Ode0", "Tcmb0", "Neff", "m_nu", "Ob0")
 
     return make_dataclass(
         "ExampleFLRW",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in flrw_attrs - set(fields)}
-        | {n: _return_1arg for n in flrw_meths},
+        bases=(bkg_cls,),
+        namespace={n: property(_return_one) for n in standard_attrs - set(fields)}
+        | {n: _return_1arg for n in standard_meths},
         frozen=True,
     )
 
 
 @pytest.fixture(scope="session")
-def flrw(flrw_cls: type[FLRWCosmologyAPI]) -> FLRWCosmologyAPI:
+def standardcosmo(
+    standardbkg_cls: type[StandardCosmologyAPI],
+) -> StandardCosmologyAPI:
     """An example FLRW API instance."""
-    return flrw_cls()
+    return standardbkg_cls()
 
 
 @pytest.fixture(scope="session")
-def flrw_wrapper_cls(
-    cosmology_wrapper_cls: type[CosmologyWrapperAPI],
-    flrw_attrs: set[str],
-    flrw_meths: set[str],
-) -> type[FLRWCosmologyWrapperAPI]:
+def standardcosmo_wrapper_cls(
+    bkg_wrapper_cls: type[BackgroundCosmologyWrapperAPI],
+    background_attrs: set[str],
+    background_meths: set[str],
+) -> type[StandardCosmologyWrapperAPI]:
     """An example FLRW API wrapper class."""
     return make_dataclass(
         "FLRWWrapper",
         [("cosmo", object)],
-        bases=(cosmology_wrapper_cls, FLRWCosmologyWrapperAPI),
-        namespace={n: property(_return_one) for n in flrw_attrs}
-        | {n: _return_1arg for n in flrw_meths},
+        bases=(bkg_wrapper_cls, StandardCosmologyWrapperAPI),
+        namespace={n: property(_return_one) for n in background_attrs}
+        | {n: _return_1arg for n in background_meths},
         frozen=True,
     )

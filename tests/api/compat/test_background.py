@@ -11,11 +11,11 @@ import pytest
 
 # LOCAL
 from cosmology.api import (
+    BackgroundCosmologyAPI,
+    BackgroundCosmologyWrapperAPI,
     CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyWrapperAPI,
-    FLRWCosmologyAPI,
-    FLRWCosmologyWrapperAPI,
 )
 from cosmology.api._array_api import Array
 
@@ -27,20 +27,20 @@ from cosmology.api._array_api import Array
 def test_noncompliant_cosmology_wrapper():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.FLRWCosmologyWrapperAPI`.
+    `cosmology.api.BackgroundCosmologyWrapperAPI`.
     """
     # Simple example: missing everything
-    class FLRWWrapper:
+    class BackgroundWrapper:
         pass
 
-    wrapper = FLRWWrapper()
+    wrapper = BackgroundWrapper()
 
-    assert not isinstance(wrapper, CosmologyWrapperAPI)
+    assert not isinstance(wrapper, BackgroundCosmologyWrapperAPI)
 
     # TODO: more examples?
 
 
-def test_compliant_flrw_wrapper(cosmology_ns, flrw_attrs, flrw_meths):
+def test_compliant_bkg_wrapper(cosmology_ns, background_attrs, background_meths):
     """
     Test that a compliant instance is a
     `cosmology.api.CosmologyWrapperAPI`. In particular, this tests
@@ -64,11 +64,11 @@ def test_compliant_flrw_wrapper(cosmology_ns, flrw_attrs, flrw_meths):
     def _getattr_(self, name: str) -> object:
         return getattr(self.cosmo, name)
 
-    FLRWWrapper = make_dataclass(
-        "FLRWWrapper",
+    BackgroundWrapper = make_dataclass(
+        "BackgroundWrapper",
         [("cosmo", object)],
-        namespace={n: property(_return_one) for n in flrw_attrs}
-        | {n: _return_1arg for n in flrw_meths}
+        namespace={n: property(_return_one) for n in background_attrs}
+        | {n: _return_1arg for n in background_meths}
         | {
             "__cosmology_namespace__": _cosmology_namespace_,
             "name": property(name),
@@ -77,19 +77,21 @@ def test_compliant_flrw_wrapper(cosmology_ns, flrw_attrs, flrw_meths):
         frozen=True,
     )
 
-    wrapper = FLRWWrapper(object())
+    wrapper = BackgroundWrapper(object())
 
     assert isinstance(wrapper, CosmologyAPI)
     assert isinstance(wrapper, CosmologyWrapperAPI)
-    assert isinstance(wrapper, FLRWCosmologyAPI)
-    assert isinstance(wrapper, FLRWCosmologyWrapperAPI)
+    assert isinstance(wrapper, BackgroundCosmologyAPI)
+    assert isinstance(wrapper, BackgroundCosmologyWrapperAPI)
 
 
-class Test_CosmologyWrapperAPI:
+class Test_BackgroundCosmologyWrapperAPI:
     @pytest.fixture(scope="class")
-    def wrapper_cls(self, cosmology_ns):
+    def wrapper_cls(
+        self, cosmology_ns: CosmologyAPINamespace
+    ) -> type[BackgroundCosmologyWrapperAPI]:
         @dataclass(frozen=True)
-        class FLRWWrapper(FLRWCosmologyWrapperAPI):
+        class BackgroundWrapper(BackgroundCosmologyWrapperAPI):
 
             cosmo: object
 
@@ -108,10 +110,12 @@ class Test_CosmologyWrapperAPI:
             def not_cosmology_api(self) -> int:
                 return 1
 
-        return FLRWWrapper
+        return BackgroundWrapper
 
     @pytest.fixture(scope="class")
-    def wrapper(self, wrapper_cls):
+    def wrapper(
+        self, wrapper_cls: type[BackgroundCosmologyWrapperAPI]
+    ) -> BackgroundCosmologyWrapperAPI:
         return wrapper_cls(object())
 
     # =========================================================================
@@ -121,8 +125,8 @@ class Test_CosmologyWrapperAPI:
         """Test that the wrapper is compliant."""
         assert isinstance(wrapper, CosmologyAPI)
         assert isinstance(wrapper, CosmologyWrapperAPI)
-        assert isinstance(wrapper, FLRWCosmologyAPI)
-        assert isinstance(wrapper, FLRWCosmologyWrapperAPI)
+        assert isinstance(wrapper, BackgroundCosmologyAPI)
+        assert isinstance(wrapper, BackgroundCosmologyWrapperAPI)
 
     def test_getattr(self, wrapper):
         """Test that the wrapper can access the attributes of the wrapped object."""

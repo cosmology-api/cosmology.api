@@ -2,16 +2,15 @@
 
 from __future__ import annotations
 
-# STDLIB
 from typing import Protocol
 
-# LOCAL
+from cosmology.api._array_api import ArrayT_co
 from cosmology.api.core import CosmologyAPI
 
 __all__: list[str] = []
 
 
-class CosmologyWrapperAPI(CosmologyAPI, Protocol):
+class CosmologyWrapperAPI(CosmologyAPI[ArrayT_co], Protocol):
     """The Cosmology API standard for compatability wrappers.
 
     This is a protocol class that defines the standard API for Cosmology
