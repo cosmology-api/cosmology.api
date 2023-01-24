@@ -92,21 +92,6 @@
   ]
 
 
-[tool.isort]
-  profile = "black"
-  include_trailing_comma = "True"
-  use_parentheses = "True"
-  ensure_newline_before_comments = "True"
-  known_localfolder = [
-    "cosmology.api",
-  ]
-  known_third_party = ["numpy", "pytest"]
-  import_heading_stdlib = "STDLIB"
-  import_heading_firstparty = "FIRST-PARTY"
-  import_heading_thirdparty = "THIRD-PARTY"
-  import_heading_localfolder = "LOCAL"
-
-
 [tool.mypy]
   python_version = 3.9
 
@@ -143,7 +128,7 @@ select = ["ALL"]
 ignore = [
   "ANN101", "ANN102", "ANN401",
   "ARG001", "ARG002",
-  "D105", "D107", "D203", "D213", "D402",
+  "D105", "D107", "D203", "D213", "D401", "D402",
   "FBT003",
   "N802",
   "PD",
@@ -152,5 +137,5 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 "src/cosmology/api/_array_api/*.py" = ["A002", "A003", "D212", "D205", "E501", "N801"]
+"tests/*.py" = ["ANN"]
 "test_*.py" = ["ANN", "D", "N8", "S101"]
-"conftest.py" = ["ANN"]

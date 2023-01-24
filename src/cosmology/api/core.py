@@ -20,7 +20,10 @@ class CosmologyAPI(Protocol[ArrayT_co]):
     """Cosmology API Protocol."""
 
     def __cosmology_namespace__(
-        self, /, *, api_version: str | None = None,
+        self,
+        /,
+        *,
+        api_version: str | None = None,
     ) -> CosmologyAPINamespace:
         """Returns an object that has all the cosmology API functions on it.
 
