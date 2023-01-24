@@ -32,7 +32,7 @@ STANDARDCOSMO_ATTRIBUTES = (
             "Tcmb0",
             "Neff",
             "m_nu",
-        )
+        ),
     )
 )
 STANDARDCOSMO_METHODS = BACKGROUNDCOSMO_METHODS | frozenset(  # TODO: public scope this
@@ -48,7 +48,7 @@ STANDARDCOSMO_METHODS = BACKGROUNDCOSMO_METHODS | frozenset(  # TODO: public sco
         "Ogamma",
         "Onu",
         "Ok",
-    )
+    ),
 )
 
 

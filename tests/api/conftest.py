@@ -56,7 +56,7 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPI]:
         name: str | None = None
 
         def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
+            self, /, *, api_version: str | None = None,
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
@@ -88,7 +88,7 @@ def cosmology_wrapper_cls(
         cosmo: object
 
         def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
+            self, /, *, api_version: str | None = None,
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
