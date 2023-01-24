@@ -48,7 +48,10 @@ def test_compliant_cosmology(cosmology_ns):
         cosmo: object
 
         def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
+            self,
+            /,
+            *,
+            api_version: str | None = None,
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
@@ -68,7 +71,8 @@ def test_compliant_cosmology(cosmology_ns):
 class Test_CosmologyWrapperAPI:
     @pytest.fixture(scope="class")
     def wrapper_cls(
-        self, cosmology_ns: CosmologyAPINamespace
+        self,
+        cosmology_ns: CosmologyAPINamespace,
     ) -> type[CosmologyWrapperAPI]:
         @dataclass(frozen=True)
         class ExampleCosmologyWrapper(CosmologyWrapperAPI):
@@ -76,7 +80,10 @@ class Test_CosmologyWrapperAPI:
             cosmo: object
 
             def __cosmology_namespace__(
-                self, /, *, api_version: str | None = None
+                self,
+                /,
+                *,
+                api_version: str | None = None,
             ) -> CosmologyAPINamespace:
                 return cosmology_ns
 
@@ -88,7 +95,9 @@ class Test_CosmologyWrapperAPI:
 
     @pytest.fixture(scope="class")
     def wrapper(
-        self, cosmology: object, wrapper_cls: type[CosmologyWrapperAPI]
+        self,
+        cosmology: object,
+        wrapper_cls: type[CosmologyWrapperAPI],
     ) -> CosmologyWrapperAPI:
         return wrapper_cls(cosmology)
 

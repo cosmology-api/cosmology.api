@@ -15,7 +15,7 @@ BACKGROUNDCOSMO_ATTRIBUTES = frozenset(  # TODO: public scope this
         "scale_factor0",
         "Otot0",
         "critical_density0",
-    )
+    ),
 )
 BACKGROUNDCOSMO_METHODS = frozenset(  # TODO: public scope this
     (
@@ -30,7 +30,7 @@ BACKGROUNDCOSMO_METHODS = frozenset(  # TODO: public scope this
         "differential_comoving_volume",
         "angular_diameter_distance",
         "luminosity_distance",
-    )
+    ),
 )
 
 

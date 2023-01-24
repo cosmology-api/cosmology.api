@@ -54,7 +54,10 @@ def test_compliant_bkg_wrapper(cosmology_ns, background_attrs, background_meths)
         return z
 
     def _cosmology_namespace_(
-        self, /, *, api_version: str | None = None
+        self,
+        /,
+        *,
+        api_version: str | None = None,
     ) -> CosmologyAPINamespace:
         return cosmology_ns
 
@@ -88,7 +91,8 @@ def test_compliant_bkg_wrapper(cosmology_ns, background_attrs, background_meths)
 class Test_BackgroundCosmologyWrapperAPI:
     @pytest.fixture(scope="class")
     def wrapper_cls(
-        self, cosmology_ns: CosmologyAPINamespace
+        self,
+        cosmology_ns: CosmologyAPINamespace,
     ) -> type[BackgroundCosmologyWrapperAPI]:
         @dataclass(frozen=True)
         class BackgroundWrapper(BackgroundCosmologyWrapperAPI):
@@ -96,7 +100,10 @@ class Test_BackgroundCosmologyWrapperAPI:
             cosmo: object
 
             def __cosmology_namespace__(
-                self, /, *, api_version: str | None = None
+                self,
+                /,
+                *,
+                api_version: str | None = None,
             ) -> CosmologyAPINamespace:
                 return cosmology_ns
 
@@ -114,7 +121,8 @@ class Test_BackgroundCosmologyWrapperAPI:
 
     @pytest.fixture(scope="class")
     def wrapper(
-        self, wrapper_cls: type[BackgroundCosmologyWrapperAPI]
+        self,
+        wrapper_cls: type[BackgroundCosmologyWrapperAPI],
     ) -> BackgroundCosmologyWrapperAPI:
         return wrapper_cls(object())
 

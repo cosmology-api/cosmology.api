@@ -12,7 +12,9 @@ __all__: list[str] = []
 
 
 class StandardCosmologyWrapperAPI(
-    BackgroundCosmologyWrapperAPI[ArrayT], StandardCosmologyAPI[ArrayT], Protocol
+    BackgroundCosmologyWrapperAPI[ArrayT],
+    StandardCosmologyAPI[ArrayT],
+    Protocol,
 ):
     """The standard for ``StandardCosmologyAPI`` compatability wrappers.
 

@@ -56,7 +56,10 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPI]:
         name: str | None = None
 
         def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
+            self,
+            /,
+            *,
+            api_version: str | None = None,
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
@@ -88,7 +91,10 @@ def cosmology_wrapper_cls(
         cosmo: object
 
         def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
+            self,
+            /,
+            *,
+            api_version: str | None = None,
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
@@ -191,7 +197,7 @@ def standardbkg_cls(
     standard_attrs: set[str],
     standard_meths: set[str],
 ) -> type[StandardCosmologyAPI]:
-    """An example FLRW API class."""
+    """Example FLRW API class."""
     fields = ("H0", "Om0", "Ode0", "Tcmb0", "Neff", "m_nu", "Ob0")
 
     return make_dataclass(
@@ -208,7 +214,7 @@ def standardbkg_cls(
 def standardcosmo(
     standardbkg_cls: type[StandardCosmologyAPI],
 ) -> StandardCosmologyAPI:
-    """An example FLRW API instance."""
+    """Example FLRW API instance."""
     return standardbkg_cls()
 
 
@@ -218,7 +224,7 @@ def standardcosmo_wrapper_cls(
     background_attrs: set[str],
     background_meths: set[str],
 ) -> type[StandardCosmologyWrapperAPI]:
-    """An example FLRW API wrapper class."""
+    """Example FLRW API wrapper class."""
     return make_dataclass(
         "FLRWWrapper",
         [("cosmo", object)],

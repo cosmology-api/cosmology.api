@@ -41,7 +41,10 @@ def test_compliant_cosmology(cosmology_ns):
         name: str | None = None
 
         def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
+            self,
+            /,
+            *,
+            api_version: str | None = None,
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
