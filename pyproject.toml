@@ -34,6 +34,7 @@
     "pytest-astropy",
   ]
   docs = [
+    "furo",
     "graphviz",
     "IPython",
     "jupyter_client",
