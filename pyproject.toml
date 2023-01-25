@@ -4,7 +4,7 @@
   description = "Cosmology API standard"
   readme = "README.rst"
   requires-python = ">=3.9"
-  license = {file = "LICENSE"}
+  license = {file = "LICENSE.txt"}
   keywords = ["cosmology", "API"]
   authors = [
     {name = "Nathaniel Starkman", email = "n.starkman@mail.utoronto.ca"},
