@@ -44,9 +44,9 @@ import_module(project)
 package = sys.modules[project]
 
 # The short X.Y version.
-version = get_version("overload_numpy").split("-", 1)[0]
+version = get_version("cosmology-api").split("-", 1)[0]
 # The full version, including alpha/beta/rc tags.
-release = get_version("overload_numpy")
+release = get_version("cosmology-api")
 
 
 # -- General configuration ---------------------------------------------------
