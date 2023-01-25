@@ -37,6 +37,7 @@
     "graphviz",
     "IPython",
     "jupyter_client",
+    "matplotlib",
     "nbsphinx",
     "pydata-sphinx-theme",
     "sphinx",
