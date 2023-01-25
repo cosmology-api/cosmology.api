@@ -113,6 +113,10 @@
     module = "tests/*"
     ignore_errors = true
 
+  [[tool.mypy.overrides]]
+    module = "tomli.*"
+    ignore_errors = true
+
 
 [tool.pytest.ini_options]
 filterwarnings = [
