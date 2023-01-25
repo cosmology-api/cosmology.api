@@ -34,9 +34,11 @@
     "pytest-astropy",
   ]
   docs = [
+    "furo",
     "graphviz",
     "IPython",
     "jupyter_client",
+    "matplotlib",
     "nbsphinx",
     "pydata-sphinx-theme",
     "sphinx",
@@ -113,13 +115,15 @@
     module = "tests/*"
     ignore_errors = true
 
+  [[tool.mypy.overrides]]
+    module = "tomli.*"
+    ignore_missing_imports = true
+
 
 [tool.pytest.ini_options]
 filterwarnings = [
   "ignore:The numpy.array_api submodule is still experimental. See NEP 47.:UserWarning"
 ]
-
-
 
 
 [tool.ruff]
@@ -137,5 +141,6 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 "src/cosmology/api/_array_api/*.py" = ["A002", "A003", "D212", "D205", "E501", "N801"]
+"docs/*.py" = ["INP001"]
 "tests/*.py" = ["ANN"]
 "test_*.py" = ["ANN", "D", "N8", "S101"]
