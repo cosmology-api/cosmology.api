@@ -43,6 +43,7 @@
     "pydata-sphinx-theme",
     "sphinx",
     "sphinx-astropy",
+    "sphinx-subprojecttoctree",
     "sphinxcontrib.bibtex < 3.0.0",
     "tomlkit",
   ]

@@ -64,6 +64,7 @@ extensions = [
     "matplotlib.sphinxext.plot_directive",
     "numpydoc",
     "pytest_doctestplus.sphinx.doctestplus",
+    "subprojecttoctree",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -76,12 +77,9 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 autosummary_generate = True
 
-automodapi_toctreedirnm = "api"
-
 # Class documentation should contain *both* the class docstring and
 # the __init__ docstring
 autoclass_content = "both"
-
 
 # This is added to the end of RST files - a good place to put substitutions to
 # be used globally.
@@ -131,6 +129,18 @@ html_theme = "furo"
 html_static_path = ["_static"]
 
 
+# -- automodapi extension -------------------------------------------------
+
+automodapi_toctreedirnm = "api"
+
+
+# -- matplotlib extension ----------------------------------------------------
+
+plot_include_source = True
+plot_html_show_source_link = False
+plot_html_show_formats = False
+
+
 # -- numpydoc extension -----------------------------------------------------
 
 numpydoc_use_plots = True
@@ -155,9 +165,7 @@ numpydoc_xref_ignore = {
     "keyword-only",
 }
 
+# -- subprojecttoctree extension --------------------------------------------
 
-# -- matplotlib extension ----------------------------------------------------
-
-plot_include_source = True
-plot_html_show_source_link = False
-plot_html_show_formats = False
+is_subproject = False
+readthedocs_url = "https://cosmology.readthedocs.io/"
