@@ -10,6 +10,15 @@ from cosmology.api.background import (
     BACKGROUNDCOSMO_METHODS,
     BackgroundCosmologyAPI,
 )
+from cosmology.api.components import (
+    ContainsBaryons,
+    ContainsColdDarkMatter,
+    ContainsDarkEnergy,
+    ContainsGlobalCurvature,
+    ContainsMatter,
+    ContainsNeutrinos,
+    ContainsPhotons,
+)
 
 __all__: list[str] = []
 
@@ -53,7 +62,17 @@ STANDARDCOSMO_METHODS = BACKGROUNDCOSMO_METHODS | frozenset(  # TODO: public sco
 
 
 @runtime_checkable
-class StandardCosmologyAPI(BackgroundCosmologyAPI[ArrayT], Protocol):
+class StandardCosmologyAPI(
+    ContainsNeutrinos[ArrayT],
+    ContainsBaryons[ArrayT],
+    ContainsPhotons[ArrayT],
+    ContainsColdDarkMatter[ArrayT],
+    ContainsMatter[ArrayT],
+    ContainsDarkEnergy[ArrayT],
+    ContainsGlobalCurvature[ArrayT],
+    BackgroundCosmologyAPI[ArrayT],
+    Protocol,
+):
     """API Protocol for the standard cosmology and expected set of components.
 
     This is a protocol class that defines the standard API for the standard
@@ -106,54 +125,6 @@ class StandardCosmologyAPI(BackgroundCosmologyAPI[ArrayT], Protocol):
         -------
         Array
         """
-        ...
-
-    @property
-    def Ok0(self) -> ArrayT:
-        """Omega curvature; the effective curvature density/critical density at z=0."""
-        ...
-
-    @property
-    def Om0(self) -> ArrayT:
-        """Omega matter; matter density/critical density at z=0."""
-        ...
-
-    @property
-    def Odm0(self) -> ArrayT:
-        """Omega dark matter; dark matter density/critical density at z=0."""
-        ...
-
-    @property
-    def Ob0(self) -> ArrayT:
-        """Omega baryon; baryon density/critical density at z=0."""
-        ...
-
-    @property
-    def Ode0(self) -> ArrayT:
-        """Omega dark energy; dark energy density/critical density at z=0."""
-        ...
-
-    @property
-    def Ogamma0(self) -> ArrayT:
-        """Omega gamma; the density/critical density of photons at z=0."""
-        ...
-
-    @property
-    def Onu0(self) -> ArrayT:
-        """Omega nu; the density/critical density of neutrinos at z=0."""
-        ...
-
-    # ----------------------------------------------
-    # Neutrinos
-
-    @property
-    def Neff(self) -> ArrayT:
-        """Effective number of neutrino species."""
-        ...
-
-    @property
-    def m_nu(self) -> tuple[ArrayT, ...]:
-        """Neutrino mass in eV."""
         ...
 
     # ==============================================================
@@ -236,114 +207,6 @@ class StandardCosmologyAPI(BackgroundCosmologyAPI[ArrayT], Protocol):
         ----------
         z : Array
             Input redshifts.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def Ok(self, z: ArrayT, /) -> ArrayT:
-        """Redshift-dependent curvature density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def Om(self, z: ArrayT, /) -> ArrayT:
-        """Redshift-dependent non-relativistic matter density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-
-        Notes
-        -----
-        This does not include neutrinos, even if non-relativistic at the
-        redshift of interest; see `Onu`.
-        """
-        ...
-
-    def Ob(self, z: ArrayT, /) -> ArrayT:
-        """Redshift-dependent baryon density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def Odm(self, z: ArrayT, /) -> ArrayT:
-        """Redshift-dependent dark matter density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-
-        Notes
-        -----
-        This does not include neutrinos, even if non-relativistic at the
-        redshift of interest.
-        """
-        ...
-
-    def Ode(self, z: ArrayT, /) -> ArrayT:
-        """Redshift-dependent dark energy density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def Ogamma(self, z: ArrayT, /) -> ArrayT:
-        """Redshift-dependent photon density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def Onu(self, z: ArrayT, /) -> ArrayT:
-        r"""Redshift-dependent neutrino density parameter.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
 
         Returns
         -------
