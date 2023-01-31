@@ -4,6 +4,7 @@ from __future__ import annotations
 
 # STDLIB
 from dataclasses import dataclass, make_dataclass
+from typing import TYPE_CHECKING
 
 # THIRD-PARTY
 import numpy.array_api as xp
@@ -17,7 +18,9 @@ from cosmology.api import (
     CosmologyAPINamespace,
     CosmologyWrapperAPI,
 )
-from cosmology.api._array_api import Array
+
+if TYPE_CHECKING:
+    from cosmology.api._array_api import Array
 
 ################################################################################
 # TESTS
