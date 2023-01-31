@@ -130,7 +130,7 @@ class StandardCosmologyAPI(
     # ==============================================================
     # Methods
 
-    def Tcmb(self, z: ArrayT, /) -> ArrayT:
+    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
         """Temperature of the CMB at redshift z in Kelvin.
 
         Parameters
@@ -147,7 +147,7 @@ class StandardCosmologyAPI(
     # ----------------------------------------------
     # Hubble
 
-    def H(self, z: ArrayT, /) -> ArrayT:
+    def H(self, z: ArrayT | float, /) -> ArrayT:
         """Hubble function :math:`H(z)` in km s-1 Mpc-1.
 
         Parameters
@@ -161,7 +161,7 @@ class StandardCosmologyAPI(
         """
         ...
 
-    def efunc(self, z: ArrayT, /) -> ArrayT:
+    def efunc(self, z: ArrayT | float, /) -> ArrayT:
         """Standardised Hubble function :math:`E(z) = H(z)/H_0`.
 
         Parameters
@@ -175,7 +175,7 @@ class StandardCosmologyAPI(
         """
         ...
 
-    def inv_efunc(self, z: ArrayT, /) -> ArrayT:
+    def inv_efunc(self, z: ArrayT | float, /) -> ArrayT:
         """Inverse of ``efunc``.
 
         Parameters
@@ -192,7 +192,7 @@ class StandardCosmologyAPI(
     # ----------------------------------------------
     # Omega
 
-    def Otot(self, z: ArrayT, /) -> ArrayT:
+    def Otot(self, z: ArrayT | float, /) -> ArrayT:
         r"""Redshift-dependent total density parameter.
 
         This is the sum of the matter, radiation, neutrino, dark energy, and

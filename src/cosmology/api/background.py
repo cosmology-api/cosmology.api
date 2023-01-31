@@ -68,14 +68,14 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
     # ==============================================================
     # Methods
 
-    def scale_factor(self, z: ArrayT, /) -> ArrayT:
+    def scale_factor(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependenct scale factor.
 
         The scale factor is defined as :math:`a = a_0 / (1 + z)`.
 
         Parameters
         ----------
-        z : Array, positional-only
+        z : Array or float, positional-only
             The redshift(s) at which to evaluate the scale factor.
 
         Returns
@@ -84,7 +84,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def Otot(self, z: ArrayT, /) -> ArrayT:
+    def Otot(self, z: ArrayT | float, /) -> ArrayT:
         r"""Redshift-dependent total density parameter.
 
         Parameters
@@ -98,14 +98,14 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def critical_density(self, z: ArrayT, /) -> ArrayT:
+    def critical_density(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent critical density in Msol Mpc-3."""
         ...
 
     # ----------------------------------------------
     # Time
 
-    def age(self, z: ArrayT, /) -> ArrayT:
+    def age(self, z: ArrayT | float, /) -> ArrayT:
         """Age of the universe in Gyr at redshift ``z``.
 
         Parameters
@@ -119,7 +119,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def lookback_time(self, z: ArrayT, /) -> ArrayT:
+    def lookback_time(self, z: ArrayT | float, /) -> ArrayT:
         """Lookback time to redshift ``z`` in Gyr.
 
         The lookback time is the difference between the age of the Universe now
@@ -139,7 +139,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
     # ----------------------------------------------
     # Comoving distance
 
-    def comoving_distance(self, z: ArrayT, /) -> ArrayT:
+    def comoving_distance(self, z: ArrayT | float, /) -> ArrayT:
         r"""Comoving line-of-sight distance :math:`d_c(z)` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
@@ -156,7 +156,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def comoving_transverse_distance(self, z: ArrayT, /) -> ArrayT:
+    def comoving_transverse_distance(self, z: ArrayT | float, /) -> ArrayT:
         r"""Transverse comoving distance :math:`d_M(z)` in Mpc.
 
         This value is the transverse comoving distance at redshift ``z``
@@ -175,7 +175,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def comoving_volume(self, z: ArrayT, /) -> ArrayT:
+    def comoving_volume(self, z: ArrayT | float, /) -> ArrayT:
         r"""Comoving volume in cubic Mpc.
 
         This is the volume of the universe encompassed by redshifts less than
@@ -193,7 +193,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def differential_comoving_volume(self, z: ArrayT, /) -> ArrayT:
+    def differential_comoving_volume(self, z: ArrayT | float, /) -> ArrayT:
         r"""Differential comoving volume in cubic Mpc per steradian.
 
         If :math:`V_c` is the comoving volume of a redshift slice with solid
@@ -212,7 +212,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
     # ----------------------------------------------
     # Angular diameter distance
 
-    def angular_diameter_distance(self, z: ArrayT, /) -> ArrayT:
+    def angular_diameter_distance(self, z: ArrayT | float, /) -> ArrayT:
         """Angular diameter distance :math:`d_A(z)` in Mpc.
 
         This gives the proper (sometimes called 'physical') transverse
@@ -239,7 +239,7 @@ class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
     # ----------------------------------------------
     # Luminosity distance
 
-    def luminosity_distance(self, z: ArrayT, /) -> ArrayT:
+    def luminosity_distance(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent luminosity distance in Mpc.
 
         This is the distance to use when converting between the bolometric flux
