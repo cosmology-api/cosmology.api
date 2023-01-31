@@ -10,11 +10,10 @@ should be the following required objects:
 
 from __future__ import annotations
 
-# STDLIB
-from typing import Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-# LOCAL
-from cosmology.api.constants import CosmologyConstantsAPINamespace
+if TYPE_CHECKING:
+    from cosmology.api.constants import CosmologyConstantsAPINamespace
 
 __all__: list[str] = []
 
