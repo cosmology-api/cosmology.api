@@ -7,6 +7,15 @@ from cosmology.api.compat import (
     CosmologyWrapperAPI,
     StandardCosmologyWrapperAPI,
 )
+from cosmology.api.components import (
+    BaryonComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
+    GlobalCurvatureComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
+)
 from cosmology.api.constants import CosmologyConstantsAPINamespace
 from cosmology.api.core import CosmologyAPI
 from cosmology.api.namespace import CosmologyAPINamespace
@@ -16,6 +25,14 @@ __all__ = [
     "CosmologyAPI",
     "BackgroundCosmologyAPI",
     "StandardCosmologyAPI",
+    # components
+    "GlobalCurvatureComponent",
+    "MatterComponent",
+    "BaryonComponent",
+    "NeutrinoComponent",
+    "DarkEnergyComponent",
+    "DarkMatterComponent",
+    "PhotonComponent",
     # wrappers
     "CosmologyWrapperAPI",
     "BackgroundCosmologyWrapperAPI",

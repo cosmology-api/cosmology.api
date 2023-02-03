@@ -11,13 +11,13 @@ from cosmology.api.background import (
     BackgroundCosmologyAPI,
 )
 from cosmology.api.components import (
-    ContainsBaryons,
-    ContainsColdDarkMatter,
-    ContainsDarkEnergy,
-    ContainsGlobalCurvature,
-    ContainsMatter,
-    ContainsNeutrinos,
-    ContainsPhotons,
+    BaryonComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
+    GlobalCurvatureComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
 )
 
 __all__: list[str] = []
@@ -63,13 +63,13 @@ STANDARDCOSMO_METHODS = BACKGROUNDCOSMO_METHODS | frozenset(  # TODO: public sco
 
 @runtime_checkable
 class StandardCosmologyAPI(
-    ContainsNeutrinos[ArrayT],
-    ContainsBaryons[ArrayT],
-    ContainsPhotons[ArrayT],
-    ContainsColdDarkMatter[ArrayT],
-    ContainsMatter[ArrayT],
-    ContainsDarkEnergy[ArrayT],
-    ContainsGlobalCurvature[ArrayT],
+    NeutrinoComponent[ArrayT],
+    BaryonComponent[ArrayT],
+    PhotonComponent[ArrayT],
+    DarkMatterComponent[ArrayT],
+    MatterComponent[ArrayT],
+    DarkEnergyComponent[ArrayT],
+    GlobalCurvatureComponent[ArrayT],
     BackgroundCosmologyAPI[ArrayT],
     Protocol,
 ):

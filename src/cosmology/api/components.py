@@ -8,18 +8,10 @@ from typing import Protocol
 from cosmology.api._array_api import ArrayT
 from cosmology.api.core import CosmologyAPI
 
-__all__ = [
-    "ContainsGlobalCurvature",
-    "ContainsMatter",
-    "ContainsBaryons",
-    "ContainsNeutrinos",
-    "ContainsDarkEnergy",
-    "ContainsColdDarkMatter",
-    "ContainsPhotons",
-]
+__all__: list[str] = []
 
 
-class ContainsGlobalCurvature(CosmologyAPI[ArrayT], Protocol):
+class GlobalCurvatureComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains global curvature, described by :math:`Omega_K`."""
 
     @property
@@ -42,7 +34,7 @@ class ContainsGlobalCurvature(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class ContainsMatter(CosmologyAPI[ArrayT], Protocol):
+class MatterComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains matter, described by :math:`Omega_m`."""
 
     @property
@@ -70,7 +62,7 @@ class ContainsMatter(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class ContainsBaryons(ContainsMatter[ArrayT], Protocol):
+class BaryonComponent(MatterComponent[ArrayT], Protocol):
     r"""The cosmology contains baryons, described by :math:`Omega_b`."""
 
     @property
@@ -93,7 +85,7 @@ class ContainsBaryons(ContainsMatter[ArrayT], Protocol):
         ...
 
 
-class ContainsNeutrinos(CosmologyAPI[ArrayT], Protocol):
+class NeutrinoComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains neutrinos, described by :math:`Omega_\nu`."""
 
     @property
@@ -126,7 +118,7 @@ class ContainsNeutrinos(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class ContainsDarkEnergy(CosmologyAPI[ArrayT], Protocol):
+class DarkEnergyComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains photons, described by :math:`Omega_{\rm de}`."""
 
     @property
@@ -149,7 +141,7 @@ class ContainsDarkEnergy(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class ContainsColdDarkMatter(ContainsMatter[ArrayT], Protocol):
+class DarkMatterComponent(MatterComponent[ArrayT], Protocol):
     r"""The cosmology contains cold dark matter, described by :math:`Omega_dm`."""
 
     @property
@@ -177,7 +169,7 @@ class ContainsColdDarkMatter(ContainsMatter[ArrayT], Protocol):
         ...
 
 
-class ContainsPhotons(CosmologyAPI[ArrayT], Protocol):
+class PhotonComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains photons, described by :math:`Omega_\gamma`."""
 
     @property
