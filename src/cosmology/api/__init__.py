@@ -1,6 +1,5 @@
 """The Cosmology API standard."""
 
-# LOCAL
 from cosmology.api.background import BackgroundCosmologyAPI
 from cosmology.api.compat import (
     BackgroundCosmologyWrapperAPI,

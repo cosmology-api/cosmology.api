@@ -1,9 +1,7 @@
-"""Test ``cosmology_api.api.namespace``."""
+"""Test ``cosmology.api.namespace``."""
 
-# STDLIB
 from types import SimpleNamespace
 
-# LOCAL
 from cosmology.api import CosmologyAPINamespace
 
 ################################################################################

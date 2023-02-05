@@ -1,16 +1,24 @@
-"""Test ``cosmology_api.api.core``."""
+"""Test ``cosmology.api.core``."""
 
 from __future__ import annotations
 
-# STDLIB
 from dataclasses import field, make_dataclass
 
-# THIRD-PARTY
-import numpy.array_api as xp
-
-# LOCAL
 from cosmology.api import StandardCosmologyAPI
 from cosmology.api._array_api import Array
+from cosmology.api.background import BackgroundCosmologyAPI
+from cosmology.api.components import (
+    BaryonComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
+    GlobalCurvatureComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
+)
+from cosmology.api.core import CosmologyAPI
+
+from .conftest import _default_one, _return_1arg, _return_one
 
 ################################################################################
 # TESTS
@@ -39,16 +47,6 @@ def test_compliant_bkg(cosmology_cls, standard_attrs, standard_meths):
     Test that an instance is `cosmology.api.StandardCosmologyAPI` even if it
     doesn't inherit from `cosmology.api.StandardCosmologyAPI`.
     """
-
-    def _default_one() -> Array:
-        return xp.ones((), dtype=xp.int32)
-
-    def _return_one(self, /) -> Array:
-        return _default_one()
-
-    def _return_1arg(self, z: Array, /) -> Array:
-        return z
-
     fields = ("H0", "Om0", "Ode0", "Tcmb0", "Neff", "m_nu", "Ob0")
 
     StandardCosmology = make_dataclass(
@@ -62,6 +60,20 @@ def test_compliant_bkg(cosmology_cls, standard_attrs, standard_meths):
 
     cosmo = StandardCosmology()
 
+    # Check Base and Background
+    assert isinstance(cosmo, CosmologyAPI)
+    assert isinstance(cosmo, BackgroundCosmologyAPI)
+
+    # Check Components
+    assert isinstance(cosmo, BaryonComponent)
+    assert isinstance(cosmo, DarkEnergyComponent)
+    assert isinstance(cosmo, DarkMatterComponent)
+    assert isinstance(cosmo, GlobalCurvatureComponent)
+    assert isinstance(cosmo, MatterComponent)
+    assert isinstance(cosmo, NeutrinoComponent)
+    assert isinstance(cosmo, PhotonComponent)
+
+    # Full Standard Cosmology
     assert isinstance(cosmo, StandardCosmologyAPI)
 
 

@@ -2,28 +2,36 @@
 
 from __future__ import annotations
 
-# STDLIB
-from dataclasses import dataclass, field, make_dataclass
+import functools
+import operator
+from dataclasses import dataclass, field, fields, make_dataclass
 from types import SimpleNamespace
+from typing import TypeVar
 
-# THIRD-PARTY
 import numpy.array_api as xp
 import pytest
-
-# LOCAL
 from cosmology.api import (
     BackgroundCosmologyAPI,
-    BackgroundCosmologyWrapperAPI,
     CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyConstantsAPINamespace,
-    CosmologyWrapperAPI,
     StandardCosmologyAPI,
-    StandardCosmologyWrapperAPI,
 )
 from cosmology.api._array_api import Array
 from cosmology.api.background import BACKGROUNDCOSMO_ATTRIBUTES, BACKGROUNDCOSMO_METHODS
+from cosmology.api.components import (
+    BaryonComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
+    GlobalCurvatureComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
+)
 from cosmology.api.standard import STANDARDCOSMO_ATTRIBUTES, STANDARDCOSMO_METHODS
+
+CT = TypeVar("CT", bound=CosmologyAPI)
+
 
 # ==============================================================================
 # Library API
@@ -53,13 +61,10 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPI]:
     class ExampleCosmology(CosmologyAPI):
         """An example cosmology API class."""
 
-        name: str | None = None
+        name: str | None = None  # normally has a default, but not for testing
 
         def __cosmology_namespace__(
-            self,
-            /,
-            *,
-            api_version: str | None = None,
+            self, /, *, api_version: str | None = None
         ) -> CosmologyAPINamespace:
             return cosmology_ns
 
@@ -75,38 +80,155 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPI]:
 @pytest.fixture(scope="session")
 def cosmology(cosmology_cls: type[CosmologyAPI]) -> CosmologyAPI:
     """An example cosmology API instance."""
-    return cosmology_cls()
-
-
-@pytest.fixture(scope="session")
-def cosmology_wrapper_cls(
-    cosmology_ns: CosmologyAPINamespace,
-) -> type[CosmologyWrapperAPI]:
-    """An example cosmology API wrapper class."""
-
-    @dataclass(frozen=True)
-    class CosmologyWrapperAPI(CosmologyWrapperAPI):
-        """An example cosmology API wrapper class."""
-
-        cosmo: object
-
-        def __cosmology_namespace__(
-            self,
-            /,
-            *,
-            api_version: str | None = None,
-        ) -> CosmologyAPINamespace:
-            return cosmology_ns
-
-        @property
-        def name(self) -> str | None:
-            return None
-
-    return CosmologyWrapperAPI
+    return cosmology_cls(name=None)
 
 
 # ==============================================================================
-# FLRW API
+# COMPONENTS API
+
+
+def get_comp_attrs(comp_cls: type) -> set[str]:
+    """The attributes of a component."""
+    methods_and_attrs = set(dir(comp_cls)) - set(dir(CosmologyAPI))
+
+    return {k for k in methods_and_attrs if not callable(getattr(comp_cls, k))}
+
+
+def get_comp_meths(comp_cls: type) -> set[str]:
+    """The attributes of a component."""
+    methods_and_attrs = set(dir(comp_cls)) - set(dir(CosmologyAPI))
+
+    return {k for k in methods_and_attrs if callable(getattr(comp_cls, k))}
+
+
+@pytest.fixture(scope="session")
+def globalcurvature_cls(
+    cosmology_cls: type[CosmologyAPI],
+) -> type[GlobalCurvatureComponent | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(GlobalCurvatureComponent)
+    comp_meths = get_comp_meths(GlobalCurvatureComponent)
+    fields = set()  # Ok0 is not a field
+    return make_dataclass(
+        "ExampleGlobalCurvatureComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - fields}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+@pytest.fixture(scope="session")
+def matter_cls(
+    cosmology_cls: type[CosmologyAPI],
+) -> type[MatterComponent | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(MatterComponent)
+    comp_meths = get_comp_meths(MatterComponent)
+    fields = {"Om0"}
+    return make_dataclass(
+        "ExampleMatterComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+@pytest.fixture(scope="session")
+def baryon_cls(matter_cls: type[CosmologyAPI]) -> type[BaryonComponent | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(BaryonComponent)
+    comp_meths = get_comp_meths(BaryonComponent)
+    flds = {f.name for f in fields(matter_cls)} | {"Ob0"}
+    return make_dataclass(
+        "ExampleBaryonComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in flds],
+        bases=(matter_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(flds)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+@pytest.fixture(scope="session")
+def darkmatter_cls(
+    matter_cls: type[CosmologyAPI],
+) -> type[DarkMatterComponent | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(DarkMatterComponent)
+    comp_meths = get_comp_meths(DarkMatterComponent)
+    flds = {f.name for f in fields(matter_cls)}  # Odm0 is not a field
+    return make_dataclass(
+        "ExampleDarkMatterComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in flds],
+        bases=(matter_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(flds)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+@pytest.fixture(scope="session")
+def neutrino_cls(
+    cosmology_cls: type[CosmologyAPI],
+) -> type[NeutrinoComponent | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(NeutrinoComponent)
+    comp_meths = get_comp_meths(NeutrinoComponent)
+    fields = {"Neff", "m_nu"}
+    return make_dataclass(
+        "ExampleNeutrinoComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+@pytest.fixture(scope="session")
+@pytest.mark.parametrize("comp_cls", [PhotonComponent])
+def photon_cls(
+    cosmology_cls: type[CosmologyAPI],
+) -> type[PhotonComponent | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(PhotonComponent)
+    comp_meths = get_comp_meths(PhotonComponent)
+    fields = set()  # Ogamma0 is not a field
+    return make_dataclass(
+        "ExamplePhotonComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+@pytest.fixture(scope="session")
+@pytest.mark.parametrize("comp_cls", [DarkEnergyComponent])
+def darkenergy_cls(
+    cosmology_cls: type[CosmologyAPI],
+) -> type[DarkEnergyComponent | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(DarkEnergyComponent)
+    comp_meths = get_comp_meths(DarkEnergyComponent)
+    fields = {"Ode0"}
+    return make_dataclass(
+        "ExampleDarkEnergyComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+# ==============================================================================
+# Background API
 
 
 def _default_one() -> Array:
@@ -139,14 +261,13 @@ def bkg_cls(
     background_attrs: set[str],
     background_meths: set[str],
 ) -> type[BackgroundCosmologyAPI]:
-    """An example FLRW API class."""
-    fields = ("H0",)
-
+    """An example Background class."""
+    flds = set()  # there are no fields
     return make_dataclass(
-        "ExampleFLRW",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        "ExampleBackgroundCosmology",
+        [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in background_attrs - set(fields)}
+        namespace={n: property(_return_one) for n in background_attrs - flds}
         | {n: _return_1arg for n in background_meths},
         frozen=True,
     )
@@ -158,25 +279,8 @@ def bkg(bkg_cls: type[BackgroundCosmologyAPI]) -> BackgroundCosmologyAPI:
     return bkg_cls()
 
 
-@pytest.fixture(scope="session")
-def bkg_wrapper_cls(
-    cosmology_wrapper_cls: type[CosmologyWrapperAPI],
-    background_attrs: set[str],
-    background_meths: set[str],
-) -> type[BackgroundCosmologyWrapperAPI]:
-    """An example FLRW API wrapper class."""
-    return make_dataclass(
-        "FLRWWrapper",
-        [("cosmo", object)],
-        bases=(cosmology_wrapper_cls, BackgroundCosmologyWrapperAPI),
-        namespace={n: property(_return_one) for n in background_attrs}
-        | {n: _return_1arg for n in background_meths},
-        frozen=True,
-    )
-
-
 # ==============================================================================
-# Standard FLRW API
+# Standard API
 
 
 @pytest.fixture(scope="session")
@@ -192,19 +296,38 @@ def standard_meths() -> frozenset[str]:
 
 
 @pytest.fixture(scope="session")
-def standardbkg_cls(
+def standard_cls(  # noqa: PLR0913
     bkg_cls: type[BackgroundCosmologyAPI],
+    globalcurvature_cls: type[GlobalCurvatureComponent],
+    matter_cls: type[MatterComponent],
+    baryon_cls: type[BaryonComponent],
+    darkmatter_cls: type[DarkMatterComponent],
+    neutrino_cls: type[NeutrinoComponent],
+    photon_cls: type[PhotonComponent],
+    darkenergy_cls: type[DarkEnergyComponent],
     standard_attrs: set[str],
     standard_meths: set[str],
 ) -> type[StandardCosmologyAPI]:
     """Example FLRW API class."""
-    fields = ("H0", "Om0", "Ode0", "Tcmb0", "Neff", "m_nu", "Ob0")
+    bases = (
+        neutrino_cls,
+        photon_cls,
+        darkenergy_cls,
+        baryon_cls,
+        darkmatter_cls,
+        matter_cls,
+        globalcurvature_cls,
+        bkg_cls,
+    )
+    flds = functools.reduce(
+        operator.or_, ({f.name for f in fields(c)} for c in bases)
+    ) | {"H0"}
 
     return make_dataclass(
-        "ExampleFLRW",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(bkg_cls,),
-        namespace={n: property(_return_one) for n in standard_attrs - set(fields)}
+        "ExampleStandardCosmology",
+        [(n, Array, field(default_factory=_default_one)) for n in flds],
+        bases=bases,  # only inherit from Background to not have the properties
+        namespace={n: property(_return_one) for n in standard_attrs - flds}
         | {n: _return_1arg for n in standard_meths},
         frozen=True,
     )
@@ -212,24 +335,7 @@ def standardbkg_cls(
 
 @pytest.fixture(scope="session")
 def standardcosmo(
-    standardbkg_cls: type[StandardCosmologyAPI],
+    standard_cls: type[StandardCosmologyAPI],
 ) -> StandardCosmologyAPI:
     """Example FLRW API instance."""
-    return standardbkg_cls()
-
-
-@pytest.fixture(scope="session")
-def standardcosmo_wrapper_cls(
-    bkg_wrapper_cls: type[BackgroundCosmologyWrapperAPI],
-    background_attrs: set[str],
-    background_meths: set[str],
-) -> type[StandardCosmologyWrapperAPI]:
-    """Example FLRW API wrapper class."""
-    return make_dataclass(
-        "FLRWWrapper",
-        [("cosmo", object)],
-        bases=(bkg_wrapper_cls, StandardCosmologyWrapperAPI),
-        namespace={n: property(_return_one) for n in background_attrs}
-        | {n: _return_1arg for n in background_meths},
-        frozen=True,
-    )
+    return standard_cls()

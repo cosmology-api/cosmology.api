@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-# STDLIB
 from typing import Protocol
 
 from cosmology.api._array_api import ArrayT

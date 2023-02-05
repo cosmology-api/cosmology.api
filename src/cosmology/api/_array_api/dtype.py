@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-# STDLIB
 from typing import Protocol, TypeVar, runtime_checkable
 
 __all__: list[str] = []

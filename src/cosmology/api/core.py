@@ -2,14 +2,11 @@
 
 from __future__ import annotations
 
-# STDLIB
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT_co
 
 if TYPE_CHECKING:
-
-    # LOCAL
     from .namespace import CosmologyAPINamespace
 
 __all__: list[str] = []

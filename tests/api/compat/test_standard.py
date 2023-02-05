@@ -1,16 +1,12 @@
-"""Test ``cosmology_api.api.compat``."""
+"""Test ``cosmology.api.compat``."""
 
 from __future__ import annotations
 
-# STDLIB
 from dataclasses import dataclass, make_dataclass
 from typing import TYPE_CHECKING
 
-# THIRD-PARTY
 import numpy.array_api as xp
 import pytest
-
-# LOCAL
 from cosmology.api import (
     BackgroundCosmologyAPI,
     BackgroundCosmologyWrapperAPI,
@@ -34,6 +30,7 @@ def test_noncompliant_cosmology_wrapper():
     Test that a non-compliant instance is not a
     `cosmology.api.BackgroundCosmologyWrapperAPI`.
     """
+
     # Simple example: missing everything
     class StandardCosmologyWrapper:
         pass
@@ -103,7 +100,6 @@ class Test_CosmologyWrapperAPI:
     ) -> type[StandardCosmologyWrapperAPI]:
         @dataclass(frozen=True)
         class StandardCosmologyWrapper(StandardCosmologyWrapperAPI):
-
             cosmo: object
 
             def __cosmology_namespace__(

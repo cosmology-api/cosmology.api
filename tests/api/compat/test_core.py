@@ -1,13 +1,10 @@
-"""Test ``cosmology_api.api.compat``."""
+"""Test ``cosmology.api.compat``."""
 
 from __future__ import annotations
 
-# STDLIB
 from dataclasses import dataclass
 
 import pytest
-
-# LOCAL
 from cosmology.api import (
     CosmologyAPI,
     CosmologyAPINamespace,
@@ -24,6 +21,7 @@ def test_noncompliant_cosmology_wrapper():
     Test that a non-compliant instance is not a
     `cosmology.api.CosmologyWrapperAPI`.
     """
+
     # Simple example: missing everything
     class ExampleCosmologyWrapper:
         pass
@@ -44,7 +42,6 @@ def test_compliant_cosmology(cosmology_ns):
 
     @dataclass
     class ExampleCosmologyWrapper:
-
         cosmo: object
 
         def __cosmology_namespace__(
@@ -76,7 +73,6 @@ class Test_CosmologyWrapperAPI:
     ) -> type[CosmologyWrapperAPI]:
         @dataclass(frozen=True)
         class ExampleCosmologyWrapper(CosmologyWrapperAPI):
-
             cosmo: object
 
             def __cosmology_namespace__(

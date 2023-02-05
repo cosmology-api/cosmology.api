@@ -1,14 +1,10 @@
-"""Test ``cosmology_api.api.core``."""
+"""Test ``cosmology.api.core``."""
 
 from __future__ import annotations
 
-# STDLIB
 from dataclasses import field, make_dataclass
 
-# THIRD-PARTY
 import numpy.array_api as xp
-
-# LOCAL
 from cosmology.api import BackgroundCosmologyAPI
 from cosmology.api._array_api import Array
 
@@ -24,10 +20,10 @@ def test_noncompliant_bkg():
     """
     # Simple example: missing everything
 
-    class BackbroundCosmology:
+    class BackgroundCosmology:
         pass
 
-    cosmo = BackbroundCosmology()
+    cosmo = BackgroundCosmology()
 
     assert not isinstance(cosmo, BackgroundCosmologyAPI)
 
@@ -49,18 +45,18 @@ def test_compliant_bkg(cosmology_cls, background_attrs, background_meths):
     def _return_1arg(self, z: Array, /) -> Array:
         return z
 
-    fields = ()
+    flds = set()
 
     BackgroundCosmology = make_dataclass(
         "BackgroundCosmology",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in background_attrs - set(fields)}
+        namespace={n: property(_return_one) for n in background_attrs - set(flds)}
         | {n: _return_1arg for n in background_meths},
         frozen=True,
     )
 
-    cosmo = BackgroundCosmology()
+    cosmo = BackgroundCosmology(name=None)
 
     assert isinstance(cosmo, BackgroundCosmologyAPI)
 

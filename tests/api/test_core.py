@@ -1,11 +1,9 @@
-"""Test ``cosmology_api.api.core``."""
+"""Test ``cosmology.api.core``."""
 
 from __future__ import annotations
 
-# STDLIB
 from dataclasses import dataclass
 
-# LOCAL
 from cosmology.api import CosmologyAPI, CosmologyAPINamespace
 
 ################################################################################

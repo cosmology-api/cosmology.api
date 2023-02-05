@@ -12,10 +12,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
+__all__: list[str] = []
+
 if TYPE_CHECKING:
     from cosmology.api.constants import CosmologyConstantsAPINamespace
-
-__all__: list[str] = []
 
 
 @runtime_checkable

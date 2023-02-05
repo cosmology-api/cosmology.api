@@ -132,6 +132,7 @@ select = ["ALL"]
 ignore = [
   "ANN101", "ANN102", "ANN401",
   "ARG001", "ARG002",
+  "COM",
   "D105", "D107", "D203", "D213", "D401", "D402",
   "FBT003",
   "N802",
@@ -143,4 +144,4 @@ ignore = [
 "src/cosmology/api/_array_api/*.py" = ["A002", "A003", "D212", "D205", "E501", "N801"]
 "docs/*.py" = ["INP001"]
 "tests/*.py" = ["ANN"]
-"test_*.py" = ["ANN", "D", "N8", "S101"]
+"test_*.py" = ["ANN", "D", "N8", "S101", "TID252"]
