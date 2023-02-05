@@ -20,3 +20,12 @@ Changelog (``cosmology.api``)
      through to the wrapped object. (#8) [nstarman]
 
 - Added ``speed_of_light`` to the constants namespace. (#11) [nstarman]
+
+- Break the standard cosmology into a composition of components: (#25) [nstarman]
+   - DarkEnergyComponent
+   - GlobalCurvatureComponent
+   - PhotonComponent
+   - NeutrinoComponent
+   - MatterComponent
+      - DarkMatterComponent
+      - BaryonComponent

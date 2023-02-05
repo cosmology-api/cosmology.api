@@ -9,7 +9,6 @@ The list of required constants is:
 
 from __future__ import annotations
 
-# STDLIB
 from typing import Any, Protocol, runtime_checkable
 
 __all__: list[str] = []

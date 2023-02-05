@@ -1,9 +1,7 @@
-"""Test ``cosmology_api.api.constants``."""
+"""Test ``cosmology.api.constants``."""
 
-# STDLIB
 from types import SimpleNamespace
 
-# LOCAL
 from cosmology.api import CosmologyConstantsAPINamespace
 
 ################################################################################
