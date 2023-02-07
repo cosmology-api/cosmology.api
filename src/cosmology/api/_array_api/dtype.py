@@ -4,7 +4,7 @@ from typing import Protocol, TypeVar, runtime_checkable
 
 __all__: list[str] = []
 
-DType = TypeVar("DType", bound="DTypeConformant")
+DType = TypeVar("DType", bound=DTypeConformant)
 
 
 @runtime_checkable
