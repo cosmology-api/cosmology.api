@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 __all__: list[str] = []
 
 
-Self = TypeVar("Self", bound=Array)
+Self = TypeVar("Self", bound="Array")  # noqa: UP037
 
 
 @runtime_checkable
