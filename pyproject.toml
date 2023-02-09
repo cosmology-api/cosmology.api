@@ -109,10 +109,14 @@
   warn_redundant_casts = true
   warn_unused_configs = true
   warn_unreachable = true
-  exclude = '''(^|/)tests/'''
+  exclude = '''(^|/)tests/|(^/)docs/'''
 
   [[tool.mypy.overrides]]
     module = "tests/*"
+    ignore_errors = true
+
+  [[tool.mypy.overrides]]
+    module = "docs/*"
     ignore_errors = true
 
   [[tool.mypy.overrides]]

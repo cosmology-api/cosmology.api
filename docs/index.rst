@@ -9,6 +9,11 @@ switch to e.g. a CAMB result instance if you happen to require the power spectra
 or transfer functions.
 
 
+Details:
+
+- :ref:`api-static_typing`
+
+
 Contributors
 ============
 
