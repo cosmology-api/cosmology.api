@@ -8,10 +8,20 @@ to start testing your code with e.g. an Astropy cosmology instance, and later
 switch to e.g. a CAMB result instance if you happen to require the power spectra
 or transfer functions.
 
+.. toctree::
+   :caption: Table of Contents
+   :name: toptoc
+   :maxdepth: 2
+   :hidden:
 
-Details:
+   install.rst
 
-- :ref:`api-static_typing`
+
+.. toctree::
+   :name: details
+   :maxdepth: 1
+
+   typing.rst
 
 
 Contributors

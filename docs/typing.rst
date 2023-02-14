@@ -1,4 +1,4 @@
-.. _api-static_typing:.. _My target:
+.. _api-static_typing:
 
 #############
 Static Typing
