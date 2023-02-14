@@ -60,7 +60,6 @@ highlight_language = "python3"
 extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
-    "sphinx.ext.intersphinx",
     "sphinx_automodapi.automodapi",
     "matplotlib.sphinxext.plot_directive",
     "numpydoc",
@@ -88,6 +87,8 @@ autoclass_content = "both"
 # be used globally.
 rst_epilog = """
 .. |author| replace:: {author}
+
+.. _Python: http://www.python.org
 """
 
 intersphinx_mapping = {

@@ -18,7 +18,7 @@ class GlobalCurvatureComponent(CosmologyAPI[ArrayT], Protocol):
         """Omega curvature; the effective curvature density/critical density at z=0."""
         ...
 
-    def Ok(self, z: ArrayT, /) -> ArrayT:
+    def Ok(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent curvature density parameter.
 
         Parameters
@@ -41,7 +41,7 @@ class MatterComponent(CosmologyAPI[ArrayT], Protocol):
         """Omega matter; matter density/critical density at z=0."""
         ...
 
-    def Om(self, z: ArrayT, /) -> ArrayT:
+    def Om(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent non-relativistic matter density parameter.
 
         Parameters
@@ -69,7 +69,7 @@ class BaryonComponent(MatterComponent[ArrayT], Protocol):
         """Omega baryon; baryon density/critical density at z=0."""
         ...
 
-    def Ob(self, z: ArrayT, /) -> ArrayT:
+    def Ob(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent baryon density parameter.
 
         Parameters
@@ -102,7 +102,7 @@ class NeutrinoComponent(CosmologyAPI[ArrayT], Protocol):
         """Neutrino mass in eV."""
         ...
 
-    def Onu(self, z: ArrayT, /) -> ArrayT:
+    def Onu(self, z: ArrayT | float, /) -> ArrayT:
         r"""Redshift-dependent neutrino density parameter.
 
         Parameters
@@ -125,7 +125,7 @@ class DarkEnergyComponent(CosmologyAPI[ArrayT], Protocol):
         """Omega dark energy; dark energy density/critical density at z=0."""
         ...
 
-    def Ode(self, z: ArrayT, /) -> ArrayT:
+    def Ode(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent dark energy density parameter.
 
         Parameters
@@ -148,7 +148,7 @@ class DarkMatterComponent(MatterComponent[ArrayT], Protocol):
         """Omega dark matter; dark matter density/critical density at z=0."""
         ...
 
-    def Odm(self, z: ArrayT, /) -> ArrayT:
+    def Odm(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent dark matter density parameter.
 
         Parameters
@@ -176,7 +176,7 @@ class PhotonComponent(CosmologyAPI[ArrayT], Protocol):
         """Omega gamma; the density/critical density of photons at z=0."""
         ...
 
-    def Ogamma(self, z: ArrayT, /) -> ArrayT:
+    def Ogamma(self, z: ArrayT | float, /) -> ArrayT:
         """Redshift-dependent photon density parameter.
 
         Parameters
