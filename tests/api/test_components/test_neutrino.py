@@ -31,7 +31,7 @@ def test_noncompliant_neutrinocomponent():
     # TODO: more examples?
 
 
-def test_compliant_neutrinocomponent(bkg_cls):
+def test_compliant_neutrinocomponent(bkg_flrw_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.NeutrinoComponent`.
@@ -39,7 +39,7 @@ def test_compliant_neutrinocomponent(bkg_cls):
     ExampleNeutrinoComponent = make_dataclass(
         "ExampleNeutrinoComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {"Neff", "m_nu"}],
-        bases=(bkg_cls,),
+        bases=(bkg_flrw_cls,),
         namespace={"Onu0": _return_one, "Onu": _return_1arg},
         frozen=True,
     )

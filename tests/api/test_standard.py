@@ -6,7 +6,7 @@ from dataclasses import field, make_dataclass
 
 from cosmology.api import StandardCosmologyAPI
 from cosmology.api._array_api import Array
-from cosmology.api.background import BackgroundCosmologyAPI
+from cosmology.api.background import FriedmannLemaitreRobertsonWalker
 from cosmology.api.components import (
     BaryonComponent,
     DarkEnergyComponent,
@@ -25,7 +25,7 @@ from .conftest import _default_one, _return_1arg, _return_one
 ################################################################################
 
 
-def test_noncompliant_bkg():
+def test_noncompliant_cosmo():
     """
     Test that a non-compliant instance is not a
     `cosmology.api.CosmologyAPI`.
@@ -42,7 +42,7 @@ def test_noncompliant_bkg():
     # TODO: more examples?
 
 
-def test_compliant_bkg(cosmology_cls, standard_attrs, standard_meths):
+def test_compliant_cosmo(cosmology_cls, standard_attrs, standard_meths):
     """
     Test that an instance is `cosmology.api.StandardCosmologyAPI` even if it
     doesn't inherit from `cosmology.api.StandardCosmologyAPI`.
@@ -62,7 +62,7 @@ def test_compliant_bkg(cosmology_cls, standard_attrs, standard_meths):
 
     # Check Base and Background
     assert isinstance(cosmo, CosmologyAPI)
-    assert isinstance(cosmo, BackgroundCosmologyAPI)
+    assert isinstance(cosmo, FriedmannLemaitreRobertsonWalker)
 
     # Check Components
     assert isinstance(cosmo, BaryonComponent)

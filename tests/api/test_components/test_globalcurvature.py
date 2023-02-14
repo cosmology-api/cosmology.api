@@ -31,7 +31,7 @@ def test_noncompliant_globalcurvaturecomponent():
     # TODO: more examples?
 
 
-def test_compliant_globalcurvaturecomponent(bkg_cls):
+def test_compliant_globalcurvaturecomponent(bkg_flrw_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.GlobalCurvatureComponent`.
@@ -39,7 +39,7 @@ def test_compliant_globalcurvaturecomponent(bkg_cls):
     ExampleGlobalCurvatureComponent = make_dataclass(
         "ExampleGlobalCurvatureComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {}],
-        bases=(bkg_cls,),
+        bases=(bkg_flrw_cls,),
         namespace={"Ok0": _return_one, "Ok": _return_1arg},
         frozen=True,
     )
