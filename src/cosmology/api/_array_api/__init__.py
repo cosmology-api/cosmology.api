@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TypeVar
 
-from .array import Array  # noqa: TCH001
+from .array import Array
 
 __all__: list[str] = []
 
