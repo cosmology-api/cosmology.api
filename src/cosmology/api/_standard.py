@@ -15,6 +15,7 @@ from cosmology.api._components import (
     NeutrinoComponent,
     PhotonComponent,
 )
+from cosmology.api.extras import HasHubbleParameter
 
 __all__: list[str] = []
 
@@ -28,6 +29,7 @@ class StandardCosmologyAPI(
     MatterComponent[ArrayT],
     DarkEnergyComponent[ArrayT],
     GlobalCurvatureComponent[ArrayT],
+    HasHubbleParameter[ArrayT],
     FriedmannLemaitreRobertsonWalker[ArrayT],
     Protocol,
 ):
@@ -42,29 +44,6 @@ class StandardCosmologyAPI(
     @property
     def Tcmb0(self) -> ArrayT:
         """Temperature of the CMB at redshift 0 in Kelvin."""
-        ...
-
-    # ----------------------------------------------
-    # Hubble
-
-    @property
-    def H0(self) -> ArrayT:
-        """Hubble function at redshift 0 in km s-1 Mpc-1."""
-        ...
-
-    @property
-    def h(self) -> ArrayT:
-        r"""Dimensionless Hubble parameter, h = H_0 / (100 [km/sec/Mpc])."""
-        ...
-
-    @property
-    def hubble_distance(self) -> ArrayT:
-        """Hubble distance in Mpc."""
-        ...
-
-    @property
-    def hubble_time(self) -> ArrayT:
-        """Hubble time in Gyr."""
         ...
 
     # ----------------------------------------------
@@ -101,54 +80,6 @@ class StandardCosmologyAPI(
         Array
         """
         ...
-
-    # ----------------------------------------------
-    # Hubble
-
-    def H(self, z: ArrayT | float, /) -> ArrayT:
-        """Hubble function :math:`H(z)` in km s-1 Mpc-1.
-
-        Parameters
-        ----------
-        z : Array
-            The redshift(s) at which to evaluate the Hubble parameter.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def efunc(self, z: ArrayT | float, /) -> ArrayT:
-        """Standardised Hubble function :math:`E(z) = H(z)/H_0`.
-
-        Parameters
-        ----------
-        z : Array
-            The redshift(s) at which to evaluate efunc.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def inv_efunc(self, z: ArrayT | float, /) -> ArrayT:
-        """Inverse of ``efunc``.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    # ----------------------------------------------
-    # Omega
 
     def Otot(self, z: ArrayT | float, /) -> ArrayT:
         r"""Redshift-dependent total density parameter.

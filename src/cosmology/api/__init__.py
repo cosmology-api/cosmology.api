@@ -18,6 +18,7 @@ from cosmology.api.compat import (
     CosmologyWrapperAPI,
     StandardCosmologyWrapperAPI,
 )
+from cosmology.api.extras import HasHubbleParameter
 
 __all__ = [
     "CosmologyAPI",
@@ -31,6 +32,8 @@ __all__ = [
     "DarkEnergyComponent",
     "DarkMatterComponent",
     "PhotonComponent",
+    # parametrizations
+    "HasHubbleParameter",
     # wrappers
     "CosmologyWrapperAPI",
     "StandardCosmologyWrapperAPI",
