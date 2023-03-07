@@ -21,7 +21,7 @@ class FriedmannLemaitreRobertsonWalker(CosmologyAPI[ArrayT], Protocol):
 
     See Also
     --------
-    StandardCosmologyAPI
+    StandardCosmology
         The standard cosmology API, with the expected set of components: matter,
         radiation, neutrinos, dark matter, and dark energy.
     """

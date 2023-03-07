@@ -11,7 +11,7 @@ from cosmology.api import (
     CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyWrapperAPI,
-    StandardCosmologyAPI,
+    StandardCosmology,
     StandardCosmologyWrapperAPI,
 )
 
@@ -84,7 +84,7 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
 
     assert isinstance(wrapper, CosmologyAPI)
     assert isinstance(wrapper, CosmologyWrapperAPI)
-    assert isinstance(wrapper, StandardCosmologyAPI)
+    assert isinstance(wrapper, StandardCosmology)
     assert isinstance(wrapper, StandardCosmologyWrapperAPI)
 
 

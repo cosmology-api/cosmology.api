@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import StandardCosmologyAPI
+from cosmology.api import StandardCosmology
 from cosmology.api._array_api import Array
 from cosmology.api._background import FriedmannLemaitreRobertsonWalker
 from cosmology.api._components import (
@@ -33,25 +33,25 @@ def test_noncompliant_standard():
     """
     # Simple example: missing everything
 
-    class StandardCosmology:
+    class NonStandardCosmology:
         pass
 
-    cosmo = StandardCosmology()
+    cosmo = NonStandardCosmology()
 
-    assert not isinstance(cosmo, StandardCosmologyAPI)
+    assert not isinstance(cosmo, StandardCosmology)
 
     # TODO: more examples?
 
 
 def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
     """
-    Test that an instance is `cosmology.api.StandardCosmologyAPI` even if it
-    doesn't inherit from `cosmology.api.StandardCosmologyAPI`.
+    Test that an instance is `cosmology.api.StandardCosmology` even if it
+    doesn't inherit from `cosmology.api.StandardCosmology`.
     """
     fields = ("H0", "Omega_m0", "Omega_de0", "Tcmb0", "Neff", "m_nu", "Omega_b0")
 
-    StandardCosmology = make_dataclass(
-        "StandardCosmology",
+    ExampleStandardCosmology = make_dataclass(
+        "ExampleStandardCosmology",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
         bases=(cosmology_cls,),
         namespace={n: property(_return_one) for n in standard_attrs - set(fields)}
@@ -59,7 +59,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
         frozen=True,
     )
 
-    cosmo = StandardCosmology()
+    cosmo = ExampleStandardCosmology()
 
     # Check Base and Background
     assert isinstance(cosmo, CosmologyAPI)
@@ -79,12 +79,12 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
     assert isinstance(cosmo, HasTcmb)
 
     # Full Standard Cosmology
-    assert isinstance(cosmo, StandardCosmologyAPI)
+    assert isinstance(cosmo, StandardCosmology)
 
 
 def test_fixture(standardcosmo):
     """
     Test that the ``standardcosmo`` fixture is a
-    `cosmology.api.StandardCosmologyAPI`.
+    `cosmology.api.StandardCosmology`.
     """
-    assert isinstance(standardcosmo, StandardCosmologyAPI)
+    assert isinstance(standardcosmo, StandardCosmology)

@@ -22,7 +22,7 @@ from cosmology.api import (
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
-    StandardCosmologyAPI,
+    StandardCosmology,
 )
 from cosmology.api._array_api import Array
 from cosmology.api._extras import HasHubbleParameter, HasTcmb
@@ -340,21 +340,19 @@ def bkg_flrw(
 # Standard API
 
 
-STANDARDCOSMO_ATTRS, STANDARDCOSMO_METHS = _get_attrs_meths(
-    StandardCosmologyAPI, CosmologyAPI
-)
+STDCOSMO_ATTRS, STDCOSMO_METHS = _get_attrs_meths(StandardCosmology, CosmologyAPI)
 
 
 @pytest.fixture(scope="session")
 def standard_attrs() -> frozenset[str]:
     """The Standard FLRW API atributes."""
-    return STANDARDCOSMO_ATTRS
+    return STDCOSMO_ATTRS
 
 
 @pytest.fixture(scope="session")
 def standard_meths() -> frozenset[str]:
     """The Standard FLRW API methods."""
-    return STANDARDCOSMO_METHS
+    return STDCOSMO_METHS
 
 
 @pytest.fixture(scope="session")
@@ -369,7 +367,7 @@ def standard_cls(  # noqa: PLR0913
     darkenergy_cls: type[HasDarkEnergyComponent],
     standard_attrs: set[str],
     standard_meths: set[str],
-) -> type[StandardCosmologyAPI]:
+) -> type[StandardCosmology]:
     """Example FLRW API class."""
     bases = (
         neutrino_cls,
@@ -397,7 +395,7 @@ def standard_cls(  # noqa: PLR0913
 
 @pytest.fixture(scope="session")
 def standardcosmo(
-    standard_cls: type[StandardCosmologyAPI],
-) -> StandardCosmologyAPI:
+    standard_cls: type[StandardCosmology],
+) -> StandardCosmology:
     """Example FLRW API instance."""
     return standard_cls()
