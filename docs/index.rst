@@ -12,7 +12,7 @@ or transfer functions.
    :caption: Context
    :maxdepth: 1
 
-    context/purpose_and_scope
+   context/purpose_and_scope
 
 .. toctree::
    :caption: API
@@ -24,8 +24,8 @@ or transfer functions.
    :caption: Other
    :maxdepth: 1
 
-   changelog <../CHANGES.rst>
-   license <../LICENSE.txt>
+   changelog
+   license.txt
 
 
 Contributors
