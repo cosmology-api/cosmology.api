@@ -10,7 +10,7 @@ from cosmology.api._core import CosmologyAPI
 __all__: list[str] = []
 
 
-class GlobalCurvatureComponent(CosmologyAPI[ArrayT], Protocol):
+class HasGlobalCurvatureComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains global curvature, described by :math:`Omega_K`."""
 
     @property
@@ -33,7 +33,7 @@ class GlobalCurvatureComponent(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class MatterComponent(CosmologyAPI[ArrayT], Protocol):
+class HasMatterComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains matter, described by :math:`Omega_m`."""
 
     @property
@@ -61,7 +61,7 @@ class MatterComponent(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class BaryonComponent(MatterComponent[ArrayT], Protocol):
+class HasBaryonComponent(HasMatterComponent[ArrayT], Protocol):
     r"""The cosmology contains baryons, described by :math:`Omega_b`."""
 
     @property
@@ -84,7 +84,7 @@ class BaryonComponent(MatterComponent[ArrayT], Protocol):
         ...
 
 
-class NeutrinoComponent(CosmologyAPI[ArrayT], Protocol):
+class HasNeutrinoComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains neutrinos, described by :math:`Omega_\nu`."""
 
     @property
@@ -117,7 +117,7 @@ class NeutrinoComponent(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class DarkEnergyComponent(CosmologyAPI[ArrayT], Protocol):
+class HasDarkEnergyComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains photons, described by :math:`Omega_{\rm de}`."""
 
     @property
@@ -140,7 +140,7 @@ class DarkEnergyComponent(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class DarkMatterComponent(MatterComponent[ArrayT], Protocol):
+class HasDarkMatterComponent(HasMatterComponent[ArrayT], Protocol):
     r"""The cosmology contains cold dark matter, described by :math:`Omega_dm`."""
 
     @property
@@ -168,7 +168,7 @@ class DarkMatterComponent(MatterComponent[ArrayT], Protocol):
         ...
 
 
-class PhotonComponent(CosmologyAPI[ArrayT], Protocol):
+class HasPhotonComponent(CosmologyAPI[ArrayT], Protocol):
     r"""The cosmology contains photons, described by :math:`Omega_\gamma`."""
 
     @property

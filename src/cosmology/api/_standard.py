@@ -7,13 +7,13 @@ from typing import Protocol, runtime_checkable
 from cosmology.api._array_api import ArrayT
 from cosmology.api._background import FriedmannLemaitreRobertsonWalker
 from cosmology.api._components import (
-    BaryonComponent,
-    DarkEnergyComponent,
-    DarkMatterComponent,
-    GlobalCurvatureComponent,
-    MatterComponent,
-    NeutrinoComponent,
-    PhotonComponent,
+    HasBaryonComponent,
+    HasDarkEnergyComponent,
+    HasDarkMatterComponent,
+    HasGlobalCurvatureComponent,
+    HasMatterComponent,
+    HasNeutrinoComponent,
+    HasPhotonComponent,
 )
 from cosmology.api._extras import HasHubbleParameter
 
@@ -22,13 +22,13 @@ __all__: list[str] = []
 
 @runtime_checkable
 class StandardCosmologyAPI(
-    NeutrinoComponent[ArrayT],
-    BaryonComponent[ArrayT],
-    PhotonComponent[ArrayT],
-    DarkMatterComponent[ArrayT],
-    MatterComponent[ArrayT],
-    DarkEnergyComponent[ArrayT],
-    GlobalCurvatureComponent[ArrayT],
+    HasNeutrinoComponent[ArrayT],
+    HasBaryonComponent[ArrayT],
+    HasPhotonComponent[ArrayT],
+    HasDarkMatterComponent[ArrayT],
+    HasMatterComponent[ArrayT],
+    HasDarkEnergyComponent[ArrayT],
+    HasGlobalCurvatureComponent[ArrayT],
     HasHubbleParameter[ArrayT],
     FriedmannLemaitreRobertsonWalker[ArrayT],
     Protocol,
