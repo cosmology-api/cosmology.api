@@ -55,3 +55,26 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         Array
         """
         ...
+
+
+class HasTcmb(CosmologyAPI[ArrayT], Protocol):
+    r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
+
+    @property
+    def Tcmb0(self) -> ArrayT:
+        """CMB temperature in K at z=0."""
+        ...
+
+    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
+        """CMB temperature in K at redshift z.
+
+        Parameters
+        ----------
+        z : Array, positional-only
+            Input redshift.
+
+        Returns
+        -------
+        Array
+        """
+        ...

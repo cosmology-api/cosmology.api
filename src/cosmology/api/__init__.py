@@ -12,7 +12,7 @@ from cosmology.api._components import (
 )
 from cosmology.api._constants import CosmologyConstantsAPINamespace
 from cosmology.api._core import CosmologyAPI
-from cosmology.api._extras import HasHubbleParameter
+from cosmology.api._extras import HasHubbleParameter, HasTcmb
 from cosmology.api._namespace import CosmologyAPINamespace
 from cosmology.api._standard import StandardCosmologyAPI
 from cosmology.api.compat import (
@@ -34,6 +34,7 @@ __all__ = [
     "HasPhotonComponent",
     # parametrizations
     "HasHubbleParameter",
+    "HasTcmb",
     # wrappers
     "CosmologyWrapperAPI",
     "StandardCosmologyWrapperAPI",
