@@ -6,8 +6,8 @@ from dataclasses import field, make_dataclass
 
 from cosmology.api import StandardCosmologyAPI
 from cosmology.api._array_api import Array
-from cosmology.api.background import FriedmannLemaitreRobertsonWalker
-from cosmology.api.components import (
+from cosmology.api._background import FriedmannLemaitreRobertsonWalker
+from cosmology.api._components import (
     BaryonComponent,
     DarkEnergyComponent,
     DarkMatterComponent,
@@ -16,7 +16,7 @@ from cosmology.api.components import (
     NeutrinoComponent,
     PhotonComponent,
 )
-from cosmology.api.core import CosmologyAPI
+from cosmology.api._core import CosmologyAPI
 
 from .conftest import _default_one, _return_1arg, _return_one
 

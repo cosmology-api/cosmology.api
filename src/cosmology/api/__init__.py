@@ -1,11 +1,7 @@
 """The Cosmology API standard."""
 
-from cosmology.api.background import FriedmannLemaitreRobertsonWalker
-from cosmology.api.compat import (
-    CosmologyWrapperAPI,
-    StandardCosmologyWrapperAPI,
-)
-from cosmology.api.components import (
+from cosmology.api._background import FriedmannLemaitreRobertsonWalker
+from cosmology.api._components import (
     BaryonComponent,
     DarkEnergyComponent,
     DarkMatterComponent,
@@ -14,10 +10,14 @@ from cosmology.api.components import (
     NeutrinoComponent,
     PhotonComponent,
 )
-from cosmology.api.constants import CosmologyConstantsAPINamespace
-from cosmology.api.core import CosmologyAPI
-from cosmology.api.namespace import CosmologyAPINamespace
-from cosmology.api.standard import StandardCosmologyAPI
+from cosmology.api._constants import CosmologyConstantsAPINamespace
+from cosmology.api._core import CosmologyAPI
+from cosmology.api._namespace import CosmologyAPINamespace
+from cosmology.api._standard import StandardCosmologyAPI
+from cosmology.api.compat import (
+    CosmologyWrapperAPI,
+    StandardCosmologyWrapperAPI,
+)
 
 __all__ = [
     "CosmologyAPI",

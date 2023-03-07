@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Protocol
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api.core import CosmologyAPI
+from cosmology.api._core import CosmologyAPI
 
 __all__: list[str] = []
 
