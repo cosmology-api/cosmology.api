@@ -25,7 +25,7 @@ or transfer functions.
    :maxdepth: 1
 
    changelog
-   license.txt
+   license
 
 
 Contributors
