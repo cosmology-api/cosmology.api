@@ -5,11 +5,7 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api.background import (
-    BACKGROUNDCOSMO_ATTRIBUTES,
-    BACKGROUNDCOSMO_METHODS,
-    BackgroundCosmologyAPI,
-)
+from cosmology.api.background import FriedmannLemaitreRobertsonWalker
 from cosmology.api.components import (
     BaryonComponent,
     DarkEnergyComponent,
@@ -23,44 +19,6 @@ from cosmology.api.components import (
 __all__: list[str] = []
 
 
-STANDARDCOSMO_ATTRIBUTES = (
-    BACKGROUNDCOSMO_ATTRIBUTES
-    | frozenset(  # TODO: public scope this
-        (
-            "H0",
-            "h",
-            "hubble_distance",
-            "hubble_time",
-            "Om0",
-            "Ode0",
-            "Ok0",
-            "Ob0",
-            "Odm0",
-            "Ogamma0",
-            "Onu0",
-            "Tcmb0",
-            "Neff",
-            "m_nu",
-        ),
-    )
-)
-STANDARDCOSMO_METHODS = BACKGROUNDCOSMO_METHODS | frozenset(  # TODO: public scope this
-    (
-        "H",
-        "efunc",
-        "inv_efunc",
-        "Tcmb",
-        "Om",
-        "Ob",
-        "Odm",
-        "Ode",
-        "Ogamma",
-        "Onu",
-        "Ok",
-    ),
-)
-
-
 @runtime_checkable
 class StandardCosmologyAPI(
     NeutrinoComponent[ArrayT],
@@ -70,7 +28,7 @@ class StandardCosmologyAPI(
     MatterComponent[ArrayT],
     DarkEnergyComponent[ArrayT],
     GlobalCurvatureComponent[ArrayT],
-    BackgroundCosmologyAPI[ArrayT],
+    FriedmannLemaitreRobertsonWalker[ArrayT],
     Protocol,
 ):
     """API Protocol for the standard cosmology and expected set of components.

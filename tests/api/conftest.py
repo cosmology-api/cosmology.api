@@ -11,26 +11,46 @@ from typing import TypeVar
 import numpy.array_api as xp
 import pytest
 from cosmology.api import (
-    BackgroundCosmologyAPI,
+    BaryonComponent,
     CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyConstantsAPINamespace,
-    StandardCosmologyAPI,
-)
-from cosmology.api._array_api import Array
-from cosmology.api.background import BACKGROUNDCOSMO_ATTRIBUTES, BACKGROUNDCOSMO_METHODS
-from cosmology.api.components import (
-    BaryonComponent,
     DarkEnergyComponent,
     DarkMatterComponent,
+    FriedmannLemaitreRobertsonWalker,
     GlobalCurvatureComponent,
     MatterComponent,
     NeutrinoComponent,
     PhotonComponent,
+    StandardCosmologyAPI,
 )
-from cosmology.api.standard import STANDARDCOSMO_ATTRIBUTES, STANDARDCOSMO_METHODS
+from cosmology.api._array_api import Array
 
 CT = TypeVar("CT", bound=CosmologyAPI)
+
+
+def _default_one() -> Array:
+    return xp.ones((), dtype=xp.int32)
+
+
+def _return_one(self, /) -> Array:
+    return _default_one()
+
+
+def _return_1arg(self, z: Array, /) -> Array:
+    return z
+
+
+def _get_attrs_meths(
+    cls: type, comp_cls: type
+) -> tuple[frozenset[str], frozenset[str]]:
+    """Get the set of attributes and methods for a component class."""
+    public_stuff = {
+        k for k in (set(dir(cls)) - set(dir(comp_cls))) if not k.startswith("_")
+    }
+    attrs = frozenset({k for k in public_stuff if not callable(getattr(cls, k))})
+    meths = frozenset({k for k in public_stuff if callable(getattr(cls, k))})
+    return attrs, meths
 
 
 # ==============================================================================
@@ -231,73 +251,73 @@ def darkenergy_cls(
 # Background API
 
 
-def _default_one() -> Array:
-    return xp.ones((), dtype=xp.int32)
-
-
-def _return_one(self, /) -> Array:
-    return _default_one()
-
-
-def _return_1arg(self, z: Array, /) -> Array:
-    return z
+BACKGROUND_FLRW_ATTRS, BACKGROUND_FLRW_METHS = _get_attrs_meths(
+    FriedmannLemaitreRobertsonWalker, CosmologyAPI
+)
 
 
 @pytest.fixture(scope="session")
-def background_attrs() -> frozenset[str]:
-    """The FLRW API atributes."""
-    return BACKGROUNDCOSMO_ATTRIBUTES
+def bkg_flrw_attrs() -> frozenset[str]:
+    """The FriedmannLemaitreRobertsonWalker atributes."""
+    return BACKGROUND_FLRW_ATTRS
 
 
 @pytest.fixture(scope="session")
-def background_meths() -> frozenset[str]:
-    """The FLRW API methods."""
-    return BACKGROUNDCOSMO_METHODS
+def bkg_flrw_meths() -> frozenset[str]:
+    """The FriedmannLemaitreRobertsonWalker methods."""
+    return BACKGROUND_FLRW_METHS
 
 
 @pytest.fixture(scope="session")
-def bkg_cls(
+def bkg_flrw_cls(
     cosmology_cls: type[CosmologyAPI],
-    background_attrs: set[str],
-    background_meths: set[str],
-) -> type[BackgroundCosmologyAPI]:
+    bkg_flrw_attrs: set[str],
+    bkg_flrw_meths: set[str],
+) -> type[FriedmannLemaitreRobertsonWalker]:
     """An example Background class."""
     flds = set()  # there are no fields
     return make_dataclass(
-        "ExampleBackgroundCosmology",
+        "ExampleFriedmannLemaitreRobertsonWalker",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in background_attrs - flds}
-        | {n: _return_1arg for n in background_meths},
+        namespace={n: property(_return_one) for n in bkg_flrw_attrs - flds}
+        | {n: _return_1arg for n in bkg_flrw_meths},
         frozen=True,
     )
 
 
 @pytest.fixture(scope="session")
-def bkg(bkg_cls: type[BackgroundCosmologyAPI]) -> BackgroundCosmologyAPI:
+def bkg_flrw(
+    bkg_flrw_cls: type[FriedmannLemaitreRobertsonWalker],
+) -> FriedmannLemaitreRobertsonWalker:
     """An example FLRW API instance."""
-    return bkg_cls()
+    return bkg_flrw_cls()
 
 
 # ==============================================================================
 # Standard API
 
 
+STANDARDCOSMO_ATTRS, STANDARDCOSMO_METHS = _get_attrs_meths(
+    StandardCosmologyAPI, CosmologyAPI
+)
+
+
 @pytest.fixture(scope="session")
 def standard_attrs() -> frozenset[str]:
     """The Standard FLRW API atributes."""
-    return STANDARDCOSMO_ATTRIBUTES
+    return STANDARDCOSMO_ATTRS
 
 
 @pytest.fixture(scope="session")
 def standard_meths() -> frozenset[str]:
     """The Standard FLRW API methods."""
-    return STANDARDCOSMO_METHODS
+    return STANDARDCOSMO_METHS
 
 
 @pytest.fixture(scope="session")
 def standard_cls(  # noqa: PLR0913
-    bkg_cls: type[BackgroundCosmologyAPI],
+    bkg_flrw_cls: type[FriedmannLemaitreRobertsonWalker],
     globalcurvature_cls: type[GlobalCurvatureComponent],
     matter_cls: type[MatterComponent],
     baryon_cls: type[BaryonComponent],
@@ -317,7 +337,7 @@ def standard_cls(  # noqa: PLR0913
         darkmatter_cls,
         matter_cls,
         globalcurvature_cls,
-        bkg_cls,
+        bkg_flrw_cls,
     )
     flds = functools.reduce(
         operator.or_, ({f.name for f in fields(c)} for c in bases)

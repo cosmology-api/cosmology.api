@@ -31,7 +31,7 @@ def test_noncompliant_darkenergycomponent():
     # TODO: more examples?
 
 
-def test_compliant_darkenergycomponent(bkg_cls):
+def test_compliant_darkenergycomponent(bkg_flrw_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.DarkEnergyComponent`.
@@ -39,7 +39,7 @@ def test_compliant_darkenergycomponent(bkg_cls):
     ExampleDarkEnergyComponent = make_dataclass(
         "ExampleDarkEnergyComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {"Ode0"}],
-        bases=(bkg_cls,),
+        bases=(bkg_flrw_cls,),
         namespace={"Ode": _return_1arg},
         frozen=True,
     )

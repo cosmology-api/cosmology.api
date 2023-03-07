@@ -1,8 +1,7 @@
 """The Cosmology API standard."""
 
-from cosmology.api.background import BackgroundCosmologyAPI
+from cosmology.api.background import FriedmannLemaitreRobertsonWalker
 from cosmology.api.compat import (
-    BackgroundCosmologyWrapperAPI,
     CosmologyWrapperAPI,
     StandardCosmologyWrapperAPI,
 )
@@ -22,7 +21,7 @@ from cosmology.api.standard import StandardCosmologyAPI
 
 __all__ = [
     "CosmologyAPI",
-    "BackgroundCosmologyAPI",
+    "FriedmannLemaitreRobertsonWalker",
     "StandardCosmologyAPI",
     # components
     "GlobalCurvatureComponent",
@@ -34,7 +33,6 @@ __all__ = [
     "PhotonComponent",
     # wrappers
     "CosmologyWrapperAPI",
-    "BackgroundCosmologyWrapperAPI",
     "StandardCosmologyWrapperAPI",
     # Namespaces
     "CosmologyAPINamespace",

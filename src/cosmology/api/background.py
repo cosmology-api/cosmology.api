@@ -10,38 +10,14 @@ from cosmology.api.core import CosmologyAPI
 __all__: list[str] = []
 
 
-BACKGROUNDCOSMO_ATTRIBUTES = frozenset(  # TODO: public scope this
-    (
-        "scale_factor0",
-        "Otot0",
-        "critical_density0",
-    ),
-)
-BACKGROUNDCOSMO_METHODS = frozenset(  # TODO: public scope this
-    (
-        "scale_factor",
-        "Otot",
-        "critical_density",
-        "age",
-        "lookback_time",
-        "comoving_distance",
-        "comoving_transverse_distance",
-        "comoving_volume",
-        "differential_comoving_volume",
-        "angular_diameter_distance",
-        "luminosity_distance",
-    ),
-)
-
-
 @runtime_checkable
-class BackgroundCosmologyAPI(CosmologyAPI[ArrayT], Protocol):
-    """Cosmology API protocol for background calculations.
+class FriedmannLemaitreRobertsonWalker(CosmologyAPI[ArrayT], Protocol):
+    """Cosmology API protocol for isotropic cosmologies.
 
-    This is a protocol class that defines the standard API for background
-    calculations. It is not intended to be instantiaed. Instead, it should be
-    used for ``isinstance`` checks or as an ABC for libraries that wish to
-    define a compatible cosmology class.
+    This is a protocol class that defines the standard API for isotropic
+    background calculations. It is not intended to be instantiated. Instead, it
+    should be used for ``isinstance`` checks or as an ABC for libraries that
+    wish to define a compatible cosmology class.
 
     See Also
     --------

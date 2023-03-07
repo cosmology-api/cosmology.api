@@ -8,8 +8,6 @@ from typing import TYPE_CHECKING
 import numpy.array_api as xp
 import pytest
 from cosmology.api import (
-    BackgroundCosmologyAPI,
-    BackgroundCosmologyWrapperAPI,
     CosmologyAPI,
     CosmologyAPINamespace,
     CosmologyWrapperAPI,
@@ -28,7 +26,7 @@ if TYPE_CHECKING:
 def test_noncompliant_cosmology_wrapper():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.BackgroundCosmologyWrapperAPI`.
+    `cosmology.api.StandardCosmologyWrapperAPI`.
     """
 
     # Simple example: missing everything
@@ -86,13 +84,11 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
 
     assert isinstance(wrapper, CosmologyAPI)
     assert isinstance(wrapper, CosmologyWrapperAPI)
-    assert isinstance(wrapper, BackgroundCosmologyAPI)
-    assert isinstance(wrapper, BackgroundCosmologyWrapperAPI)
     assert isinstance(wrapper, StandardCosmologyAPI)
     assert isinstance(wrapper, StandardCosmologyWrapperAPI)
 
 
-class Test_CosmologyWrapperAPI:
+class Test_StandardCosmologyWrapperAPI:
     @pytest.fixture(scope="class")
     def wrapper_cls(
         self,
@@ -136,8 +132,7 @@ class Test_CosmologyWrapperAPI:
         """Test that the wrapper is compliant."""
         assert isinstance(wrapper, CosmologyAPI)
         assert isinstance(wrapper, CosmologyWrapperAPI)
-        assert isinstance(wrapper, BackgroundCosmologyAPI)
-        assert isinstance(wrapper, BackgroundCosmologyWrapperAPI)
+        assert isinstance(wrapper, StandardCosmologyWrapperAPI)
 
     def test_getattr(self, wrapper):
         """Test that the wrapper can access the attributes of the wrapped object."""

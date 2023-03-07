@@ -31,7 +31,7 @@ def test_noncompliant_mattercomponent():
     # TODO: more examples?
 
 
-def test_compliant_mattercomponent(bkg_cls):
+def test_compliant_mattercomponent(bkg_flrw_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.MatterComponent`.
@@ -39,7 +39,7 @@ def test_compliant_mattercomponent(bkg_cls):
     ExampleMatterComponent = make_dataclass(
         "ExampleMatterComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {"Om0"}],
-        bases=(bkg_cls,),
+        bases=(bkg_flrw_cls,),
         namespace={"Om": _return_1arg},
         frozen=True,
     )

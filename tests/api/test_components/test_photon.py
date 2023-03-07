@@ -31,7 +31,7 @@ def test_noncompliant_photoncomponent():
     # TODO: more examples?
 
 
-def test_compliant_photoncomponent(bkg_cls):
+def test_compliant_photoncomponent(bkg_flrw_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.PhotonComponent`.
@@ -39,7 +39,7 @@ def test_compliant_photoncomponent(bkg_cls):
     ExamplePhotonComponent = make_dataclass(
         "ExamplePhotonComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {}],
-        bases=(bkg_cls,),
+        bases=(bkg_flrw_cls,),
         namespace={"Ogamma0": _return_one, "Ogamma": _return_1arg},
         frozen=True,
     )

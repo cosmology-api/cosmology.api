@@ -5,14 +5,14 @@ from __future__ import annotations
 from typing import Protocol
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api.compat.background import BackgroundCosmologyWrapperAPI
+from cosmology.api.compat.core import CosmologyWrapperAPI
 from cosmology.api.standard import StandardCosmologyAPI
 
 __all__: list[str] = []
 
 
 class StandardCosmologyWrapperAPI(
-    BackgroundCosmologyWrapperAPI[ArrayT],
+    CosmologyWrapperAPI[ArrayT],
     StandardCosmologyAPI[ArrayT],
     Protocol,
 ):
