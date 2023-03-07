@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api.background import FriedmannLemaitreRobertsonWalker
-from cosmology.api.components import (
+from cosmology.api._background import FriedmannLemaitreRobertsonWalker
+from cosmology.api._components import (
     BaryonComponent,
     DarkEnergyComponent,
     DarkMatterComponent,
