@@ -18,13 +18,3 @@ For information on testing compatibility with float inputs see
 
 compat
 ```
-
-<!-- TODO: replace this with a description of the
- -->
-```{eval-rst}
-.. automodapi:: cosmology.api
-   :inherited-members:
-   :skip: CosmologyAPINamespace
-   :skip: CosmologyAPINamespace
-   :skip: CosmologyConstantsAPINamespace
-```

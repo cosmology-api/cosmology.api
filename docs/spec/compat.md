@@ -3,7 +3,7 @@
 The Cosmology API also includes wrappers of cosmology objects.
 
 
-```{eval-rst}
+<!-- ```{eval-rst}
 .. automodapi:: cosmology.api.compat
    :inherited-members:
-```
+``` -->
