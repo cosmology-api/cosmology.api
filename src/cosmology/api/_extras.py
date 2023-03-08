@@ -15,12 +15,7 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
 
     @property
     def H0(self) -> ArrayT:
-        """Hubble function at redshift 0 in km s-1 Mpc-1."""
-        ...
-
-    @property
-    def h(self) -> ArrayT:
-        r"""Dimensionless Hubble parameter, h = H_0 / (100 [km/sec/Mpc])."""
+        """Hubble parameter at redshift 0 in km s-1 Mpc-1."""
         ...
 
     @property
@@ -34,7 +29,7 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         ...
 
     def H(self, z: ArrayT | float, /) -> ArrayT:
-        """Hubble function :math:`H(z)` in km s-1 Mpc-1.
+        """Hubble parameter :math:`H(z)` in km s-1 Mpc-1.
 
         Parameters
         ----------
@@ -47,13 +42,13 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def efunc(self, z: ArrayT | float, /) -> ArrayT:
+    def h_over_h0(self, z: ArrayT | float, /) -> ArrayT:
         """Standardised Hubble function :math:`E(z) = H(z)/H_0`.
 
         Parameters
         ----------
         z : Array
-            The redshift(s) at which to evaluate efunc.
+            The redshift(s) at which to evaluate.
 
         Returns
         -------
