@@ -17,6 +17,7 @@ from cosmology.api._components import (
     PhotonComponent,
 )
 from cosmology.api._core import CosmologyAPI
+from cosmology.api._extras import HasHubbleParameter
 
 from .conftest import _default_one, _return_1arg, _return_one
 
@@ -25,7 +26,7 @@ from .conftest import _default_one, _return_1arg, _return_one
 ################################################################################
 
 
-def test_noncompliant_cosmo():
+def test_noncompliant_standard():
     """
     Test that a non-compliant instance is not a
     `cosmology.api.CosmologyAPI`.
@@ -42,7 +43,7 @@ def test_noncompliant_cosmo():
     # TODO: more examples?
 
 
-def test_compliant_cosmo(cosmology_cls, standard_attrs, standard_meths):
+def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
     """
     Test that an instance is `cosmology.api.StandardCosmologyAPI` even if it
     doesn't inherit from `cosmology.api.StandardCosmologyAPI`.
@@ -72,6 +73,9 @@ def test_compliant_cosmo(cosmology_cls, standard_attrs, standard_meths):
     assert isinstance(cosmo, MatterComponent)
     assert isinstance(cosmo, NeutrinoComponent)
     assert isinstance(cosmo, PhotonComponent)
+
+    # Check Parametrizations
+    assert isinstance(cosmo, HasHubbleParameter)
 
     # Full Standard Cosmology
     assert isinstance(cosmo, StandardCosmologyAPI)

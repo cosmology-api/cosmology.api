@@ -25,6 +25,7 @@ from cosmology.api import (
     StandardCosmologyAPI,
 )
 from cosmology.api._array_api import Array
+from cosmology.api._extras import HasHubbleParameter
 
 CT = TypeVar("CT", bound=CosmologyAPI)
 
@@ -210,7 +211,6 @@ def neutrino_cls(
 
 
 @pytest.fixture(scope="session")
-@pytest.mark.parametrize("comp_cls", [PhotonComponent])
 def photon_cls(
     cosmology_cls: type[CosmologyAPI],
 ) -> type[PhotonComponent | CosmologyAPI]:
@@ -239,6 +239,28 @@ def darkenergy_cls(
     fields = {"Ode0"}
     return make_dataclass(
         "ExampleDarkEnergyComponent",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+# ==============================================================================
+# Parametrizations API
+
+
+@pytest.fixture(scope="session")
+def hashubbleparamet_cls(
+    cosmology_cls: type[CosmologyAPI],
+) -> type[HasHubbleParameter | CosmologyAPI]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(HasHubbleParameter)
+    comp_meths = get_comp_meths(HasHubbleParameter)
+    fields = {"H0"}
+    return make_dataclass(
+        "ExampleHasHubbleParameter",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
         bases=(cosmology_cls,),
         namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
