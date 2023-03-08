@@ -25,7 +25,7 @@ from cosmology.api import (
     StandardCosmologyAPI,
 )
 from cosmology.api._array_api import Array
-from cosmology.api.extras import HasHubbleParameter
+from cosmology.api._extras import HasHubbleParameter
 
 CT = TypeVar("CT", bound=CosmologyAPI)
 

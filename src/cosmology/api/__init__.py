@@ -12,13 +12,13 @@ from cosmology.api._components import (
 )
 from cosmology.api._constants import CosmologyConstantsAPINamespace
 from cosmology.api._core import CosmologyAPI
+from cosmology.api._extras import HasHubbleParameter
 from cosmology.api._namespace import CosmologyAPINamespace
 from cosmology.api._standard import StandardCosmologyAPI
 from cosmology.api.compat import (
     CosmologyWrapperAPI,
     StandardCosmologyWrapperAPI,
 )
-from cosmology.api.extras import HasHubbleParameter
 
 __all__ = [
     "CosmologyAPI",

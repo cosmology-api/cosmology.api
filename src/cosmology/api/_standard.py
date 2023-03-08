@@ -15,7 +15,7 @@ from cosmology.api._components import (
     NeutrinoComponent,
     PhotonComponent,
 )
-from cosmology.api.extras import HasHubbleParameter
+from cosmology.api._extras import HasHubbleParameter
 
 __all__: list[str] = []
 

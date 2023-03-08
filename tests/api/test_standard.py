@@ -17,7 +17,7 @@ from cosmology.api._components import (
     PhotonComponent,
 )
 from cosmology.api._core import CosmologyAPI
-from cosmology.api.extras import HasHubbleParameter
+from cosmology.api._extras import HasHubbleParameter
 
 from .conftest import _default_one, _return_1arg, _return_one
 
