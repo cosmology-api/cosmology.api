@@ -39,7 +39,7 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         Returns
         -------
         Array
-        """
+        """  # noqa: D402
         ...
 
     def h_over_h0(self, z: ArrayT | float, /) -> ArrayT:
