@@ -11,7 +11,7 @@ __all__: list[str] = []
 
 
 class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
-    r"""The cosmology contains global curvature, described by :math:`Omega_K`."""
+    r"""The cosmology has methods to retrieve the Hubble parameter :math:`H`."""
 
     @property
     def H0(self) -> ArrayT:
