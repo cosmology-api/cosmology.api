@@ -40,7 +40,7 @@ def test_compliant_darkmattercomponent(matter_cls):
         "ExampleDarkMatterComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {}],
         bases=(matter_cls,),
-        namespace={"Odm0": _return_one, "Odm": _return_1arg},
+        namespace={"Omega_dm0": _return_one, "Omega_dm": _return_1arg},
         frozen=True,
     )
 

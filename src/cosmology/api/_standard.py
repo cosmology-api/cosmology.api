@@ -50,7 +50,7 @@ class StandardCosmologyAPI(
     # Omega
 
     @property
-    def Otot0(self) -> ArrayT:
+    def Omega_tot0(self) -> ArrayT:
         r"""Omega total; the total density/critical density at z=0.
 
         .. math::
@@ -81,7 +81,7 @@ class StandardCosmologyAPI(
         """
         ...
 
-    def Otot(self, z: ArrayT | float, /) -> ArrayT:
+    def Omega_tot(self, z: ArrayT | float, /) -> ArrayT:
         r"""Redshift-dependent total density parameter.
 
         This is the sum of the matter, radiation, neutrino, dark energy, and

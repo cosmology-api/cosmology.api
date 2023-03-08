@@ -32,7 +32,7 @@ class FriedmannLemaitreRobertsonWalker(CosmologyAPI[ArrayT], Protocol):
         ...
 
     @property
-    def Otot0(self) -> ArrayT:
+    def Omega_tot0(self) -> ArrayT:
         r"""Omega total; the total density/critical density at z=0."""
         ...
 
@@ -60,7 +60,7 @@ class FriedmannLemaitreRobertsonWalker(CosmologyAPI[ArrayT], Protocol):
         """
         ...
 
-    def Otot(self, z: ArrayT | float, /) -> ArrayT:
+    def Omega_tot(self, z: ArrayT | float, /) -> ArrayT:
         r"""Redshift-dependent total density parameter.
 
         Parameters

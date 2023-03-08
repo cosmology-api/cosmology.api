@@ -40,7 +40,7 @@ def test_compliant_neutrinocomponent(bkg_flrw_cls):
         "ExampleNeutrinoComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {"Neff", "m_nu"}],
         bases=(bkg_flrw_cls,),
-        namespace={"Onu0": _return_one, "Onu": _return_1arg},
+        namespace={"Omega_nu0": _return_one, "Omega_nu": _return_1arg},
         frozen=True,
     )
 

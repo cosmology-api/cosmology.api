@@ -38,9 +38,9 @@ def test_compliant_darkenergycomponent(bkg_flrw_cls):
     """
     ExampleDarkEnergyComponent = make_dataclass(
         "ExampleDarkEnergyComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Ode0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_de0"}],
         bases=(bkg_flrw_cls,),
-        namespace={"Ode": _return_1arg},
+        namespace={"Omega_de": _return_1arg},
         frozen=True,
     )
 
