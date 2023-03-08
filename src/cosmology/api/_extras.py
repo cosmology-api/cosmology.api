@@ -60,17 +60,3 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         Array
         """
         ...
-
-    def inv_efunc(self, z: ArrayT | float, /) -> ArrayT:
-        """Inverse of ``efunc``.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
