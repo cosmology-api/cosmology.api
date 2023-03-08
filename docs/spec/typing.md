@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Static Typing
 
 ```{eval-rst}
