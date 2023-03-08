@@ -180,7 +180,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
         ...
 
     # ----------------------------------------------
-    # Angular diameter distance
+    # Angular
 
     def angular_diameter_distance(self, z: InputT_contra, /) -> ArrayT_co:
         """Angular diameter distance :math:`d_A(z)` in Mpc.
@@ -207,7 +207,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
         ...
 
     # ----------------------------------------------
-    # Luminosity distance
+    # Luminoisty
 
     def luminosity_distance(self, z: InputT_contra, /) -> ArrayT_co:
         """Redshift-dependent luminosity distance in Mpc.
