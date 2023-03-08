@@ -1,10 +1,10 @@
-"""Test ``cosmology.api.MatterComponent``."""
+"""Test ``cosmology.api.HasMatterComponent``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import MatterComponent
+from cosmology.api import HasMatterComponent
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg
@@ -17,16 +17,16 @@ from ..conftest import _default_one, _return_1arg
 def test_noncompliant_mattercomponent():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.MatterComponent`.
+    `cosmology.api.HasMatterComponent`.
     """
     # Simple example: missing everything
 
-    class ExampleMatterComponent:
+    class ExampleHasMatterComponent:
         pass
 
-    cosmo = ExampleMatterComponent()
+    cosmo = ExampleHasMatterComponent()
 
-    assert not isinstance(cosmo, MatterComponent)
+    assert not isinstance(cosmo, HasMatterComponent)
 
     # TODO: more examples?
 
@@ -34,24 +34,24 @@ def test_noncompliant_mattercomponent():
 def test_compliant_mattercomponent(bkg_flrw_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.MatterComponent`.
+    `cosmology.api.HasMatterComponent`.
     """
-    ExampleMatterComponent = make_dataclass(
-        "ExampleMatterComponent",
+    ExampleHasMatterComponent = make_dataclass(
+        "ExampleHasMatterComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {"Omega_m0"}],
         bases=(bkg_flrw_cls,),
         namespace={"Omega_m": _return_1arg},
         frozen=True,
     )
 
-    cosmo = ExampleMatterComponent()
+    cosmo = ExampleHasMatterComponent()
 
-    assert isinstance(cosmo, MatterComponent)
+    assert isinstance(cosmo, HasMatterComponent)
 
 
 def test_fixture(matter_cls):
     """
     Test that the ``matter_cls`` fixture is a
-    `cosmology.api.MatterComponent`.
+    `cosmology.api.HasMatterComponent`.
     """
-    assert isinstance(matter_cls(), MatterComponent)
+    assert isinstance(matter_cls(), HasMatterComponent)

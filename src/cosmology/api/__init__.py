@@ -2,13 +2,13 @@
 
 from cosmology.api._background import FriedmannLemaitreRobertsonWalker
 from cosmology.api._components import (
-    BaryonComponent,
-    DarkEnergyComponent,
-    DarkMatterComponent,
-    GlobalCurvatureComponent,
-    MatterComponent,
-    NeutrinoComponent,
-    PhotonComponent,
+    HasBaryonComponent,
+    HasDarkEnergyComponent,
+    HasDarkMatterComponent,
+    HasGlobalCurvatureComponent,
+    HasMatterComponent,
+    HasNeutrinoComponent,
+    HasPhotonComponent,
 )
 from cosmology.api._constants import CosmologyConstantsAPINamespace
 from cosmology.api._core import CosmologyAPI
@@ -25,13 +25,13 @@ __all__ = [
     "FriedmannLemaitreRobertsonWalker",
     "StandardCosmologyAPI",
     # components
-    "GlobalCurvatureComponent",
-    "MatterComponent",
-    "BaryonComponent",
-    "NeutrinoComponent",
-    "DarkEnergyComponent",
-    "DarkMatterComponent",
-    "PhotonComponent",
+    "HasGlobalCurvatureComponent",
+    "HasMatterComponent",
+    "HasBaryonComponent",
+    "HasNeutrinoComponent",
+    "HasDarkEnergyComponent",
+    "HasDarkMatterComponent",
+    "HasPhotonComponent",
     # parametrizations
     "HasHubbleParameter",
     # wrappers

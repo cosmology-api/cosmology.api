@@ -1,10 +1,10 @@
-"""Test ``cosmology.api.DarkEnergyComponent``."""
+"""Test ``cosmology.api.HasDarkEnergyComponent``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import DarkEnergyComponent
+from cosmology.api import HasDarkEnergyComponent
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg, _return_one  # noqa: F401
@@ -17,16 +17,16 @@ from ..conftest import _default_one, _return_1arg, _return_one  # noqa: F401
 def test_noncompliant_darkenergycomponent():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.DarkEnergyComponent`.
+    `cosmology.api.HasDarkEnergyComponent`.
     """
     # Simple example: missing everything
 
-    class ExampleDarkEnergyComponent:
+    class ExampleHasDarkEnergyComponent:
         pass
 
-    cosmo = ExampleDarkEnergyComponent()
+    cosmo = ExampleHasDarkEnergyComponent()
 
-    assert not isinstance(cosmo, DarkEnergyComponent)
+    assert not isinstance(cosmo, HasDarkEnergyComponent)
 
     # TODO: more examples?
 
@@ -34,24 +34,24 @@ def test_noncompliant_darkenergycomponent():
 def test_compliant_darkenergycomponent(bkg_flrw_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.DarkEnergyComponent`.
+    `cosmology.api.HasDarkEnergyComponent`.
     """
-    ExampleDarkEnergyComponent = make_dataclass(
-        "ExampleDarkEnergyComponent",
+    ExampleHasDarkEnergyComponent = make_dataclass(
+        "ExampleHasDarkEnergyComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {"Omega_de0"}],
         bases=(bkg_flrw_cls,),
         namespace={"Omega_de": _return_1arg},
         frozen=True,
     )
 
-    cosmo = ExampleDarkEnergyComponent()
+    cosmo = ExampleHasDarkEnergyComponent()
 
-    assert isinstance(cosmo, DarkEnergyComponent)
+    assert isinstance(cosmo, HasDarkEnergyComponent)
 
 
 def test_fixture(darkenergy_cls):
     """
     Test that the ``darkenergy_cls`` fixture is a
-    `cosmology.api.DarkEnergyComponent`.
+    `cosmology.api.HasDarkEnergyComponent`.
     """
-    assert isinstance(darkenergy_cls(), DarkEnergyComponent)
+    assert isinstance(darkenergy_cls(), HasDarkEnergyComponent)

@@ -8,13 +8,13 @@ from cosmology.api import StandardCosmologyAPI
 from cosmology.api._array_api import Array
 from cosmology.api._background import FriedmannLemaitreRobertsonWalker
 from cosmology.api._components import (
-    BaryonComponent,
-    DarkEnergyComponent,
-    DarkMatterComponent,
-    GlobalCurvatureComponent,
-    MatterComponent,
-    NeutrinoComponent,
-    PhotonComponent,
+    HasBaryonComponent,
+    HasDarkEnergyComponent,
+    HasDarkMatterComponent,
+    HasGlobalCurvatureComponent,
+    HasMatterComponent,
+    HasNeutrinoComponent,
+    HasPhotonComponent,
 )
 from cosmology.api._core import CosmologyAPI
 from cosmology.api._extras import HasHubbleParameter
@@ -66,13 +66,13 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
     assert isinstance(cosmo, FriedmannLemaitreRobertsonWalker)
 
     # Check Components
-    assert isinstance(cosmo, BaryonComponent)
-    assert isinstance(cosmo, DarkEnergyComponent)
-    assert isinstance(cosmo, DarkMatterComponent)
-    assert isinstance(cosmo, GlobalCurvatureComponent)
-    assert isinstance(cosmo, MatterComponent)
-    assert isinstance(cosmo, NeutrinoComponent)
-    assert isinstance(cosmo, PhotonComponent)
+    assert isinstance(cosmo, HasBaryonComponent)
+    assert isinstance(cosmo, HasDarkEnergyComponent)
+    assert isinstance(cosmo, HasDarkMatterComponent)
+    assert isinstance(cosmo, HasGlobalCurvatureComponent)
+    assert isinstance(cosmo, HasMatterComponent)
+    assert isinstance(cosmo, HasNeutrinoComponent)
+    assert isinstance(cosmo, HasPhotonComponent)
 
     # Check Parametrizations
     assert isinstance(cosmo, HasHubbleParameter)
