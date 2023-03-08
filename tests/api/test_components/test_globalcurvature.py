@@ -40,7 +40,7 @@ def test_compliant_globalcurvaturecomponent(bkg_flrw_cls):
         "ExampleGlobalCurvatureComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {}],
         bases=(bkg_flrw_cls,),
-        namespace={"Ok0": _return_one, "Ok": _return_1arg},
+        namespace={"Omega_k0": _return_one, "Omega_k": _return_1arg},
         frozen=True,
     )
 

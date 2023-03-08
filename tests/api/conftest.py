@@ -129,7 +129,7 @@ def globalcurvature_cls(
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(GlobalCurvatureComponent)
     comp_meths = get_comp_meths(GlobalCurvatureComponent)
-    fields = set()  # Ok0 is not a field
+    fields = set()  # Omega_k0 is not a field
     return make_dataclass(
         "ExampleGlobalCurvatureComponent",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
@@ -147,7 +147,7 @@ def matter_cls(
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(MatterComponent)
     comp_meths = get_comp_meths(MatterComponent)
-    fields = {"Om0"}
+    fields = {"Omega_m0"}
     return make_dataclass(
         "ExampleMatterComponent",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
@@ -163,7 +163,7 @@ def baryon_cls(matter_cls: type[CosmologyAPI]) -> type[BaryonComponent | Cosmolo
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(BaryonComponent)
     comp_meths = get_comp_meths(BaryonComponent)
-    flds = {f.name for f in fields(matter_cls)} | {"Ob0"}
+    flds = {f.name for f in fields(matter_cls)} | {"Omega_b0"}
     return make_dataclass(
         "ExampleBaryonComponent",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
@@ -181,7 +181,7 @@ def darkmatter_cls(
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(DarkMatterComponent)
     comp_meths = get_comp_meths(DarkMatterComponent)
-    flds = {f.name for f in fields(matter_cls)}  # Odm0 is not a field
+    flds = {f.name for f in fields(matter_cls)}  # Omega_dm0 is not a field
     return make_dataclass(
         "ExampleDarkMatterComponent",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
@@ -217,7 +217,7 @@ def photon_cls(
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(PhotonComponent)
     comp_meths = get_comp_meths(PhotonComponent)
-    fields = set()  # Ogamma0 is not a field
+    fields = set()  # Omega_gamma0 is not a field
     return make_dataclass(
         "ExamplePhotonComponent",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
@@ -236,7 +236,7 @@ def darkenergy_cls(
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(DarkEnergyComponent)
     comp_meths = get_comp_meths(DarkEnergyComponent)
-    fields = {"Ode0"}
+    fields = {"Omega_de0"}
     return make_dataclass(
         "ExampleDarkEnergyComponent",
         [(n, Array, field(default_factory=_default_one)) for n in fields],

@@ -38,9 +38,9 @@ def test_compliant_mattercomponent(bkg_flrw_cls):
     """
     ExampleMatterComponent = make_dataclass(
         "ExampleMatterComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Om0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_m0"}],
         bases=(bkg_flrw_cls,),
-        namespace={"Om": _return_1arg},
+        namespace={"Omega_m": _return_1arg},
         frozen=True,
     )
 

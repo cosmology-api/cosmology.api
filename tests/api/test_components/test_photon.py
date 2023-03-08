@@ -40,7 +40,7 @@ def test_compliant_photoncomponent(bkg_flrw_cls):
         "ExamplePhotonComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {}],
         bases=(bkg_flrw_cls,),
-        namespace={"Ogamma0": _return_one, "Ogamma": _return_1arg},
+        namespace={"Omega_gamma0": _return_one, "Omega_gamma": _return_1arg},
         frozen=True,
     )
 
