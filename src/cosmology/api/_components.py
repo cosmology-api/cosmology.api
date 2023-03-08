@@ -34,7 +34,7 @@ class HasTotalComponent(Cosmology[ArrayT_co, InputT_contra], Protocol):
 
 
 class HasGlobalCurvatureComponent(Cosmology[ArrayT_co, InputT_contra], Protocol):
-    r"""The cosmology contains global curvature, described by :math:`Omega_K`."""
+    r"""The cosmology contains global curvature, described by :math:`Omega_k`."""
 
     @property
     def Omega_k0(self) -> ArrayT_co:
@@ -164,7 +164,7 @@ class HasDarkEnergyComponent(Cosmology[ArrayT_co, InputT_contra], Protocol):
 
 
 class HasDarkMatterComponent(HasMatterComponent[ArrayT_co, InputT_contra], Protocol):
-    r"""The cosmology contains cold dark matter, described by :math:`Omega_dm`."""
+    r"""The cosmology contains cold dark matter, described by :math:`Omega_{\rm dm}`."""
 
     @property
     def Omega_dm0(self) -> ArrayT_co:

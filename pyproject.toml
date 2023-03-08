@@ -2,7 +2,7 @@
   name = "cosmology.api"
   version = "0.1.0"
   description = "Cosmology API standard"
-  readme = "README.rst"
+  readme = "README.md"
   requires-python = ">=3.9"
   license = {file = "LICENSE.txt"}
   keywords = ["cosmology", "API"]
@@ -36,15 +36,13 @@
   docs = [
     "furo",
     "graphviz",
-    "IPython",
-    "jupyter_client",
-    "matplotlib",
-    "nbsphinx",
-    "pydata-sphinx-theme",
+    "myst_parser",
     "sphinx",
     "sphinx-astropy",
-    "sphinx-subprojecttoctree",
-    "sphinxcontrib.bibtex < 3.0.0",
+    "sphinx-copybutton",
+    "sphinx-design",
+    "sphinx-inline-tabs",
+    "sphinx-tabs",
     "tomlkit",
   ]
 

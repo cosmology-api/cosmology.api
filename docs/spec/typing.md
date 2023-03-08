@@ -1,10 +1,6 @@
-.. _api-static_typing:
+# Static Typing
 
-#############
-Static Typing
-#############
-
-
+```{eval-rst}
 .. csv-table:: Array + float :rst:dir:`csv-table`
    :header: "Array Library", "Version", "Can add float"
 
@@ -15,5 +11,6 @@ Static Typing
    "Jax",         "0.4.3",      "Yes"
    "Torch",       "1.13.1",     "Yes"
    "Tensorflow",  "2.11.0",     "Yes"
+```
 
 Last tested 2023-02-09.
