@@ -14,10 +14,10 @@ from cosmology.api import (
     Cosmology,
     CosmologyConstantsNamespace,
     CosmologyNamespace,
-    FriedmannLemaitreRobertsonWalker,
     HasBaryonComponent,
     HasDarkEnergyComponent,
     HasDarkMatterComponent,
+    HasDistanceMeasures,
     HasGlobalCurvatureComponent,
     HasMatterComponent,
     HasNeutrinoComponent,
@@ -293,47 +293,45 @@ def hastcmb_cls(
 # Background API
 
 
-BACKGROUND_FLRW_ATTRS, BACKGROUND_FLRW_METHS = _get_attrs_meths(
-    FriedmannLemaitreRobertsonWalker, Cosmology
-)
+DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(HasDistanceMeasures, Cosmology)
 
 
 @pytest.fixture(scope="session")
-def bkg_flrw_attrs() -> frozenset[str]:
-    """The FriedmannLemaitreRobertsonWalker atributes."""
-    return BACKGROUND_FLRW_ATTRS
+def dists_attrs() -> frozenset[str]:
+    """The HasDistanceMeasures atributes."""
+    return DISTANCES_ATTRS
 
 
 @pytest.fixture(scope="session")
-def bkg_flrw_meths() -> frozenset[str]:
-    """The FriedmannLemaitreRobertsonWalker methods."""
-    return BACKGROUND_FLRW_METHS
+def dists_meths() -> frozenset[str]:
+    """The HasDistanceMeasures methods."""
+    return DISTANCES_METHS
 
 
 @pytest.fixture(scope="session")
-def bkg_flrw_cls(
+def dists_cls(
     cosmology_cls: type[Cosmology],
-    bkg_flrw_attrs: set[str],
-    bkg_flrw_meths: set[str],
-) -> type[FriedmannLemaitreRobertsonWalker]:
+    dists_attrs: set[str],
+    dists_meths: set[str],
+) -> type[HasDistanceMeasures]:
     """An example Background class."""
     flds = set()  # there are no fields
     return make_dataclass(
-        "ExampleFriedmannLemaitreRobertsonWalker",
+        "ExampleHasDistanceMeasures",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in bkg_flrw_attrs - flds}
-        | {n: _return_1arg for n in bkg_flrw_meths},
+        namespace={n: property(_return_one) for n in dists_attrs - flds}
+        | {n: _return_1arg for n in dists_meths},
         frozen=True,
     )
 
 
 @pytest.fixture(scope="session")
-def bkg_flrw(
-    bkg_flrw_cls: type[FriedmannLemaitreRobertsonWalker],
-) -> FriedmannLemaitreRobertsonWalker:
+def dists(
+    dists_cls: type[HasDistanceMeasures],
+) -> HasDistanceMeasures:
     """An example FLRW API instance."""
-    return bkg_flrw_cls()
+    return dists_cls()
 
 
 # ==============================================================================
@@ -357,7 +355,7 @@ def standard_meths() -> frozenset[str]:
 
 @pytest.fixture(scope="session")
 def standard_cls(  # noqa: PLR0913
-    bkg_flrw_cls: type[FriedmannLemaitreRobertsonWalker],
+    dists_cls: type[HasDistanceMeasures],
     globalcurvature_cls: type[HasGlobalCurvatureComponent],
     matter_cls: type[HasMatterComponent],
     baryon_cls: type[HasBaryonComponent],
@@ -377,7 +375,7 @@ def standard_cls(  # noqa: PLR0913
         darkmatter_cls,
         matter_cls,
         globalcurvature_cls,
-        bkg_flrw_cls,
+        dists_cls,
     )
     flds = functools.reduce(
         operator.or_, ({f.name for f in fields(c)} for c in bases)

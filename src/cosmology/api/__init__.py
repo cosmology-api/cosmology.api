@@ -1,6 +1,5 @@
 """The Cosmology API standard."""
 
-from cosmology.api._background import FriedmannLemaitreRobertsonWalker
 from cosmology.api._components import (
     HasBaryonComponent,
     HasDarkEnergyComponent,
@@ -12,6 +11,7 @@ from cosmology.api._components import (
 )
 from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
+from cosmology.api._distances import HasDistanceMeasures
 from cosmology.api._extras import HasHubbleParameter, HasTcmb
 from cosmology.api._namespace import CosmologyNamespace
 from cosmology.api._standard import StandardCosmology
@@ -22,7 +22,7 @@ from cosmology.api.compat import (
 
 __all__ = [
     "Cosmology",
-    "FriedmannLemaitreRobertsonWalker",
+    "HasDistanceMeasures",
     "StandardCosmology",
     # components
     "HasGlobalCurvatureComponent",
