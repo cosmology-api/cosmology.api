@@ -15,7 +15,7 @@ from cosmology.api._components import (
     HasNeutrinoComponent,
     HasPhotonComponent,
 )
-from cosmology.api._extras import HasHubbleParameter
+from cosmology.api._extras import HasHubbleParameter, HasTcmb
 
 __all__: list[str] = []
 
@@ -29,6 +29,7 @@ class StandardCosmologyAPI(
     HasMatterComponent[ArrayT],
     HasDarkEnergyComponent[ArrayT],
     HasGlobalCurvatureComponent[ArrayT],
+    HasTcmb[ArrayT],
     HasHubbleParameter[ArrayT],
     FriedmannLemaitreRobertsonWalker[ArrayT],
     Protocol,
@@ -41,14 +42,7 @@ class StandardCosmologyAPI(
     libraries that wish to define a compatible cosmology class.
     """
 
-    @property
-    def Tcmb0(self) -> ArrayT:
-        """Temperature of the CMB at redshift 0 in Kelvin."""
-        ...
-
-    # ----------------------------------------------
-    # Omega
-
+    # Override from the base classes, for better docstring.
     @property
     def Omega_tot0(self) -> ArrayT:
         r"""Omega total; the total density/critical density at z=0.
@@ -64,23 +58,7 @@ class StandardCosmologyAPI(
         """
         ...
 
-    # ==============================================================
-    # Methods
-
-    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
-        """Temperature of the CMB at redshift z in Kelvin.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            The redshift(s) at which to evaluate the CMB temperature.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
+    # Override from the base classes, for better docstring.
     def Omega_tot(self, z: ArrayT | float, /) -> ArrayT:
         r"""Redshift-dependent total density parameter.
 

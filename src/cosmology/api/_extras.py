@@ -39,7 +39,7 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         Returns
         -------
         Array
-        """
+        """  # noqa: D402
         ...
 
     def h_over_h0(self, z: ArrayT | float, /) -> ArrayT:
@@ -49,6 +49,29 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         ----------
         z : Array
             The redshift(s) at which to evaluate.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+
+class HasTcmb(CosmologyAPI[ArrayT], Protocol):
+    r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
+
+    @property
+    def Tcmb0(self) -> ArrayT:
+        """CMB temperature in K at z=0."""
+        ...
+
+    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
+        """CMB temperature in K at redshift z.
+
+        Parameters
+        ----------
+        z : Array, positional-only
+            Input redshift.
 
         Returns
         -------

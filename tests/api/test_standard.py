@@ -17,7 +17,7 @@ from cosmology.api._components import (
     HasPhotonComponent,
 )
 from cosmology.api._core import CosmologyAPI
-from cosmology.api._extras import HasHubbleParameter
+from cosmology.api._extras import HasHubbleParameter, HasTcmb
 
 from .conftest import _default_one, _return_1arg, _return_one
 
@@ -76,6 +76,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
 
     # Check Parametrizations
     assert isinstance(cosmo, HasHubbleParameter)
+    assert isinstance(cosmo, HasTcmb)
 
     # Full Standard Cosmology
     assert isinstance(cosmo, StandardCosmologyAPI)

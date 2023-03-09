@@ -29,7 +29,7 @@ def get_array_from_library(name: ArrayLibraries) -> tuple[str, object]:  # noqa:
 
         return vrsn, array.array("f", [1.0, 2.0, 3.0])
 
-    elif name == ArrayLibraries.numpy:
+    elif name == ArrayLibraries.numpy:  # noqa: RET505
         import numpy as np
 
         return np.__version__, np.linspace(0, 1, 10, dtype=np.float64)
