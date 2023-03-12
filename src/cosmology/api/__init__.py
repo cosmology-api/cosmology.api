@@ -16,8 +16,8 @@ from cosmology.api._extras import HasHubbleParameter, HasTcmb
 from cosmology.api._namespace import CosmologyAPINamespace
 from cosmology.api._standard import StandardCosmology
 from cosmology.api.compat import (
-    CosmologyWrapperAPI,
-    StandardCosmologyWrapperAPI,
+    CosmologyWrapper,
+    StandardCosmologyWrapper,
 )
 
 __all__ = [
@@ -36,8 +36,8 @@ __all__ = [
     "HasHubbleParameter",
     "HasTcmb",
     # wrappers
-    "CosmologyWrapperAPI",
-    "StandardCosmologyWrapperAPI",
+    "CosmologyWrapper",
+    "StandardCosmologyWrapper",
     # Namespaces
     "CosmologyAPINamespace",
     "CosmologyConstantsAPINamespace",

@@ -13,7 +13,7 @@ Changelog (``cosmology.api``)
 -  CosmologyConstantsAPINamespace is the Protocol defining the constants
    namespace of the API. (#1) [nstarman]
 
-- CosmologyWrapperAPI is the Protocol defining an API-conformant
+- CosmologyWrapper is the Protocol defining an API-conformant
   wrapper for a non-conformant cosmology class. (#4) [nstarman]
 
    - A default implementation is provided for ``__getattr__`` that passes

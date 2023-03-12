@@ -10,7 +10,7 @@ from cosmology.api._core import Cosmology
 __all__: list[str] = []
 
 
-class CosmologyWrapperAPI(Cosmology[ArrayT_co], Protocol):
+class CosmologyWrapper(Cosmology[ArrayT_co], Protocol):
     """The standard for ``Cosmology`` compatability wrappers.
 
     This is a protocol class that defines an API standard. It is not intended to
