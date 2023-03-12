@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import numpy.array_api as xp
 import pytest
 from cosmology.api import (
-    CosmologyAPI,
+    Cosmology,
     CosmologyAPINamespace,
     CosmologyWrapperAPI,
     StandardCosmology,
@@ -82,7 +82,7 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
 
     wrapper = StandardCosmologyWrapper(object())
 
-    assert isinstance(wrapper, CosmologyAPI)
+    assert isinstance(wrapper, Cosmology)
     assert isinstance(wrapper, CosmologyWrapperAPI)
     assert isinstance(wrapper, StandardCosmology)
     assert isinstance(wrapper, StandardCosmologyWrapperAPI)
@@ -130,7 +130,7 @@ class Test_StandardCosmologyWrapperAPI:
 
     def test_is_compliant(self, wrapper):
         """Test that the wrapper is compliant."""
-        assert isinstance(wrapper, CosmologyAPI)
+        assert isinstance(wrapper, Cosmology)
         assert isinstance(wrapper, CosmologyWrapperAPI)
         assert isinstance(wrapper, StandardCosmologyWrapperAPI)
 

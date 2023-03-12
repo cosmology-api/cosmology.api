@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from cosmology.api import CosmologyAPI, CosmologyAPINamespace
+from cosmology.api import Cosmology, CosmologyAPINamespace
 
 ################################################################################
 # TESTS
@@ -14,16 +14,16 @@ from cosmology.api import CosmologyAPI, CosmologyAPINamespace
 def test_noncompliant_cosmology():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.CosmologyAPI`.
+    `cosmology.api.Cosmology`.
     """
     # Simple example: missing everything
 
-    class Cosmology:
+    class ExampleCosmology:
         pass
 
-    cosmo = Cosmology()
+    cosmo = ExampleCosmology()
 
-    assert not isinstance(cosmo, CosmologyAPI)
+    assert not isinstance(cosmo, Cosmology)
 
     # TODO: more examples?
 
@@ -31,7 +31,7 @@ def test_noncompliant_cosmology():
 def test_compliant_cosmology(cosmology_ns):
     """
     Test that a compliant instance is a
-    `cosmology.api.CosmologyAPI`.
+    `cosmology.api.Cosmology`.
     """
 
     @dataclass
@@ -48,12 +48,12 @@ def test_compliant_cosmology(cosmology_ns):
 
     cosmo = Cosmology()
 
-    assert isinstance(cosmo, CosmologyAPI)
+    assert isinstance(cosmo, Cosmology)
 
 
 def test_fixture(cosmology):
     """
     Test that the ``cosmology`` fixture is a
-    `cosmology.api.CosmologyAPI`.
+    `cosmology.api.Cosmology`.
     """
-    assert isinstance(cosmology, CosmologyAPI)
+    assert isinstance(cosmology, Cosmology)

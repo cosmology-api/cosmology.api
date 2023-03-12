@@ -13,7 +13,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class CosmologyAPI(Protocol[ArrayT_co]):
+class Cosmology(Protocol[ArrayT_co]):
     """Cosmology API Protocol."""
 
     def __cosmology_namespace__(

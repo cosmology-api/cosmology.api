@@ -5,12 +5,12 @@ from __future__ import annotations
 from typing import Protocol
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api._core import CosmologyAPI
+from cosmology.api._core import Cosmology
 
 __all__: list[str] = []
 
 
-class HasGlobalCurvatureComponent(CosmologyAPI[ArrayT], Protocol):
+class HasGlobalCurvatureComponent(Cosmology[ArrayT], Protocol):
     r"""The cosmology contains global curvature, described by :math:`Omega_K`."""
 
     @property
@@ -33,7 +33,7 @@ class HasGlobalCurvatureComponent(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class HasMatterComponent(CosmologyAPI[ArrayT], Protocol):
+class HasMatterComponent(Cosmology[ArrayT], Protocol):
     r"""The cosmology contains matter, described by :math:`Omega_m`."""
 
     @property
@@ -84,7 +84,7 @@ class HasBaryonComponent(HasMatterComponent[ArrayT], Protocol):
         ...
 
 
-class HasNeutrinoComponent(CosmologyAPI[ArrayT], Protocol):
+class HasNeutrinoComponent(Cosmology[ArrayT], Protocol):
     r"""The cosmology contains neutrinos, described by :math:`Omega_\nu`."""
 
     @property
@@ -117,7 +117,7 @@ class HasNeutrinoComponent(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class HasDarkEnergyComponent(CosmologyAPI[ArrayT], Protocol):
+class HasDarkEnergyComponent(Cosmology[ArrayT], Protocol):
     r"""The cosmology contains photons, described by :math:`Omega_{\rm de}`."""
 
     @property
@@ -168,7 +168,7 @@ class HasDarkMatterComponent(HasMatterComponent[ArrayT], Protocol):
         ...
 
 
-class HasPhotonComponent(CosmologyAPI[ArrayT], Protocol):
+class HasPhotonComponent(Cosmology[ArrayT], Protocol):
     r"""The cosmology contains photons, described by :math:`Omega_\gamma`."""
 
     @property

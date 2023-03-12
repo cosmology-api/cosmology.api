@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import pytest
 from cosmology.api import (
-    CosmologyAPI,
+    Cosmology,
     CosmologyAPINamespace,
     CosmologyWrapperAPI,
 )
@@ -61,7 +61,7 @@ def test_compliant_cosmology(cosmology_ns):
 
     wrapper = ExampleCosmologyWrapper(object())
 
-    assert isinstance(wrapper, CosmologyAPI)
+    assert isinstance(wrapper, Cosmology)
     assert isinstance(wrapper, CosmologyWrapperAPI)
 
 
@@ -102,7 +102,7 @@ class Test_CosmologyWrapperAPI:
 
     def test_is_compliant(self, wrapper):
         """Test that the wrapper is compliant."""
-        assert isinstance(wrapper, CosmologyAPI)
+        assert isinstance(wrapper, Cosmology)
         assert isinstance(wrapper, CosmologyWrapperAPI)
 
     def test_getattr(self, wrapper):
