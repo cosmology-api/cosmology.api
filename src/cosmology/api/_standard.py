@@ -21,7 +21,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class StandardCosmologyAPI(
+class StandardCosmology(
     HasNeutrinoComponent[ArrayT],
     HasBaryonComponent[ArrayT],
     HasPhotonComponent[ArrayT],
