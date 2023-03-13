@@ -7,10 +7,10 @@ Changelog (``cosmology.api``)
 - Cosmology is the Protocol defining conformant cosmology classes.
   (#1) [nstarman]
 
--  CosmologyAPINamespace is the Protocol defining the main namespace of the
+-  CosmologyNamespace is the Protocol defining the main namespace of the
    API. (#1) [nstarman]
 
--  CosmologyConstantsAPINamespace is the Protocol defining the constants
+-  CosmologyConstantsNamespace is the Protocol defining the constants
    namespace of the API. (#1) [nstarman]
 
 - CosmologyWrapper is the Protocol defining an API-conformant

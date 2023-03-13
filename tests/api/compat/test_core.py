@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import pytest
 from cosmology.api import (
     Cosmology,
-    CosmologyAPINamespace,
+    CosmologyNamespace,
     CosmologyWrapper,
 )
 
@@ -49,7 +49,7 @@ def test_compliant_cosmology(cosmology_ns):
             /,
             *,
             api_version: str | None = None,
-        ) -> CosmologyAPINamespace:
+        ) -> CosmologyNamespace:
             return cosmology_ns
 
         @property
@@ -69,7 +69,7 @@ class Test_CosmologyWrapper:
     @pytest.fixture(scope="class")
     def wrapper_cls(
         self,
-        cosmology_ns: CosmologyAPINamespace,
+        cosmology_ns: CosmologyNamespace,
     ) -> type[CosmologyWrapper]:
         @dataclass(frozen=True)
         class ExampleCosmologyWrapper(CosmologyWrapper):
@@ -80,7 +80,7 @@ class Test_CosmologyWrapper:
                 /,
                 *,
                 api_version: str | None = None,
-            ) -> CosmologyAPINamespace:
+            ) -> CosmologyNamespace:
                 return cosmology_ns
 
             @property

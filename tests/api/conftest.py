@@ -12,8 +12,8 @@ import numpy.array_api as xp
 import pytest
 from cosmology.api import (
     Cosmology,
-    CosmologyAPINamespace,
-    CosmologyConstantsAPINamespace,
+    CosmologyConstantsNamespace,
+    CosmologyNamespace,
     FriedmannLemaitreRobertsonWalker,
     HasBaryonComponent,
     HasDarkEnergyComponent,
@@ -59,13 +59,13 @@ def _get_attrs_meths(
 
 
 @pytest.fixture(scope="session")
-def constants_ns() -> CosmologyConstantsAPINamespace:
+def constants_ns() -> CosmologyConstantsNamespace:
     """The cosmology constants API namespace."""
     return SimpleNamespace(G=1, c=2)
 
 
 @pytest.fixture(scope="session")
-def cosmology_ns(constants_ns: CosmologyConstantsAPINamespace) -> CosmologyAPINamespace:
+def cosmology_ns(constants_ns: CosmologyConstantsNamespace) -> CosmologyNamespace:
     """The cosmology API namespace."""
     return SimpleNamespace(constants=constants_ns)
 
@@ -75,7 +75,7 @@ def cosmology_ns(constants_ns: CosmologyConstantsAPINamespace) -> CosmologyAPINa
 
 
 @pytest.fixture(scope="session")
-def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[Cosmology]:
+def cosmology_cls(cosmology_ns: CosmologyNamespace) -> type[Cosmology]:
     """An example cosmology API class."""
 
     @dataclass(frozen=True)
@@ -86,7 +86,7 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[Cosmology]:
 
         def __cosmology_namespace__(
             self, /, *, api_version: str | None = None
-        ) -> CosmologyAPINamespace:
+        ) -> CosmologyNamespace:
             return cosmology_ns
 
         # === not Cosmology ===

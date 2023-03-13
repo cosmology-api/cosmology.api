@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from cosmology.api import Cosmology, CosmologyAPINamespace
+from cosmology.api import Cosmology, CosmologyNamespace
 
 ################################################################################
 # TESTS
@@ -43,7 +43,7 @@ def test_compliant_cosmology(cosmology_ns):
             /,
             *,
             api_version: str | None = None,
-        ) -> CosmologyAPINamespace:
+        ) -> CosmologyNamespace:
             return cosmology_ns
 
     cosmo = Cosmology()

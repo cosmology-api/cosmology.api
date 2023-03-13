@@ -15,14 +15,14 @@ from typing import TYPE_CHECKING, Protocol, runtime_checkable
 __all__: list[str] = []
 
 if TYPE_CHECKING:
-    from cosmology.api._constants import CosmologyConstantsAPINamespace
+    from cosmology.api._constants import CosmologyConstantsNamespace
 
 
 @runtime_checkable
-class CosmologyAPINamespace(Protocol):
+class CosmologyNamespace(Protocol):
     """Runtime-checkable Protocol for the Cosmology API namespace."""
 
     @property
-    def constants(self) -> CosmologyConstantsAPINamespace:
+    def constants(self) -> CosmologyConstantsNamespace:
         """The cosmology constants API."""
         ...

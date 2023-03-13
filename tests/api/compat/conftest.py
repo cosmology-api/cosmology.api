@@ -6,7 +6,7 @@ from dataclasses import dataclass, make_dataclass
 
 import pytest
 from cosmology.api import (
-    CosmologyAPINamespace,
+    CosmologyNamespace,
     CosmologyWrapper,
     StandardCosmologyWrapper,
 )
@@ -25,7 +25,7 @@ from ..conftest import (  # noqa: F401
 
 @pytest.fixture(scope="session")
 def cosmology_wrapper_cls(
-    cosmology_ns: CosmologyAPINamespace,  # noqa: F811
+    cosmology_ns: CosmologyNamespace,  # noqa: F811
 ) -> type[CosmologyWrapper]:
     """An example cosmology API wrapper class."""
 
@@ -37,7 +37,7 @@ def cosmology_wrapper_cls(
 
         def __cosmology_namespace__(
             self, /, *, api_version: str | None = None
-        ) -> CosmologyAPINamespace:
+        ) -> CosmologyNamespace:
             return cosmology_ns
 
         @property

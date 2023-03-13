@@ -10,10 +10,10 @@ from cosmology.api._components import (
     HasNeutrinoComponent,
     HasPhotonComponent,
 )
-from cosmology.api._constants import CosmologyConstantsAPINamespace
+from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
 from cosmology.api._extras import HasHubbleParameter, HasTcmb
-from cosmology.api._namespace import CosmologyAPINamespace
+from cosmology.api._namespace import CosmologyNamespace
 from cosmology.api._standard import StandardCosmology
 from cosmology.api.compat import (
     CosmologyWrapper,
@@ -39,6 +39,6 @@ __all__ = [
     "CosmologyWrapper",
     "StandardCosmologyWrapper",
     # Namespaces
-    "CosmologyAPINamespace",
-    "CosmologyConstantsAPINamespace",
+    "CosmologyNamespace",
+    "CosmologyConstantsNamespace",
 ]

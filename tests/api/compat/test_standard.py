@@ -9,7 +9,7 @@ import numpy.array_api as xp
 import pytest
 from cosmology.api import (
     Cosmology,
-    CosmologyAPINamespace,
+    CosmologyNamespace,
     CosmologyWrapper,
     StandardCosmology,
     StandardCosmologyWrapper,
@@ -58,7 +58,7 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
         /,
         *,
         api_version: str | None = None,
-    ) -> CosmologyAPINamespace:
+    ) -> CosmologyNamespace:
         return cosmology_ns
 
     def name(self) -> str | None:
@@ -92,7 +92,7 @@ class Test_StandardCosmologyWrapper:
     @pytest.fixture(scope="class")
     def wrapper_cls(
         self,
-        cosmology_ns: CosmologyAPINamespace,
+        cosmology_ns: CosmologyNamespace,
     ) -> type[StandardCosmologyWrapper]:
         @dataclass(frozen=True)
         class ExampleStandardCosmologyWrapper(StandardCosmologyWrapper):
@@ -103,7 +103,7 @@ class Test_StandardCosmologyWrapper:
                 /,
                 *,
                 api_version: str | None = None,
-            ) -> CosmologyAPINamespace:
+            ) -> CosmologyNamespace:
                 return cosmology_ns
 
             @property

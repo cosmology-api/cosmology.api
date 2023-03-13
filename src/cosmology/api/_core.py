@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Protocol, runtime_checkable
 from cosmology.api._array_api import ArrayT_co
 
 if TYPE_CHECKING:
-    from ._namespace import CosmologyAPINamespace
+    from ._namespace import CosmologyNamespace
 
 __all__: list[str] = []
 
@@ -21,7 +21,7 @@ class Cosmology(Protocol[ArrayT_co]):
         /,
         *,
         api_version: str | None = None,
-    ) -> CosmologyAPINamespace:
+    ) -> CosmologyNamespace:
         """Returns an object that has all the cosmology API functions on it.
 
         Parameters
@@ -36,7 +36,7 @@ class Cosmology(Protocol[ArrayT_co]):
 
         Returns
         -------
-        `CosmologyAPINamespace`
+        `CosmologyNamespace`
             an object representing the cosmology API namespace. It should have
             every top-level function defined in the specification as an
             attribute. It may contain other public names as well, but it is
