@@ -6,9 +6,9 @@ from dataclasses import dataclass
 
 import pytest
 from cosmology.api import (
-    CosmologyAPI,
-    CosmologyAPINamespace,
-    CosmologyWrapperAPI,
+    Cosmology,
+    CosmologyNamespace,
+    CosmologyWrapper,
 )
 
 ################################################################################
@@ -19,7 +19,7 @@ from cosmology.api import (
 def test_noncompliant_cosmology_wrapper():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.CosmologyWrapperAPI`.
+    `cosmology.api.CosmologyWrapper`.
     """
 
     # Simple example: missing everything
@@ -28,7 +28,7 @@ def test_noncompliant_cosmology_wrapper():
 
     wrapper = ExampleCosmologyWrapper()
 
-    assert not isinstance(wrapper, CosmologyWrapperAPI)
+    assert not isinstance(wrapper, CosmologyWrapper)
 
     # TODO: more examples?
 
@@ -36,7 +36,7 @@ def test_noncompliant_cosmology_wrapper():
 def test_compliant_cosmology(cosmology_ns):
     """
     Test that a compliant instance is a
-    `cosmology.api.CosmologyWrapperAPI`. In particular, this tests
+    `cosmology.api.CosmologyWrapper`. In particular, this tests
     that the class does not need to inherit from the Protocol to be compliant.
     """
 
@@ -49,7 +49,7 @@ def test_compliant_cosmology(cosmology_ns):
             /,
             *,
             api_version: str | None = None,
-        ) -> CosmologyAPINamespace:
+        ) -> CosmologyNamespace:
             return cosmology_ns
 
         @property
@@ -61,18 +61,18 @@ def test_compliant_cosmology(cosmology_ns):
 
     wrapper = ExampleCosmologyWrapper(object())
 
-    assert isinstance(wrapper, CosmologyAPI)
-    assert isinstance(wrapper, CosmologyWrapperAPI)
+    assert isinstance(wrapper, Cosmology)
+    assert isinstance(wrapper, CosmologyWrapper)
 
 
-class Test_CosmologyWrapperAPI:
+class Test_CosmologyWrapper:
     @pytest.fixture(scope="class")
     def wrapper_cls(
         self,
-        cosmology_ns: CosmologyAPINamespace,
-    ) -> type[CosmologyWrapperAPI]:
+        cosmology_ns: CosmologyNamespace,
+    ) -> type[CosmologyWrapper]:
         @dataclass(frozen=True)
-        class ExampleCosmologyWrapper(CosmologyWrapperAPI):
+        class ExampleCosmologyWrapper(CosmologyWrapper):
             cosmo: object
 
             def __cosmology_namespace__(
@@ -80,7 +80,7 @@ class Test_CosmologyWrapperAPI:
                 /,
                 *,
                 api_version: str | None = None,
-            ) -> CosmologyAPINamespace:
+            ) -> CosmologyNamespace:
                 return cosmology_ns
 
             @property
@@ -93,8 +93,8 @@ class Test_CosmologyWrapperAPI:
     def wrapper(
         self,
         cosmology: object,
-        wrapper_cls: type[CosmologyWrapperAPI],
-    ) -> CosmologyWrapperAPI:
+        wrapper_cls: type[CosmologyWrapper],
+    ) -> CosmologyWrapper:
         return wrapper_cls(cosmology)
 
     # =========================================================================
@@ -102,8 +102,8 @@ class Test_CosmologyWrapperAPI:
 
     def test_is_compliant(self, wrapper):
         """Test that the wrapper is compliant."""
-        assert isinstance(wrapper, CosmologyAPI)
-        assert isinstance(wrapper, CosmologyWrapperAPI)
+        assert isinstance(wrapper, Cosmology)
+        assert isinstance(wrapper, CosmologyWrapper)
 
     def test_getattr(self, wrapper):
         """Test that the wrapper can access the attributes of the wrapped object."""

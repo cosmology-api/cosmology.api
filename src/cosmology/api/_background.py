@@ -5,13 +5,13 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api._core import CosmologyAPI
+from cosmology.api._core import Cosmology
 
 __all__: list[str] = []
 
 
 @runtime_checkable
-class FriedmannLemaitreRobertsonWalker(CosmologyAPI[ArrayT], Protocol):
+class FriedmannLemaitreRobertsonWalker(Cosmology[ArrayT], Protocol):
     """Cosmology API protocol for isotropic cosmologies.
 
     This is a protocol class that defines the standard API for isotropic

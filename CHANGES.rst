@@ -4,16 +4,16 @@ Changelog (``cosmology.api``)
 0.1.0 (unreleased)
 ------------------
 
-- CosmologyAPI is the Protocol defining conformant cosmology classes.
+- Cosmology is the Protocol defining conformant cosmology classes.
   (#1) [nstarman]
 
--  CosmologyAPINamespace is the Protocol defining the main namespace of the
+-  CosmologyNamespace is the Protocol defining the main namespace of the
    API. (#1) [nstarman]
 
--  CosmologyConstantsAPINamespace is the Protocol defining the constants
+-  CosmologyConstantsNamespace is the Protocol defining the constants
    namespace of the API. (#1) [nstarman]
 
-- CosmologyWrapperAPI is the Protocol defining an API-conformant
+- CosmologyWrapper is the Protocol defining an API-conformant
   wrapper for a non-conformant cosmology class. (#4) [nstarman]
 
    - A default implementation is provided for ``__getattr__`` that passes

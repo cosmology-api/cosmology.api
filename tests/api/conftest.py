@@ -11,9 +11,9 @@ from typing import TypeVar
 import numpy.array_api as xp
 import pytest
 from cosmology.api import (
-    CosmologyAPI,
-    CosmologyAPINamespace,
-    CosmologyConstantsAPINamespace,
+    Cosmology,
+    CosmologyConstantsNamespace,
+    CosmologyNamespace,
     FriedmannLemaitreRobertsonWalker,
     HasBaryonComponent,
     HasDarkEnergyComponent,
@@ -27,7 +27,7 @@ from cosmology.api import (
 from cosmology.api._array_api import Array
 from cosmology.api._extras import HasHubbleParameter, HasTcmb
 
-CT = TypeVar("CT", bound=CosmologyAPI)
+CT = TypeVar("CT", bound=Cosmology)
 
 
 def _default_one() -> Array:
@@ -59,13 +59,13 @@ def _get_attrs_meths(
 
 
 @pytest.fixture(scope="session")
-def constants_ns() -> CosmologyConstantsAPINamespace:
+def constants_ns() -> CosmologyConstantsNamespace:
     """The cosmology constants API namespace."""
     return SimpleNamespace(G=1, c=2)
 
 
 @pytest.fixture(scope="session")
-def cosmology_ns(constants_ns: CosmologyConstantsAPINamespace) -> CosmologyAPINamespace:
+def cosmology_ns(constants_ns: CosmologyConstantsNamespace) -> CosmologyNamespace:
     """The cosmology API namespace."""
     return SimpleNamespace(constants=constants_ns)
 
@@ -75,21 +75,21 @@ def cosmology_ns(constants_ns: CosmologyConstantsAPINamespace) -> CosmologyAPINa
 
 
 @pytest.fixture(scope="session")
-def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPI]:
+def cosmology_cls(cosmology_ns: CosmologyNamespace) -> type[Cosmology]:
     """An example cosmology API class."""
 
     @dataclass(frozen=True)
-    class ExampleCosmology(CosmologyAPI):
+    class ExampleCosmology(Cosmology):
         """An example cosmology API class."""
 
         name: str | None = None  # normally has a default, but not for testing
 
         def __cosmology_namespace__(
             self, /, *, api_version: str | None = None
-        ) -> CosmologyAPINamespace:
+        ) -> CosmologyNamespace:
             return cosmology_ns
 
-        # === not CosmologyAPI ===
+        # === not Cosmology ===
 
         @property
         def not_cosmology_api(self) -> int:
@@ -99,7 +99,7 @@ def cosmology_cls(cosmology_ns: CosmologyAPINamespace) -> type[CosmologyAPI]:
 
 
 @pytest.fixture(scope="session")
-def cosmology(cosmology_cls: type[CosmologyAPI]) -> CosmologyAPI:
+def cosmology(cosmology_cls: type[Cosmology]) -> Cosmology:
     """An example cosmology API instance."""
     return cosmology_cls(name=None)
 
@@ -110,22 +110,22 @@ def cosmology(cosmology_cls: type[CosmologyAPI]) -> CosmologyAPI:
 
 def get_comp_attrs(comp_cls: type) -> set[str]:
     """The attributes of a component."""
-    methods_and_attrs = set(dir(comp_cls)) - set(dir(CosmologyAPI))
+    methods_and_attrs = set(dir(comp_cls)) - set(dir(Cosmology))
 
     return {k for k in methods_and_attrs if not callable(getattr(comp_cls, k))}
 
 
 def get_comp_meths(comp_cls: type) -> set[str]:
     """The attributes of a component."""
-    methods_and_attrs = set(dir(comp_cls)) - set(dir(CosmologyAPI))
+    methods_and_attrs = set(dir(comp_cls)) - set(dir(Cosmology))
 
     return {k for k in methods_and_attrs if callable(getattr(comp_cls, k))}
 
 
 @pytest.fixture(scope="session")
 def globalcurvature_cls(
-    cosmology_cls: type[CosmologyAPI],
-) -> type[HasGlobalCurvatureComponent | CosmologyAPI]:
+    cosmology_cls: type[Cosmology],
+) -> type[HasGlobalCurvatureComponent | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasGlobalCurvatureComponent)
     comp_meths = get_comp_meths(HasGlobalCurvatureComponent)
@@ -142,8 +142,8 @@ def globalcurvature_cls(
 
 @pytest.fixture(scope="session")
 def matter_cls(
-    cosmology_cls: type[CosmologyAPI],
-) -> type[HasMatterComponent | CosmologyAPI]:
+    cosmology_cls: type[Cosmology],
+) -> type[HasMatterComponent | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasMatterComponent)
     comp_meths = get_comp_meths(HasMatterComponent)
@@ -160,8 +160,8 @@ def matter_cls(
 
 @pytest.fixture(scope="session")
 def baryon_cls(
-    matter_cls: type[CosmologyAPI],
-) -> type[HasBaryonComponent | CosmologyAPI]:
+    matter_cls: type[Cosmology],
+) -> type[HasBaryonComponent | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasBaryonComponent)
     comp_meths = get_comp_meths(HasBaryonComponent)
@@ -178,8 +178,8 @@ def baryon_cls(
 
 @pytest.fixture(scope="session")
 def darkmatter_cls(
-    matter_cls: type[CosmologyAPI],
-) -> type[HasDarkMatterComponent | CosmologyAPI]:
+    matter_cls: type[Cosmology],
+) -> type[HasDarkMatterComponent | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasDarkMatterComponent)
     comp_meths = get_comp_meths(HasDarkMatterComponent)
@@ -196,8 +196,8 @@ def darkmatter_cls(
 
 @pytest.fixture(scope="session")
 def neutrino_cls(
-    cosmology_cls: type[CosmologyAPI],
-) -> type[HasNeutrinoComponent | CosmologyAPI]:
+    cosmology_cls: type[Cosmology],
+) -> type[HasNeutrinoComponent | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasNeutrinoComponent)
     comp_meths = get_comp_meths(HasNeutrinoComponent)
@@ -214,8 +214,8 @@ def neutrino_cls(
 
 @pytest.fixture(scope="session")
 def photon_cls(
-    cosmology_cls: type[CosmologyAPI],
-) -> type[HasPhotonComponent | CosmologyAPI]:
+    cosmology_cls: type[Cosmology],
+) -> type[HasPhotonComponent | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasPhotonComponent)
     comp_meths = get_comp_meths(HasPhotonComponent)
@@ -233,8 +233,8 @@ def photon_cls(
 @pytest.fixture(scope="session")
 @pytest.mark.parametrize("comp_cls", [HasDarkEnergyComponent])
 def darkenergy_cls(
-    cosmology_cls: type[CosmologyAPI],
-) -> type[HasDarkEnergyComponent | CosmologyAPI]:
+    cosmology_cls: type[Cosmology],
+) -> type[HasDarkEnergyComponent | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasDarkEnergyComponent)
     comp_meths = get_comp_meths(HasDarkEnergyComponent)
@@ -255,8 +255,8 @@ def darkenergy_cls(
 
 @pytest.fixture(scope="session")
 def hashubbleparamet_cls(
-    cosmology_cls: type[CosmologyAPI],
-) -> type[HasHubbleParameter | CosmologyAPI]:
+    cosmology_cls: type[Cosmology],
+) -> type[HasHubbleParameter | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasHubbleParameter)
     comp_meths = get_comp_meths(HasHubbleParameter)
@@ -273,8 +273,8 @@ def hashubbleparamet_cls(
 
 @pytest.fixture(scope="session")
 def hastcmb_cls(
-    cosmology_cls: type[CosmologyAPI],
-) -> type[HasTcmb | CosmologyAPI]:
+    cosmology_cls: type[Cosmology],
+) -> type[HasTcmb | Cosmology]:
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasTcmb)
     comp_meths = get_comp_meths(HasTcmb)
@@ -294,7 +294,7 @@ def hastcmb_cls(
 
 
 BACKGROUND_FLRW_ATTRS, BACKGROUND_FLRW_METHS = _get_attrs_meths(
-    FriedmannLemaitreRobertsonWalker, CosmologyAPI
+    FriedmannLemaitreRobertsonWalker, Cosmology
 )
 
 
@@ -312,7 +312,7 @@ def bkg_flrw_meths() -> frozenset[str]:
 
 @pytest.fixture(scope="session")
 def bkg_flrw_cls(
-    cosmology_cls: type[CosmologyAPI],
+    cosmology_cls: type[Cosmology],
     bkg_flrw_attrs: set[str],
     bkg_flrw_meths: set[str],
 ) -> type[FriedmannLemaitreRobertsonWalker]:
@@ -340,7 +340,7 @@ def bkg_flrw(
 # Standard API
 
 
-STDCOSMO_ATTRS, STDCOSMO_METHS = _get_attrs_meths(StandardCosmology, CosmologyAPI)
+STDCOSMO_ATTRS, STDCOSMO_METHS = _get_attrs_meths(StandardCosmology, Cosmology)
 
 
 @pytest.fixture(scope="session")

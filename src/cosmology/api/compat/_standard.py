@@ -6,13 +6,13 @@ from typing import Protocol
 
 from cosmology.api._array_api import ArrayT
 from cosmology.api._standard import StandardCosmology
-from cosmology.api.compat._core import CosmologyWrapperAPI
+from cosmology.api.compat._core import CosmologyWrapper
 
 __all__: list[str] = []
 
 
-class StandardCosmologyWrapperAPI(
-    CosmologyWrapperAPI[ArrayT],
+class StandardCosmologyWrapper(
+    CosmologyWrapper[ArrayT],
     StandardCosmology[ArrayT],
     Protocol,
 ):

@@ -5,13 +5,13 @@ from __future__ import annotations
 from typing import Protocol
 
 from cosmology.api._array_api import ArrayT_co
-from cosmology.api._core import CosmologyAPI
+from cosmology.api._core import Cosmology
 
 __all__: list[str] = []
 
 
-class CosmologyWrapperAPI(CosmologyAPI[ArrayT_co], Protocol):
-    """The standard for ``CosmologyAPI`` compatability wrappers.
+class CosmologyWrapper(Cosmology[ArrayT_co], Protocol):
+    """The standard for ``Cosmology`` compatability wrappers.
 
     This is a protocol class that defines an API standard. It is not intended to
     be used directly, and should not be instantiated. Instead, it should be used

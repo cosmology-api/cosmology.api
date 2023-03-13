@@ -15,7 +15,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class CosmologyConstantsAPINamespace(Protocol):
+class CosmologyConstantsNamespace(Protocol):
     """Cosmology constants API Protocol."""
 
     @property

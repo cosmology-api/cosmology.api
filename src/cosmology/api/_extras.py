@@ -5,12 +5,12 @@ from __future__ import annotations
 from typing import Protocol
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api._core import CosmologyAPI
+from cosmology.api._core import Cosmology
 
 __all__: list[str] = []
 
 
-class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
+class HasHubbleParameter(Cosmology[ArrayT], Protocol):
     r"""The cosmology has methods to retrieve the Hubble parameter :math:`H`."""
 
     @property
@@ -57,7 +57,7 @@ class HasHubbleParameter(CosmologyAPI[ArrayT], Protocol):
         ...
 
 
-class HasTcmb(CosmologyAPI[ArrayT], Protocol):
+class HasTcmb(Cosmology[ArrayT], Protocol):
     r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
 
     @property

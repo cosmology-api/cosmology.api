@@ -16,7 +16,7 @@ from cosmology.api._components import (
     HasNeutrinoComponent,
     HasPhotonComponent,
 )
-from cosmology.api._core import CosmologyAPI
+from cosmology.api._core import Cosmology
 from cosmology.api._extras import HasHubbleParameter, HasTcmb
 
 from .conftest import _default_one, _return_1arg, _return_one
@@ -29,7 +29,7 @@ from .conftest import _default_one, _return_1arg, _return_one
 def test_noncompliant_standard():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.CosmologyAPI`.
+    `cosmology.api.Cosmology`.
     """
     # Simple example: missing everything
 
@@ -62,7 +62,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
     cosmo = ExampleStandardCosmology()
 
     # Check Base and Background
-    assert isinstance(cosmo, CosmologyAPI)
+    assert isinstance(cosmo, Cosmology)
     assert isinstance(cosmo, FriedmannLemaitreRobertsonWalker)
 
     # Check Components
