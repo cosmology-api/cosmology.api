@@ -5,7 +5,9 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api._components import (
+from cosmology.api._distances import HasDistanceMeasures
+from cosmology.api._extras import HasCriticalDensity, HasHubbleParameter
+from cosmology.api.component import (
     HasBaryonComponent,
     HasDarkEnergyComponent,
     HasDarkMatterComponent,
@@ -15,8 +17,6 @@ from cosmology.api._components import (
     HasPhotonComponent,
     HasTotalComponent,
 )
-from cosmology.api._distances import HasDistanceMeasures
-from cosmology.api._extras import HasCriticalDensity, HasHubbleParameter
 
 __all__: list[str] = []
 

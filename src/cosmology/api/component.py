@@ -7,7 +7,16 @@ from typing import Protocol
 from cosmology.api._array_api import ArrayT
 from cosmology.api._core import Cosmology
 
-__all__: list[str] = []
+__all__ = [
+    "HasTotalComponent",
+    "HasGlobalCurvatureComponent",
+    "HasMatterComponent",
+    "HasBaryonComponent",
+    "HasNeutrinoComponent",
+    "HasDarkEnergyComponent",
+    "HasDarkMatterComponent",
+    "HasPhotonComponent",
+]
 
 
 class HasTotalComponent(Cosmology[ArrayT], Protocol):

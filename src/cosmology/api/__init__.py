@@ -1,15 +1,6 @@
 """The Cosmology API standard."""
 
-from cosmology.api._components import (
-    HasBaryonComponent,
-    HasDarkEnergyComponent,
-    HasDarkMatterComponent,
-    HasGlobalCurvatureComponent,
-    HasMatterComponent,
-    HasNeutrinoComponent,
-    HasPhotonComponent,
-    HasTotalComponent,
-)
+from cosmology.api import compat, component
 from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
 from cosmology.api._distances import HasDistanceMeasures
@@ -22,18 +13,13 @@ from cosmology.api.compat import (
 )
 
 __all__ = [
+    # Modules
+    "compat",
+    "component",
+    # Classes
     "Cosmology",
     "HasDistanceMeasures",
     "StandardCosmology",
-    # components
-    "HasTotalComponent",
-    "HasGlobalCurvatureComponent",
-    "HasMatterComponent",
-    "HasBaryonComponent",
-    "HasNeutrinoComponent",
-    "HasDarkEnergyComponent",
-    "HasDarkMatterComponent",
-    "HasPhotonComponent",
     # parametrizations
     "HasCriticalDensity",
     "HasHubbleParameter",
