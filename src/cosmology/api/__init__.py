@@ -8,6 +8,7 @@ from cosmology.api._components import (
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
+    HasTotalComponent,
 )
 from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
@@ -25,6 +26,7 @@ __all__ = [
     "HasDistanceMeasures",
     "StandardCosmology",
     # components
+    "HasTotalComponent",
     "HasGlobalCurvatureComponent",
     "HasMatterComponent",
     "HasBaryonComponent",
