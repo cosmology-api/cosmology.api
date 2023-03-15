@@ -18,22 +18,11 @@ class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
     background calculations. It is not intended to be instantiated. Instead, it
     should be used for ``isinstance`` checks or as an ABC for libraries that
     wish to define a compatible cosmology class.
-
-    See Also
-    --------
-    StandardCosmology
-        The standard cosmology API, with the expected set of components: matter,
-        radiation, neutrinos, dark matter, and dark energy.
     """
 
     @property
     def scale_factor0(self) -> ArrayT:
         """Scale factor at z=0."""
-        ...
-
-    @property
-    def Omega_tot0(self) -> ArrayT:
-        r"""Omega total; the total density/critical density at z=0."""
         ...
 
     @property
@@ -53,20 +42,6 @@ class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
         ----------
         z : Array or float, positional-only
             The redshift(s) at which to evaluate the scale factor.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def Omega_tot(self, z: ArrayT | float, /) -> ArrayT:
-        r"""Redshift-dependent total density parameter.
-
-        Parameters
-        ----------
-        z : Array
-            Input redshifts.
 
         Returns
         -------

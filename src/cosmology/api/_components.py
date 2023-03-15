@@ -10,6 +10,29 @@ from cosmology.api._core import Cosmology
 __all__: list[str] = []
 
 
+class HasTotalComponent(Cosmology[ArrayT], Protocol):
+    r"""The cosmology contains a total density, described by :math:`Omega_{\rm tot}`."""
+
+    @property
+    def Omega_tot0(self) -> ArrayT:
+        r"""Omega total; the total density/critical density at z=0."""
+        ...
+
+    def Omega_tot(self, z: ArrayT | float, /) -> ArrayT:
+        r"""Redshift-dependent total density parameter.
+
+        Parameters
+        ----------
+        z : Array
+            Input redshifts.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+
 class HasGlobalCurvatureComponent(Cosmology[ArrayT], Protocol):
     r"""The cosmology contains global curvature, described by :math:`Omega_K`."""
 

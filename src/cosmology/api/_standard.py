@@ -13,6 +13,7 @@ from cosmology.api._components import (
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
+    HasTotalComponent,
 )
 from cosmology.api._distances import HasDistanceMeasures
 from cosmology.api._extras import HasHubbleParameter, HasTcmb
@@ -29,6 +30,7 @@ class StandardCosmology(
     HasMatterComponent[ArrayT],
     HasDarkEnergyComponent[ArrayT],
     HasGlobalCurvatureComponent[ArrayT],
+    HasTotalComponent[ArrayT],
     HasTcmb[ArrayT],
     HasHubbleParameter[ArrayT],
     HasDistanceMeasures[ArrayT],
