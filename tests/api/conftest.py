@@ -15,17 +15,19 @@ from cosmology.api import (
     CosmologyConstantsNamespace,
     CosmologyNamespace,
     HasBaryonComponent,
+    HasCriticalDensity,
     HasDarkEnergyComponent,
     HasDarkMatterComponent,
     HasDistanceMeasures,
     HasGlobalCurvatureComponent,
+    HasHubbleParameter,
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
     StandardCosmology,
 )
 from cosmology.api._array_api import Array
-from cosmology.api._extras import HasCriticalDensity, HasHubbleParameter
+from cosmology.api._distances import _HasTcmb
 
 CT = TypeVar("CT", bound=Cosmology)
 
@@ -278,7 +280,7 @@ def hasrhocrit_cls(
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(HasCriticalDensity)
     comp_meths = get_comp_meths(HasCriticalDensity)
-    fields = {"Tcmb0"}
+    fields = {}
     return make_dataclass(
         "ExampleHasCriticalDensity",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
@@ -290,7 +292,25 @@ def hasrhocrit_cls(
 
 
 # ==============================================================================
-# Background API
+# Distance Measures API
+
+
+@pytest.fixture(scope="session")
+def hastcmb_cls(
+    cosmology_cls: type[Cosmology],
+) -> type[_HasTcmb | Cosmology]:
+    """An example standard cosmology API class."""
+    comp_attrs = get_comp_attrs(_HasTcmb)
+    comp_meths = get_comp_meths(_HasTcmb)
+    fields = {"Tcmb0"}
+    return make_dataclass(
+        "Example_HasTcmb",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
+        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
 
 
 DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(HasDistanceMeasures, Cosmology)

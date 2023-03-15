@@ -7,7 +7,7 @@ from dataclasses import field, make_dataclass
 from cosmology.api import HasDistanceMeasures
 from cosmology.api._array_api import Array
 
-from .conftest import _default_one, _return_1arg, _return_one
+from ..conftest import _default_one, _return_1arg, _return_one
 
 ################################################################################
 # TESTS

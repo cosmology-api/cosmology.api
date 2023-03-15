@@ -1,11 +1,11 @@
-"""Test ``cosmology.api.HasCriticalDensity``."""
+"""Test ``cosmology.api._HasTcmb``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import HasCriticalDensity
 from cosmology.api._array_api import Array
+from cosmology.api._distances import _HasTcmb
 
 from ..conftest import _default_one, _return_1arg
 
@@ -14,32 +14,32 @@ from ..conftest import _default_one, _return_1arg
 ################################################################################
 
 
-def test_noncompliant_hasrhocrit():
+def test_noncompliant_hastcmbs():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.HasCriticalDensity`.
+    `cosmology.api._HasTcmb`.
     """
     # Simple example: missing everything
 
-    class ExampleHasCriticalDensity:
+    class Example_HasTcmb:
         pass
 
-    cosmo = ExampleHasCriticalDensity()
+    cosmo = Example_HasTcmb()
 
-    assert not isinstance(cosmo, HasCriticalDensity)
+    assert not isinstance(cosmo, _HasTcmb)
 
     # TODO: more examples?
 
 
-def test_compliant_hasrhocrit(hasrhocrit_cls):
+def test_compliant_hastcmbs(hastcmb_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.HasCriticalDensity`.
+    `cosmology.api._HasTcmb`.
     """
-    ExampleHasCriticalDensity = make_dataclass(
-        "ExampleHasCriticalDensity",
+    Example_HasTcmb = make_dataclass(
+        "Example_HasTcmb",
         [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
-        bases=(hasrhocrit_cls,),
+        bases=(hastcmb_cls,),
         namespace={
             "Tcmb0": _default_one,
             "Tcmb": _return_1arg,
@@ -47,14 +47,14 @@ def test_compliant_hasrhocrit(hasrhocrit_cls):
         frozen=True,
     )
 
-    cosmo = ExampleHasCriticalDensity()
+    cosmo = Example_HasTcmb()
 
-    assert isinstance(cosmo, HasCriticalDensity)
+    assert isinstance(cosmo, _HasTcmb)
 
 
-def test_fixture(hasrhocrit_cls):
+def test_fixture(hastcmb_cls):
     """
-    Test that the ``hasrhocrit_cls`` fixture is a
-    `cosmology.api.HasCriticalDensity`.
+    Test that the ``hastcmb_cls`` fixture is a
+    `cosmology.api._HasTcmb`.
     """
-    assert isinstance(hasrhocrit_cls(), HasCriticalDensity)
+    assert isinstance(hastcmb_cls(), _HasTcmb)

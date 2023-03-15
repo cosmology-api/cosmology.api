@@ -10,12 +10,36 @@ from cosmology.api._core import Cosmology
 __all__: list[str] = []
 
 
+# This is currently private
+class _HasTcmb(Cosmology[ArrayT], Protocol):
+    r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
+
+    @property
+    def Tcmb0(self) -> ArrayT:
+        """CMB temperature in K at z=0."""
+        ...
+
+    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
+        """CMB temperature in K at redshift z.
+
+        Parameters
+        ----------
+        z : Array, positional-only
+            Input redshift.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+
 ##############################################################################
 # Total
 
 
 @runtime_checkable
-class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
+class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
     """Cosmology API protocol for isotropic cosmologies.
 
     This is a protocol class that defines the standard API for isotropic
@@ -27,11 +51,6 @@ class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
     @property
     def scale_factor0(self) -> ArrayT:
         """Scale factor at z=0."""
-        ...
-
-    @property
-    def Tcmb0(self) -> ArrayT:
-        """CMB temperature in K at z=0."""
         ...
 
     # ==============================================================
@@ -46,20 +65,6 @@ class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
         ----------
         z : Array or float, positional-only
             The redshift(s) at which to evaluate the scale factor.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
-        """CMB temperature in K at redshift z.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
 
         Returns
         -------
