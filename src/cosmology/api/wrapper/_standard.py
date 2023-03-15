@@ -6,7 +6,7 @@ from typing import Protocol
 
 from cosmology.api._array_api import ArrayT
 from cosmology.api._standard import StandardCosmology
-from cosmology.api.compat._core import CosmologyWrapper
+from cosmology.api.wrapper._core import CosmologyWrapper
 
 __all__: list[str] = []
 
