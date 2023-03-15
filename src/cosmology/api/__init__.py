@@ -7,10 +7,6 @@ from cosmology.api._distances import HasDistanceMeasures
 from cosmology.api._extras import HasCriticalDensity, HasHubbleParameter
 from cosmology.api._namespace import CosmologyNamespace
 from cosmology.api._standard import StandardCosmology
-from cosmology.api.compat import (
-    CosmologyWrapper,
-    StandardCosmologyWrapper,
-)
 
 __all__ = [
     # Modules
@@ -23,9 +19,6 @@ __all__ = [
     # parametrizations
     "HasCriticalDensity",
     "HasHubbleParameter",
-    # wrappers
-    "CosmologyWrapper",
-    "StandardCosmologyWrapper",
     # Namespaces
     "CosmologyNamespace",
     "CosmologyConstantsNamespace",
