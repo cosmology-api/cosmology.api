@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from cosmology.api._array_api import ArrayT
+from cosmology.api._array_api import ArrayT_co
+from cosmology.api._core import InputT_contra
 from cosmology.api._standard import StandardCosmology
 from cosmology.api.compat._core import CosmologyWrapper
 
@@ -12,8 +13,8 @@ __all__: list[str] = []
 
 
 class StandardCosmologyWrapper(
-    CosmologyWrapper[ArrayT],
-    StandardCosmology[ArrayT],
+    CosmologyWrapper[ArrayT_co, InputT_contra],
+    StandardCosmology[ArrayT_co, InputT_contra],
     Protocol,
 ):
     """The standard for ``StandardCosmology`` compatability wrappers.

@@ -2,25 +2,28 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Protocol, TypeVar, runtime_checkable
 
 from cosmology.api._array_api import ArrayT_co
 
 if TYPE_CHECKING:
     from ._namespace import CosmologyNamespace
 
+# The inputs types will have defaults if https://peps.python.org/pep-0696/
+# is accepted.
+InputT = TypeVar("InputT")  # -> TypeVar("InputT", default=ArrayT_co | float)
+InputT_co = TypeVar("InputT_co", covariant=True)
+InputT_contra = TypeVar("InputT_contra", contravariant=True)
+
 __all__: list[str] = []
 
 
 @runtime_checkable
-class Cosmology(Protocol[ArrayT_co]):
+class Cosmology(Protocol[ArrayT_co, InputT_contra]):  # type: ignore[misc]
     """Cosmology API Protocol."""
 
     def __cosmology_namespace__(
-        self,
-        /,
-        *,
-        api_version: str | None = None,
+        self, /, *, api_version: str | None = None
     ) -> CosmologyNamespace:
         """Returns an object that has all the cosmology API functions on it.
 
