@@ -4,20 +4,21 @@ from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import StandardCosmology
-from cosmology.api._array_api import Array
-from cosmology.api._background import FriedmannLemaitreRobertsonWalker
-from cosmology.api._components import (
+from cosmology.api import (
+    Cosmology,
     HasBaryonComponent,
+    HasCriticalDensity,
     HasDarkEnergyComponent,
     HasDarkMatterComponent,
+    HasDistanceMeasures,
     HasGlobalCurvatureComponent,
+    HasHubbleParameter,
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
+    StandardCosmology,
 )
-from cosmology.api._core import Cosmology
-from cosmology.api._extras import HasHubbleParameter, HasTcmb
+from cosmology.api._array_api import Array
 
 from .conftest import _default_one, _return_1arg, _return_one
 
@@ -63,7 +64,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
 
     # Check Base and Background
     assert isinstance(cosmo, Cosmology)
-    assert isinstance(cosmo, FriedmannLemaitreRobertsonWalker)
+    assert isinstance(cosmo, HasDistanceMeasures)
 
     # Check Components
     assert isinstance(cosmo, HasBaryonComponent)
@@ -76,7 +77,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
 
     # Check Parametrizations
     assert isinstance(cosmo, HasHubbleParameter)
-    assert isinstance(cosmo, HasTcmb)
+    assert isinstance(cosmo, HasCriticalDensity)
 
     # Full Standard Cosmology
     assert isinstance(cosmo, StandardCosmology)

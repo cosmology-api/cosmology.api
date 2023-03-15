@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT
-from cosmology.api._background import FriedmannLemaitreRobertsonWalker
 from cosmology.api._components import (
     HasBaryonComponent,
     HasDarkEnergyComponent,
@@ -14,8 +13,10 @@ from cosmology.api._components import (
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
+    HasTotalComponent,
 )
-from cosmology.api._extras import HasHubbleParameter, HasTcmb
+from cosmology.api._distances import HasDistanceMeasures
+from cosmology.api._extras import HasCriticalDensity, HasHubbleParameter
 
 __all__: list[str] = []
 
@@ -29,9 +30,10 @@ class StandardCosmology(
     HasMatterComponent[ArrayT],
     HasDarkEnergyComponent[ArrayT],
     HasGlobalCurvatureComponent[ArrayT],
-    HasTcmb[ArrayT],
+    HasTotalComponent[ArrayT],
     HasHubbleParameter[ArrayT],
-    FriedmannLemaitreRobertsonWalker[ArrayT],
+    HasCriticalDensity[ArrayT],
+    HasDistanceMeasures[ArrayT],
     Protocol,
 ):
     """API Protocol for the standard cosmology and expected set of components.

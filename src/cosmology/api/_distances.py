@@ -10,35 +10,47 @@ from cosmology.api._core import Cosmology
 __all__: list[str] = []
 
 
+# This is currently private
+class _HasTcmb(Cosmology[ArrayT], Protocol):
+    r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
+
+    @property
+    def Tcmb0(self) -> ArrayT:
+        """CMB temperature in K at z=0."""
+        ...
+
+    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
+        """CMB temperature in K at redshift z.
+
+        Parameters
+        ----------
+        z : Array, positional-only
+            Input redshift.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+
+##############################################################################
+# Total
+
+
 @runtime_checkable
-class FriedmannLemaitreRobertsonWalker(Cosmology[ArrayT], Protocol):
+class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
     """Cosmology API protocol for isotropic cosmologies.
 
     This is a protocol class that defines the standard API for isotropic
     background calculations. It is not intended to be instantiated. Instead, it
     should be used for ``isinstance`` checks or as an ABC for libraries that
     wish to define a compatible cosmology class.
-
-    See Also
-    --------
-    StandardCosmology
-        The standard cosmology API, with the expected set of components: matter,
-        radiation, neutrinos, dark matter, and dark energy.
     """
 
     @property
     def scale_factor0(self) -> ArrayT:
         """Scale factor at z=0."""
-        ...
-
-    @property
-    def Omega_tot0(self) -> ArrayT:
-        r"""Omega total; the total density/critical density at z=0."""
-        ...
-
-    @property
-    def critical_density0(self) -> ArrayT:
-        """Critical density at z = 0 in Msol Mpc-3."""
         ...
 
     # ==============================================================
@@ -58,24 +70,6 @@ class FriedmannLemaitreRobertsonWalker(Cosmology[ArrayT], Protocol):
         -------
         Array
         """
-        ...
-
-    def Omega_tot(self, z: ArrayT | float, /) -> ArrayT:
-        r"""Redshift-dependent total density parameter.
-
-        Parameters
-        ----------
-        z : Array
-            Input redshifts.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def critical_density(self, z: ArrayT | float, /) -> ArrayT:
-        """Redshift-dependent critical density in Msol Mpc-3."""
         ...
 
     # ----------------------------------------------
