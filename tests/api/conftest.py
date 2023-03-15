@@ -25,7 +25,7 @@ from cosmology.api import (
     StandardCosmology,
 )
 from cosmology.api._array_api import Array
-from cosmology.api._extras import HasHubbleParameter, HasTcmb
+from cosmology.api._extras import HasCriticalDensity, HasHubbleParameter
 
 CT = TypeVar("CT", bound=Cosmology)
 
@@ -272,15 +272,15 @@ def hashubbleparamet_cls(
 
 
 @pytest.fixture(scope="session")
-def hastcmb_cls(
+def hasrhocrit_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasTcmb | Cosmology]:
+) -> type[HasCriticalDensity | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasTcmb)
-    comp_meths = get_comp_meths(HasTcmb)
+    comp_attrs = get_comp_attrs(HasCriticalDensity)
+    comp_meths = get_comp_meths(HasCriticalDensity)
     fields = {"Tcmb0"}
     return make_dataclass(
-        "ExampleHasTcmb",
+        "ExampleHasCriticalDensity",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
         bases=(cosmology_cls,),
         namespace={n: property(_return_one) for n in comp_attrs - set(fields)}

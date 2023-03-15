@@ -7,6 +7,7 @@ from dataclasses import field, make_dataclass
 from cosmology.api import (
     Cosmology,
     HasBaryonComponent,
+    HasCriticalDensity,
     HasDarkEnergyComponent,
     HasDarkMatterComponent,
     HasDistanceMeasures,
@@ -15,7 +16,6 @@ from cosmology.api import (
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
-    HasTcmb,
     StandardCosmology,
 )
 from cosmology.api._array_api import Array
@@ -77,7 +77,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
 
     # Check Parametrizations
     assert isinstance(cosmo, HasHubbleParameter)
-    assert isinstance(cosmo, HasTcmb)
+    assert isinstance(cosmo, HasCriticalDensity)
 
     # Full Standard Cosmology
     assert isinstance(cosmo, StandardCosmology)

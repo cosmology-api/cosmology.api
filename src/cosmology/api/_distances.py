@@ -10,6 +10,10 @@ from cosmology.api._core import Cosmology
 __all__: list[str] = []
 
 
+##############################################################################
+# Total
+
+
 @runtime_checkable
 class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
     """Cosmology API protocol for isotropic cosmologies.
@@ -26,8 +30,8 @@ class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
         ...
 
     @property
-    def critical_density0(self) -> ArrayT:
-        """Critical density at z = 0 in Msol Mpc-3."""
+    def Tcmb0(self) -> ArrayT:
+        """CMB temperature in K at z=0."""
         ...
 
     # ==============================================================
@@ -49,8 +53,18 @@ class HasDistanceMeasures(Cosmology[ArrayT], Protocol):
         """
         ...
 
-    def critical_density(self, z: ArrayT | float, /) -> ArrayT:
-        """Redshift-dependent critical density in Msol Mpc-3."""
+    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
+        """CMB temperature in K at redshift z.
+
+        Parameters
+        ----------
+        z : Array, positional-only
+            Input redshift.
+
+        Returns
+        -------
+        Array
+        """
         ...
 
     # ----------------------------------------------

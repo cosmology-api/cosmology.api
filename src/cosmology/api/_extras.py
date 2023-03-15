@@ -10,6 +10,19 @@ from cosmology.api._core import Cosmology
 __all__: list[str] = []
 
 
+class HasCriticalDensity(Cosmology[ArrayT], Protocol):
+    """The cosmology has methods for the critical density."""
+
+    @property
+    def critical_density0(self) -> ArrayT:
+        """Critical density at z = 0 in Msol Mpc-3."""
+        ...
+
+    def critical_density(self, z: ArrayT | float, /) -> ArrayT:
+        """Redshift-dependent critical density in Msol Mpc-3."""
+        ...
+
+
 class HasHubbleParameter(Cosmology[ArrayT], Protocol):
     r"""The cosmology has methods to retrieve the Hubble parameter :math:`H`."""
 
@@ -49,29 +62,6 @@ class HasHubbleParameter(Cosmology[ArrayT], Protocol):
         ----------
         z : Array
             The redshift(s) at which to evaluate.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-
-class HasTcmb(Cosmology[ArrayT], Protocol):
-    r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
-
-    @property
-    def Tcmb0(self) -> ArrayT:
-        """CMB temperature in K at z=0."""
-        ...
-
-    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
-        """CMB temperature in K at redshift z.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
 
         Returns
         -------

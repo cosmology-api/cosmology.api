@@ -16,7 +16,7 @@ from cosmology.api._components import (
     HasTotalComponent,
 )
 from cosmology.api._distances import HasDistanceMeasures
-from cosmology.api._extras import HasHubbleParameter, HasTcmb
+from cosmology.api._extras import HasCriticalDensity, HasHubbleParameter
 
 __all__: list[str] = []
 
@@ -31,8 +31,8 @@ class StandardCosmology(
     HasDarkEnergyComponent[ArrayT],
     HasGlobalCurvatureComponent[ArrayT],
     HasTotalComponent[ArrayT],
-    HasTcmb[ArrayT],
     HasHubbleParameter[ArrayT],
+    HasCriticalDensity[ArrayT],
     HasDistanceMeasures[ArrayT],
     Protocol,
 ):
