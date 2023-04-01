@@ -12,7 +12,6 @@ if TYPE_CHECKING:
 # The inputs types will have defaults if https://peps.python.org/pep-0696/
 # is accepted.
 InputT = TypeVar("InputT")  # -> TypeVar("InputT", default=ArrayT_co | float)
-InputT_co = TypeVar("InputT_co", covariant=True)
 InputT_contra = TypeVar("InputT_contra", contravariant=True)
 
 __all__: list[str] = []
