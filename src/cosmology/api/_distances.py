@@ -4,22 +4,22 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
-from cosmology.api._array_api import ArrayT
-from cosmology.api._core import Cosmology
+from cosmology.api._array_api import ArrayT_co
+from cosmology.api._core import Cosmology, InputT_contra
 
 __all__: list[str] = []
 
 
 # This is currently private
-class _HasTcmb(Cosmology[ArrayT], Protocol):
+class _HasTcmb(Cosmology[ArrayT_co, InputT_contra], Protocol):
     r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
 
     @property
-    def Tcmb0(self) -> ArrayT:
+    def Tcmb0(self) -> ArrayT_co:
         """CMB temperature in K at z=0."""
         ...
 
-    def Tcmb(self, z: ArrayT | float, /) -> ArrayT:
+    def Tcmb(self, z: InputT_contra, /) -> ArrayT_co:
         """CMB temperature in K at redshift z.
 
         Parameters
@@ -39,7 +39,7 @@ class _HasTcmb(Cosmology[ArrayT], Protocol):
 
 
 @runtime_checkable
-class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
+class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
     """Cosmology API protocol for isotropic cosmologies.
 
     This is a protocol class that defines the standard API for isotropic
@@ -49,14 +49,14 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
     """
 
     @property
-    def scale_factor0(self) -> ArrayT:
+    def scale_factor0(self) -> ArrayT_co:
         """Scale factor at z=0."""
         ...
 
     # ==============================================================
     # Methods
 
-    def scale_factor(self, z: ArrayT | float, /) -> ArrayT:
+    def scale_factor(self, z: InputT_contra, /) -> ArrayT_co:
         """Redshift-dependenct scale factor.
 
         The scale factor is defined as :math:`a = a_0 / (1 + z)`.
@@ -75,7 +75,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
     # ----------------------------------------------
     # Time
 
-    def age(self, z: ArrayT | float, /) -> ArrayT:
+    def age(self, z: InputT_contra, /) -> ArrayT_co:
         """Age of the universe in Gyr at redshift ``z``.
 
         Parameters
@@ -89,7 +89,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
         """
         ...
 
-    def lookback_time(self, z: ArrayT | float, /) -> ArrayT:
+    def lookback_time(self, z: InputT_contra, /) -> ArrayT_co:
         """Lookback time to redshift ``z`` in Gyr.
 
         The lookback time is the difference between the age of the Universe now
@@ -109,7 +109,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
     # ----------------------------------------------
     # Comoving distance
 
-    def comoving_distance(self, z: ArrayT | float, /) -> ArrayT:
+    def comoving_distance(self, z: InputT_contra, /) -> ArrayT_co:
         r"""Comoving line-of-sight distance :math:`d_c(z)` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
@@ -126,7 +126,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
         """
         ...
 
-    def comoving_transverse_distance(self, z: ArrayT | float, /) -> ArrayT:
+    def comoving_transverse_distance(self, z: InputT_contra, /) -> ArrayT_co:
         r"""Transverse comoving distance :math:`d_M(z)` in Mpc.
 
         This value is the transverse comoving distance at redshift ``z``
@@ -145,7 +145,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
         """
         ...
 
-    def comoving_volume(self, z: ArrayT | float, /) -> ArrayT:
+    def comoving_volume(self, z: InputT_contra, /) -> ArrayT_co:
         r"""Comoving volume in cubic Mpc.
 
         This is the volume of the universe encompassed by redshifts less than
@@ -163,7 +163,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
         """
         ...
 
-    def differential_comoving_volume(self, z: ArrayT | float, /) -> ArrayT:
+    def differential_comoving_volume(self, z: InputT_contra, /) -> ArrayT_co:
         r"""Differential comoving volume in cubic Mpc per steradian.
 
         If :math:`V_c` is the comoving volume of a redshift slice with solid
@@ -182,7 +182,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
     # ----------------------------------------------
     # Angular diameter distance
 
-    def angular_diameter_distance(self, z: ArrayT | float, /) -> ArrayT:
+    def angular_diameter_distance(self, z: InputT_contra, /) -> ArrayT_co:
         """Angular diameter distance :math:`d_A(z)` in Mpc.
 
         This gives the proper (sometimes called 'physical') transverse
@@ -209,7 +209,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT], Protocol):
     # ----------------------------------------------
     # Luminosity distance
 
-    def luminosity_distance(self, z: ArrayT | float, /) -> ArrayT:
+    def luminosity_distance(self, z: InputT_contra, /) -> ArrayT_co:
         """Redshift-dependent luminosity distance in Mpc.
 
         This is the distance to use when converting between the bolometric flux

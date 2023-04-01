@@ -114,4 +114,4 @@ class Test_CosmologyWrapper:
         assert wrapper.not_cosmology_api == 1
 
         with pytest.raises(AttributeError):
-            wrapper.this_is_not_an_attribute
+            wrapper.this_is_not_an_attribute  # noqa: B018
