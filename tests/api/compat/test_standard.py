@@ -9,6 +9,7 @@ import numpy.array_api as xp
 import pytest
 from cosmology.api import (
     Cosmology,
+    CosmologyConstantsNamespace,
     CosmologyNamespace,
     CosmologyWrapper,
     StandardCosmology,
@@ -40,7 +41,7 @@ def test_noncompliant_cosmology_wrapper():
     # TODO: more examples?
 
 
-def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
+def test_compliant_standard_wrapper(cosmology_ns, standard_attrs, standard_meths):
     """
     Test that a compliant instance is a
     `cosmology.api.CosmologyWrapper`. In particular, this tests
@@ -62,6 +63,9 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
     def _getattr_(self, name: str) -> object:
         return getattr(self.cosmo, name)
 
+    def constants(self) -> CosmologyConstantsNamespace:
+        return cosmology_ns.constants
+
     ExampleStandardCosmologyWrapper = make_dataclass(
         "ExampleStandardCosmologyWrapper",
         [("cosmo", object)],
@@ -71,6 +75,7 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
             "__cosmology_namespace__": property(_cosmology_namespace_),
             "name": property(name),
             "__getattr__": _getattr_,
+            "constants": constants,
         },
         frozen=True,
     )

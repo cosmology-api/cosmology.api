@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import pytest
 from cosmology.api import (
     Cosmology,
+    CosmologyConstantsNamespace,
     CosmologyNamespace,
     CosmologyWrapper,
 )
@@ -55,6 +56,10 @@ def test_compliant_cosmology(cosmology_ns):
         def __getattr__(self, name: str) -> object:
             return getattr(self.cosmo, name)
 
+        @property
+        def constants(self) -> CosmologyConstantsNamespace:
+            return cosmology_ns.constants
+
     wrapper = ExampleCosmologyWrapper(object())
 
     assert isinstance(wrapper, Cosmology)
@@ -78,6 +83,10 @@ class Test_CosmologyWrapper:
             @property
             def name(self) -> str | None:
                 return None
+
+            @property
+            def constants(self) -> CosmologyConstantsNamespace:
+                return cosmology_ns.constants
 
         return ExampleCosmologyWrapper
 
