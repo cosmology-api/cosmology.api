@@ -40,12 +40,12 @@ class _HasTcmb(Cosmology[ArrayT_co, InputT_contra], Protocol):
 
 @runtime_checkable
 class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
-    """Cosmology API protocol for isotropic cosmologies.
+    """Cosmology API protocol for distance measures.
 
-    This is a protocol class that defines the standard API for isotropic
-    background calculations. It is not intended to be instantiated. Instead, it
-    should be used for ``isinstance`` checks or as an ABC for libraries that
-    wish to define a compatible cosmology class.
+    This is a protocol class that defines the standard API for distance
+    measures. It is not intended to be instantiated. Instead, it should be used
+    for ``isinstance`` checks or as an ABC for libraries that wish to define a
+    compatible cosmology class.
     """
 
     @property
