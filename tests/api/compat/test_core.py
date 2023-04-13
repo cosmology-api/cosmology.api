@@ -44,12 +44,8 @@ def test_compliant_cosmology(cosmology_ns):
     class ExampleCosmologyWrapper:
         cosmo: object
 
-        def __cosmology_namespace__(
-            self,
-            /,
-            *,
-            api_version: str | None = None,
-        ) -> CosmologyNamespace:
+        @property
+        def __cosmology_namespace__(self) -> CosmologyNamespace:
             return cosmology_ns
 
         @property
@@ -75,12 +71,8 @@ class Test_CosmologyWrapper:
         class ExampleCosmologyWrapper(CosmologyWrapper):
             cosmo: object
 
-            def __cosmology_namespace__(
-                self,
-                /,
-                *,
-                api_version: str | None = None,
-            ) -> CosmologyNamespace:
+            @property
+            def __cosmology_namespace__(self) -> CosmologyNamespace:
                 return cosmology_ns
 
             @property

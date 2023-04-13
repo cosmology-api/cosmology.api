@@ -35,9 +35,8 @@ def cosmology_wrapper_cls(
 
         cosmo: object
 
-        def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
-        ) -> CosmologyNamespace:
+        @property
+        def __cosmology_namespace__(self) -> CosmologyNamespace:
             return cosmology_ns
 
         @property
