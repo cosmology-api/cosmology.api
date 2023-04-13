@@ -41,8 +41,8 @@ def test_compliant_hasrhocrit(hasrhocrit_cls):
         [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
         bases=(hasrhocrit_cls,),
         namespace={
-            "Tcmb0": _default_one,
-            "Tcmb": _return_1arg,
+            "T_cmb0": _default_one,
+            "T_cmb": _return_1arg,
         },
         frozen=True,
     )

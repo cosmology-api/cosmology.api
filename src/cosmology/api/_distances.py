@@ -15,11 +15,11 @@ class _HasTcmb(Cosmology[ArrayT_co, InputT_contra], Protocol):
     r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
 
     @property
-    def Tcmb0(self) -> ArrayT_co:
+    def T_cmb0(self) -> ArrayT_co:
         """CMB temperature in K at z=0."""
         ...
 
-    def Tcmb(self, z: InputT_contra, /) -> ArrayT_co:
+    def T_cmb(self, z: InputT_contra, /) -> ArrayT_co:
         """CMB temperature in K at redshift z.
 
         Parameters

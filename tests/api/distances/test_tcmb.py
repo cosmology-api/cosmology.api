@@ -41,7 +41,7 @@ def test_compliant_hastcmbs(hastcmb_cls):
         [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
         bases=(hastcmb_cls,),
         namespace={
-            "Tcmb0": _default_one,
+            "T_cmb0": _default_one,
             "Tcmb": _return_1arg,
         },
         frozen=True,

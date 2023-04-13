@@ -49,7 +49,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
     Test that an instance is `cosmology.api.StandardCosmology` even if it
     doesn't inherit from `cosmology.api.StandardCosmology`.
     """
-    fields = ("H0", "Omega_m0", "Omega_de0", "Tcmb0", "Neff", "m_nu", "Omega_b0")
+    fields = ("H0", "Omega_m0", "Omega_de0", "T_cmb0", "Neff", "m_nu", "Omega_b0")
 
     ExampleStandardCosmology = make_dataclass(
         "ExampleStandardCosmology",
