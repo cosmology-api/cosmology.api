@@ -14,6 +14,7 @@ from cosmology.api import (
     Cosmology,
     CosmologyConstantsNamespace,
     CosmologyNamespace,
+    HasBackgroundTemperature,
     HasBaryonComponent,
     HasCriticalDensityMethods,
     HasDarkEnergyComponent,
@@ -28,7 +29,6 @@ from cosmology.api import (
     StandardCosmology,
 )
 from cosmology.api._array_api import Array
-from cosmology.api._distances import HasTcmb
 
 CT = TypeVar("CT", bound=Cosmology)
 
@@ -233,11 +233,11 @@ def hasrhocrit_cls(
 
 
 @pytest.fixture(scope="session")
-def hastcmb_cls(
+def bkgt_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasTcmb | Cosmology]:
+) -> type[HasBackgroundTemperature | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasTcmb, {"T_cmb0"}, bases=(cosmology_cls,))
+    return make_comp_cls(HasBackgroundTemperature, {"T_cmb0"}, bases=(cosmology_cls,))
 
 
 DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(HasDistanceMeasures, Cosmology)
