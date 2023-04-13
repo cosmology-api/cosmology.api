@@ -301,7 +301,7 @@ def hastcmb_cls(
     """An example standard cosmology API class."""
     comp_attrs = get_comp_attrs(_HasTcmb)
     comp_meths = get_comp_meths(_HasTcmb)
-    fields = {"Tcmb0"}
+    fields = {"T_cmb0"}
     return make_dataclass(
         "Example_HasTcmb",
         [(n, Array, field(default_factory=_default_one)) for n in fields],
