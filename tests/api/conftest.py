@@ -25,6 +25,7 @@ from cosmology.api import (
     MatterComponent,
     NeutrinoComponent,
     PhotonComponent,
+    ScaleFactor,
     StandardCosmology,
     TotalComponent,
 )
@@ -215,6 +216,14 @@ def rhocrit_cls(
 
 # ==============================================================================
 # Distance Measures API
+
+
+@pytest.fixture(scope="session")
+def scalefactor_cls(
+    cosmology_cls: type[Cosmology],
+) -> type[ScaleFactor | Cosmology]:
+    """An example standard cosmology API class."""
+    return make_cls(ScaleFactor, set())
 
 
 @pytest.fixture(scope="session")
