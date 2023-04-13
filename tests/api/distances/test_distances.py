@@ -47,7 +47,7 @@ def test_compliant_dists(dists_cls, dists_attrs, dists_meths):
         frozen=True,
     )
 
-    cosmo = HasDistanceMeasuresCosmology(name=None)
+    cosmo = HasDistanceMeasuresCosmology()
 
     assert isinstance(cosmo, HasDistanceMeasures)
 

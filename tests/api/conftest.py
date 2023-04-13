@@ -295,6 +295,7 @@ def standard_cls(  # noqa: PLR0913
     neutrino_cls: type[NeutrinoComponent],
     photon_cls: type[PhotonComponent],
     darkenergy_cls: type[DarkEnergyComponent],
+    cosmology_cls: type[Cosmology],
     standard_attrs: set[str],
     standard_meths: set[str],
 ) -> type[StandardCosmology]:
@@ -308,6 +309,7 @@ def standard_cls(  # noqa: PLR0913
         matter_cls,
         globalcurvature_cls,
         dists_cls,
+        cosmology_cls,
     )
     flds = functools.reduce(
         operator.or_, ({f.name for f in fields(c)} for c in bases)
