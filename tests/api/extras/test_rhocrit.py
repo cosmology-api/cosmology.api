@@ -7,7 +7,7 @@ from dataclasses import field, make_dataclass
 from cosmology.api import CriticalDensity
 from cosmology.api._array_api import Array
 
-from ..conftest import _default_one, _return_1arg
+from ..conftest import _default_one
 
 ################################################################################
 # TESTS
@@ -31,18 +31,18 @@ def test_noncompliant_hasrhocrit():
     # TODO: more examples?
 
 
-def test_compliant_hasrhocrit(hasrhocrit_cls):
+def test_compliant_hasrhocrit(cosmology_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.HasCriticalDensity`.
     """
+    fields = {"critical_density0"}
     ExampleCriticalDensity = make_dataclass(
         "ExampleCriticalDensity",
-        [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
-        bases=(hasrhocrit_cls,),
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=(cosmology_cls,),
         namespace={
-            "T_cmb0": _default_one,
-            "T_cmb": _return_1arg,
+            "critical_density": _default_one,
         },
         frozen=True,
     )
@@ -52,9 +52,9 @@ def test_compliant_hasrhocrit(hasrhocrit_cls):
     assert isinstance(cosmo, CriticalDensity)
 
 
-def test_fixture(hasrhocrit_cls):
+def test_fixture(rhocrit_cls):
     """
-    Test that the ``hasrhocrit_cls`` fixture is a
+    Test that the ``rhocrit_cls`` fixture is a
     `cosmology.api.CriticalDensity`.
     """
-    assert isinstance(hasrhocrit_cls(), CriticalDensity)
+    assert isinstance(rhocrit_cls(), CriticalDensity)

@@ -31,7 +31,7 @@ def test_noncompliant_hubbleparametrized():
     # TODO: more examples?
 
 
-def test_compliant_hubbleparametrized(hashubble_cls):
+def test_compliant_hubbleparametrized(hubble_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.HubbleParameter`.
@@ -39,14 +39,11 @@ def test_compliant_hubbleparametrized(hashubble_cls):
     ExampleHubbleParameter = make_dataclass(
         "ExampleHubbleParameter",
         [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
-        bases=(hashubble_cls,),
+        bases=(hubble_cls,),
         namespace={
-            "h": _default_one,
             "hubble_time": _default_one,
             "hubble_distance": _default_one,
             "H": _return_1arg,
-            "efunc": _return_1arg,
-            "inv_efunc": _return_1arg,
         },
         frozen=True,
     )
@@ -56,9 +53,9 @@ def test_compliant_hubbleparametrized(hashubble_cls):
     assert isinstance(cosmo, HubbleParameter)
 
 
-def test_fixture(hashubble_cls):
+def test_fixture(hubble_cls):
     """
-    Test that the ``hashubble_cls`` fixture is a
+    Test that the ``hubble_cls`` fixture is a
     `cosmology.api.HubbleParameter`.
     """
-    assert isinstance(hashubble_cls(), HubbleParameter)
+    assert isinstance(hubble_cls(), HubbleParameter)

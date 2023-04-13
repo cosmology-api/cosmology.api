@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT_co
 from cosmology.api._core import InputT_contra
@@ -12,6 +12,7 @@ __all__: list[str] = []
 # ============================================================================
 
 
+@runtime_checkable
 class HasCriticalDensity0(Protocol[ArrayT_co]):
     r"""The object has a critical density attribute -- :math:`\rho_{\rm crit}`."""
 
@@ -21,6 +22,7 @@ class HasCriticalDensity0(Protocol[ArrayT_co]):
         ...
 
 
+@runtime_checkable
 class HasCriticalDensity(Protocol[ArrayT_co, InputT_contra]):
     """The object has a critical density method."""
 
@@ -29,6 +31,7 @@ class HasCriticalDensity(Protocol[ArrayT_co, InputT_contra]):
         ...
 
 
+@runtime_checkable
 class CriticalDensity(
     HasCriticalDensity[ArrayT_co, InputT_contra],
     HasCriticalDensity0[ArrayT_co],
@@ -40,6 +43,7 @@ class CriticalDensity(
 # ============================================================================
 
 
+@runtime_checkable
 class HasH0(Protocol[ArrayT_co]):
     r"""The object has a Hubble parameter attribute -- :math:`H_0`."""
 
@@ -49,6 +53,7 @@ class HasH0(Protocol[ArrayT_co]):
         ...
 
 
+@runtime_checkable
 class HasHubbleDistance(Protocol[ArrayT_co]):
     r"""The object has a Hubble distance attribute."""
 
@@ -58,6 +63,7 @@ class HasHubbleDistance(Protocol[ArrayT_co]):
         ...
 
 
+@runtime_checkable
 class HasHubbleTime(Protocol[ArrayT_co]):
     r"""The object has a Hubble time attribute."""
 
@@ -67,6 +73,7 @@ class HasHubbleTime(Protocol[ArrayT_co]):
         ...
 
 
+@runtime_checkable
 class HasH(Protocol[ArrayT_co, InputT_contra]):
     r"""The object has a Hubble parameter method -- :math:`H(z)`."""
 
@@ -100,6 +107,7 @@ class HasH(Protocol[ArrayT_co, InputT_contra]):
         ...
 
 
+@runtime_checkable
 class HubbleParameter(
     HasH0[ArrayT_co],
     HasHubbleDistance[ArrayT_co],
