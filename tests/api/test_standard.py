@@ -11,7 +11,7 @@ from cosmology.api import (
     CurvatureComponent,
     DarkEnergyComponent,
     DarkMatterComponent,
-    HasDistanceMeasures,
+    DistanceMeasures,
     HubbleParameter,
     MatterComponent,
     NeutrinoComponent,
@@ -64,7 +64,7 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
 
     # Check Base and Background
     assert isinstance(cosmo, Cosmology)
-    assert isinstance(cosmo, HasDistanceMeasures)
+    assert isinstance(cosmo, DistanceMeasures)
 
     # Check Components
     assert isinstance(cosmo, BaryonComponent)

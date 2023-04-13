@@ -16,7 +16,7 @@ from cosmology.api._components import (
     TotalComponent,
 )
 from cosmology.api._core import Cosmology, InputT_contra
-from cosmology.api._distances import HasDistanceMeasures
+from cosmology.api._distances import DistanceMeasures
 from cosmology.api._extras import CriticalDensity, HubbleParameter
 
 __all__: list[str] = []
@@ -34,7 +34,7 @@ class StandardCosmology(
     TotalComponent[ArrayT_co, InputT_contra],
     HubbleParameter[ArrayT_co, InputT_contra],
     CriticalDensity[ArrayT_co, InputT_contra],
-    HasDistanceMeasures[ArrayT_co, InputT_contra],
+    DistanceMeasures[ArrayT_co, InputT_contra],
     Cosmology[ArrayT_co, InputT_contra],
     Protocol,
 ):
@@ -77,7 +77,7 @@ class StandardCosmology(
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------

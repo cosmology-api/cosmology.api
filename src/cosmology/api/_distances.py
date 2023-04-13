@@ -92,7 +92,7 @@ class ScaleFactor(
 
 
 @runtime_checkable
-class HasDistanceMeasures(
+class DistanceMeasures(
     ScaleFactor[ArrayT_co, InputT_contra],
     BackgroundTemperature[ArrayT_co, InputT_contra],
     Protocol,

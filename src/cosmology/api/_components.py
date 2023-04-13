@@ -30,7 +30,7 @@ class HasOmegaTot(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------
@@ -69,7 +69,7 @@ class HasOmegaK(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------
@@ -108,7 +108,7 @@ class HasOmegaM(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------
@@ -152,7 +152,7 @@ class HasOmegaB(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------
@@ -191,7 +191,7 @@ class HasOmegaNu(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------
@@ -254,7 +254,7 @@ class HasOmegaDE(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------
@@ -293,7 +293,7 @@ class HasOmegaDM(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------
@@ -337,7 +337,7 @@ class HasOmegaGamma(Protocol[ArrayT_co, InputT_contra]):
         Parameters
         ----------
         z : Array
-            Input redshifts.
+            Input redshift(s).
 
         Returns
         -------

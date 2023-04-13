@@ -32,7 +32,7 @@ from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
 from cosmology.api._distances import (
     BackgroundTemperature,
-    HasDistanceMeasures,
+    DistanceMeasures,
     HasScaleFactor,
     HasScaleFactor0,
     HasTcmb,
@@ -106,7 +106,7 @@ __all__ = [
     "HasH",
     "HubbleParameter",
     # --- Distances ---
-    "HasDistanceMeasures",
+    "DistanceMeasures",
     # scale factor
     "HasScaleFactor",
     "HasScaleFactor0",

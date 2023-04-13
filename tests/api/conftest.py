@@ -20,7 +20,7 @@ from cosmology.api import (
     CurvatureComponent,
     DarkEnergyComponent,
     DarkMatterComponent,
-    HasDistanceMeasures,
+    DistanceMeasures,
     HubbleParameter,
     MatterComponent,
     NeutrinoComponent,
@@ -225,18 +225,18 @@ def bkgt_cls(
     return make_cls(BackgroundTemperature, {"T_cmb0"})
 
 
-DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(HasDistanceMeasures, Cosmology)
+DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(DistanceMeasures, Cosmology)
 
 
 @pytest.fixture(scope="session")
 def dists_attrs() -> frozenset[str]:
-    """The HasDistanceMeasures atributes."""
+    """The DistanceMeasures atributes."""
     return DISTANCES_ATTRS
 
 
 @pytest.fixture(scope="session")
 def dists_meths() -> frozenset[str]:
-    """The HasDistanceMeasures methods."""
+    """The DistanceMeasures methods."""
     return DISTANCES_METHS
 
 
@@ -245,11 +245,11 @@ def dists_cls(
     cosmology_cls: type[Cosmology],
     dists_attrs: set[str],
     dists_meths: set[str],
-) -> type[HasDistanceMeasures]:
+) -> type[DistanceMeasures]:
     """An example Background class."""
     flds = set()  # there are no fields
     return make_dataclass(
-        "ExampleHasDistanceMeasures",
+        "ExampleDistanceMeasures",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(),
         namespace={n: property(_return_one) for n in dists_attrs - flds}
@@ -260,8 +260,8 @@ def dists_cls(
 
 @pytest.fixture(scope="session")
 def dists(
-    dists_cls: type[HasDistanceMeasures],
-) -> HasDistanceMeasures:
+    dists_cls: type[DistanceMeasures],
+) -> DistanceMeasures:
     """An example FLRW API instance."""
     return dists_cls()
 
@@ -287,7 +287,7 @@ def standard_meths() -> frozenset[str]:
 
 @pytest.fixture(scope="session")
 def standard_cls(  # noqa: PLR0913
-    dists_cls: type[HasDistanceMeasures],
+    dists_cls: type[DistanceMeasures],
     globalcurvature_cls: type[CurvatureComponent],
     matter_cls: type[MatterComponent],
     baryon_cls: type[BaryonComponent],

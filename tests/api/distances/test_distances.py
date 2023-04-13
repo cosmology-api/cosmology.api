@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import HasDistanceMeasures
+from cosmology.api import DistanceMeasures
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg, _return_one
@@ -17,29 +17,29 @@ from ..conftest import _default_one, _return_1arg, _return_one
 def test_noncompliant_dists():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.HasDistanceMeasures`.
+    `cosmology.api.DistanceMeasures`.
     """
     # Simple example: missing everything
 
-    class HasDistanceMeasuresCosmology:
+    class DistanceMeasuresCosmology:
         pass
 
-    cosmo = HasDistanceMeasuresCosmology()
+    cosmo = DistanceMeasuresCosmology()
 
-    assert not isinstance(cosmo, HasDistanceMeasures)
+    assert not isinstance(cosmo, DistanceMeasures)
 
     # TODO: more examples?
 
 
 def test_compliant_dists(dists_cls, dists_attrs, dists_meths):
     """
-    Test that an instance is `cosmology.api.HasDistanceMeasures` even if it
-    doesn't inherit from `cosmology.api.HasDistanceMeasures`.
+    Test that an instance is `cosmology.api.DistanceMeasures` even if it
+    doesn't inherit from `cosmology.api.DistanceMeasures`.
     """
     flds = set()
 
-    HasDistanceMeasuresCosmology = make_dataclass(
-        "HasDistanceMeasuresCosmology",
+    DistanceMeasuresCosmology = make_dataclass(
+        "DistanceMeasuresCosmology",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(dists_cls,),
         namespace={n: property(_return_one) for n in dists_attrs - set(flds)}
@@ -47,14 +47,14 @@ def test_compliant_dists(dists_cls, dists_attrs, dists_meths):
         frozen=True,
     )
 
-    cosmo = HasDistanceMeasuresCosmology()
+    cosmo = DistanceMeasuresCosmology()
 
-    assert isinstance(cosmo, HasDistanceMeasures)
+    assert isinstance(cosmo, DistanceMeasures)
 
 
 def test_fixture(dists):
     """
     Test that the ``dists`` fixture is a
-    `cosmology.api.HasDistanceMeasures`.
+    `cosmology.api.DistanceMeasures`.
     """
-    assert isinstance(dists, HasDistanceMeasures)
+    assert isinstance(dists, DistanceMeasures)
