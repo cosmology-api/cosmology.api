@@ -17,7 +17,7 @@ from cosmology.api._components import (
 )
 from cosmology.api._core import Cosmology, InputT_contra
 from cosmology.api._distances import HasDistanceMeasures
-from cosmology.api._extras import HasCriticalDensityMethods, HasHubbleMethods
+from cosmology.api._extras import CriticalDensity, HubbleParameter
 
 __all__: list[str] = []
 
@@ -32,8 +32,8 @@ class StandardCosmology(
     DarkEnergyComponent[ArrayT_co, InputT_contra],
     CurvatureComponent[ArrayT_co, InputT_contra],
     TotalComponent[ArrayT_co, InputT_contra],
-    HasHubbleMethods[ArrayT_co, InputT_contra],
-    HasCriticalDensityMethods[ArrayT_co, InputT_contra],
+    HubbleParameter[ArrayT_co, InputT_contra],
+    CriticalDensity[ArrayT_co, InputT_contra],
     HasDistanceMeasures[ArrayT_co, InputT_contra],
     Cosmology[ArrayT_co, InputT_contra],
     Protocol,

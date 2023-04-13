@@ -5,14 +5,14 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT_co
-from cosmology.api._core import Cosmology, InputT_contra
+from cosmology.api._core import InputT_contra
 
 __all__: list[str] = []
 
 
 @runtime_checkable
 class HasTcmb0(Protocol[ArrayT_co]):
-    r"""The cosmology contains a background temperature -- :math:`T_{CMB}`."""
+    r"""The object contains a background temperature -- :math:`T_{CMB}`."""
 
     @property
     def T_cmb0(self) -> ArrayT_co:
@@ -22,7 +22,7 @@ class HasTcmb0(Protocol[ArrayT_co]):
 
 @runtime_checkable
 class HasTcmb(Protocol[ArrayT_co, InputT_contra]):
-    r"""The cosmology contains a background temperature method."""
+    r"""The object contains a background temperature method."""
 
     def T_cmb(self, z: InputT_contra, /) -> ArrayT_co:
         """CMB temperature in K at redshift z.
@@ -40,13 +40,10 @@ class HasTcmb(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasBackgroundTemperature(
-    HasTcmb[ArrayT_co, InputT_contra],
-    HasTcmb0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+class BackgroundTemperature(
+    HasTcmb[ArrayT_co, InputT_contra], HasTcmb0[ArrayT_co], Protocol
 ):
-    r"""The cosmology has attributes and methods for the background temperature."""
+    r"""The object has attributes and methods for the background temperature."""
 
 
 # ==============================================================================
@@ -54,7 +51,7 @@ class HasBackgroundTemperature(
 
 @runtime_checkable
 class HasScaleFactor0(Protocol[ArrayT_co]):
-    """The cosmology contains a scale factor, described by :math:`a_0`."""
+    """The object contains a scale factor, described by :math:`a_0`."""
 
     @property
     def scale_factor0(self) -> ArrayT_co:
@@ -64,7 +61,7 @@ class HasScaleFactor0(Protocol[ArrayT_co]):
 
 @runtime_checkable
 class HasScaleFactor(Protocol[ArrayT_co, InputT_contra]):
-    """The cosmology contains a scale factor method."""
+    """The object contains a scale factor method."""
 
     def scale_factor(self, z: InputT_contra, /) -> ArrayT_co:
         """Redshift-dependenct scale factor.
@@ -84,13 +81,10 @@ class HasScaleFactor(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasScaleFactorDistance(
-    HasScaleFactor[ArrayT_co, InputT_contra],
-    HasScaleFactor0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+class ScaleFactor(
+    HasScaleFactor[ArrayT_co, InputT_contra], HasScaleFactor0[ArrayT_co], Protocol
 ):
-    """The cosmology has attributes and methods for the scale factor."""
+    """The object has attributes and methods for the scale factor."""
 
 
 ##############################################################################
@@ -99,8 +93,8 @@ class HasScaleFactorDistance(
 
 @runtime_checkable
 class HasDistanceMeasures(
-    HasScaleFactorDistance[ArrayT_co, InputT_contra],
-    HasBackgroundTemperature[ArrayT_co, InputT_contra],
+    ScaleFactor[ArrayT_co, InputT_contra],
+    BackgroundTemperature[ArrayT_co, InputT_contra],
     Protocol,
 ):
     """Cosmology API protocol for isotropic cosmologies.

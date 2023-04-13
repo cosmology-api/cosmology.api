@@ -11,17 +11,17 @@ from typing import TypeVar
 import numpy.array_api as xp
 import pytest
 from cosmology.api import (
+    BackgroundTemperature,
     BaryonComponent,
     Cosmology,
     CosmologyConstantsNamespace,
     CosmologyNamespace,
+    CriticalDensity,
     CurvatureComponent,
     DarkEnergyComponent,
     DarkMatterComponent,
-    HasBackgroundTemperature,
-    HasCriticalDensityMethods,
     HasDistanceMeasures,
-    HasHubbleMethods,
+    HubbleParameter,
     MatterComponent,
     NeutrinoComponent,
     PhotonComponent,
@@ -215,17 +215,17 @@ def darkenergy_cls(
 @pytest.fixture(scope="session")
 def hashubble_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasHubbleMethods | Cosmology]:
+) -> type[HubbleParameter | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasHubbleMethods, {"H0"}, bases=(cosmology_cls,))
+    return make_comp_cls(HubbleParameter, {"H0"}, bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
 def hasrhocrit_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasCriticalDensityMethods | Cosmology]:
+) -> type[CriticalDensity | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasCriticalDensityMethods, set(), bases=(cosmology_cls,))
+    return make_comp_cls(CriticalDensity, set(), bases=(cosmology_cls,))
 
 
 # ==============================================================================
@@ -235,9 +235,9 @@ def hasrhocrit_cls(
 @pytest.fixture(scope="session")
 def bkgt_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasBackgroundTemperature | Cosmology]:
+) -> type[BackgroundTemperature | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasBackgroundTemperature, {"T_cmb0"}, bases=(cosmology_cls,))
+    return make_comp_cls(BackgroundTemperature, {"T_cmb0"}, bases=(cosmology_cls,))
 
 
 DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(HasDistanceMeasures, Cosmology)

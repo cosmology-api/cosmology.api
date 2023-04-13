@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Protocol
 
 from cosmology.api._array_api import ArrayT_co
-from cosmology.api._core import Cosmology, InputT_contra
+from cosmology.api._core import InputT_contra
 
 __all__: list[str] = []
 
@@ -29,13 +29,12 @@ class HasCriticalDensity(Protocol[ArrayT_co, InputT_contra]):
         ...
 
 
-class HasCriticalDensityMethods(
+class CriticalDensity(
     HasCriticalDensity[ArrayT_co, InputT_contra],
     HasCriticalDensity0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
     Protocol,
 ):
-    """The cosmology has methods for the critical density."""
+    """The object has attributes and methods for the critical density."""
 
 
 # ============================================================================
@@ -101,12 +100,11 @@ class HasH(Protocol[ArrayT_co, InputT_contra]):
         ...
 
 
-class HasHubbleMethods(
+class HubbleParameter(
     HasH0[ArrayT_co],
     HasHubbleDistance[ArrayT_co],
     HasHubbleTime[ArrayT_co],
     HasH[ArrayT_co, InputT_contra],
-    Cosmology[ArrayT_co, InputT_contra],
     Protocol,
 ):
-    r"""The cosmology has methods for working with hubble quantities."""
+    r"""The object has methods for working with hubble quantities."""

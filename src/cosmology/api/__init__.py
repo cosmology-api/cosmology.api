@@ -31,23 +31,23 @@ from cosmology.api._components import (
 from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
 from cosmology.api._distances import (
-    HasBackgroundTemperature,
+    BackgroundTemperature,
     HasDistanceMeasures,
     HasScaleFactor,
     HasScaleFactor0,
-    HasScaleFactorDistance,
     HasTcmb,
     HasTcmb0,
+    ScaleFactor,
 )
 from cosmology.api._extras import (
+    CriticalDensity,
     HasCriticalDensity,
     HasCriticalDensity0,
-    HasCriticalDensityMethods,
     HasH,
     HasH0,
     HasHubbleDistance,
-    HasHubbleMethods,
     HasHubbleTime,
+    HubbleParameter,
 )
 from cosmology.api._namespace import CosmologyNamespace
 from cosmology.api._standard import StandardCosmology
@@ -98,23 +98,23 @@ __all__ = [
     # critical density
     "HasCriticalDensity0",
     "HasCriticalDensity",
-    "HasCriticalDensityMethods",
+    "CriticalDensity",
     # hubble parameter
     "HasH0",
     "HasHubbleDistance",
     "HasHubbleTime",
     "HasH",
-    "HasHubbleMethods",
+    "HubbleParameter",
     # --- Distances ---
     "HasDistanceMeasures",
     # scale factor
     "HasScaleFactor",
     "HasScaleFactor0",
-    "HasScaleFactorDistance",
+    "ScaleFactor",
     # background temperature
     "HasTcmb0",
     "HasTcmb",
-    "HasBackgroundTemperature",
+    "BackgroundTemperature",
     # -- Wrappers --
     "CosmologyWrapper",
     "StandardCosmologyWrapper",

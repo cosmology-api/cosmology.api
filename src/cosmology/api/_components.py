@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT_co
-from cosmology.api._core import Cosmology, InputT_contra
+from cosmology.api._core import InputT_contra
 
 __all__: list[str] = []
 
@@ -41,10 +41,7 @@ class HasOmegaTot(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class TotalComponent(
-    HasOmegaTot[ArrayT_co, InputT_contra],
-    HasOmegaTot0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+    HasOmegaTot[ArrayT_co, InputT_contra], HasOmegaTot0[ArrayT_co], Protocol
 ):
     r"""The cosmology has attributes and methods for the total density."""
 
@@ -83,10 +80,7 @@ class HasOmegaK(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class CurvatureComponent(
-    HasOmegaK[ArrayT_co, InputT_contra],
-    HasOmegaK0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+    HasOmegaK[ArrayT_co, InputT_contra], HasOmegaK0[ArrayT_co], Protocol
 ):
     r"""The cosmology has attributes and methods for the global curvature."""
 
@@ -130,10 +124,7 @@ class HasOmegaM(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class MatterComponent(
-    HasOmegaM[ArrayT_co, InputT_contra],
-    HasOmegaM0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+    HasOmegaM[ArrayT_co, InputT_contra], HasOmegaM0[ArrayT_co], Protocol
 ):
     r"""The cosmology has attributes and methods for the matter density."""
 
@@ -172,10 +163,7 @@ class HasOmegaB(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class BaryonComponent(
-    HasOmegaB[ArrayT_co, InputT_contra],
-    HasOmegaB0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+    HasOmegaB[ArrayT_co, InputT_contra], HasOmegaB0[ArrayT_co], Protocol
 ):
     r"""The cosmology has attributes and methods for the baryon density."""
 
@@ -238,7 +226,6 @@ class NeutrinoComponent(
     HasMNu[ArrayT_co],
     HasNeff[ArrayT_co],
     HasOmegaNu0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the neutrino density."""
@@ -278,10 +265,7 @@ class HasOmegaDE(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class DarkEnergyComponent(
-    HasOmegaDE[ArrayT_co, InputT_contra],
-    HasOmegaDE0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+    HasOmegaDE[ArrayT_co, InputT_contra], HasOmegaDE0[ArrayT_co], Protocol
 ):
     r"""The cosmology has attributes and methods for the dark energy."""
 
@@ -325,10 +309,7 @@ class HasOmegaDM(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class DarkMatterComponent(
-    HasOmegaDM[ArrayT_co, InputT_contra],
-    HasOmegaDM0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+    HasOmegaDM[ArrayT_co, InputT_contra], HasOmegaDM0[ArrayT_co], Protocol
 ):
     r"""The cosmology has attributes and methods for the dark matter."""
 
@@ -367,9 +348,6 @@ class HasOmegaGamma(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class PhotonComponent(
-    HasOmegaGamma[ArrayT_co, InputT_contra],
-    HasOmegaGamma0[ArrayT_co],
-    Cosmology[ArrayT_co, InputT_contra],
-    Protocol,
+    HasOmegaGamma[ArrayT_co, InputT_contra], HasOmegaGamma0[ArrayT_co], Protocol
 ):
     r"""The cosmology has attributes and methods for the photons."""
