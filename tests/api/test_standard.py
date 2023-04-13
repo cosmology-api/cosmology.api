@@ -5,17 +5,17 @@ from __future__ import annotations
 from dataclasses import field, make_dataclass
 
 from cosmology.api import (
+    BaryonComponent,
     Cosmology,
-    HasBaryonComponent,
+    CurvatureComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
     HasCriticalDensityMethods,
-    HasDarkEnergyComponent,
-    HasDarkMatterComponent,
     HasDistanceMeasures,
-    HasGlobalCurvatureComponent,
     HasHubbleMethods,
-    HasMatterComponent,
-    HasNeutrinoComponent,
-    HasPhotonComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
     StandardCosmology,
 )
 from cosmology.api._array_api import Array
@@ -67,13 +67,13 @@ def test_compliant_standard(cosmology_cls, standard_attrs, standard_meths):
     assert isinstance(cosmo, HasDistanceMeasures)
 
     # Check Components
-    assert isinstance(cosmo, HasBaryonComponent)
-    assert isinstance(cosmo, HasDarkEnergyComponent)
-    assert isinstance(cosmo, HasDarkMatterComponent)
-    assert isinstance(cosmo, HasGlobalCurvatureComponent)
-    assert isinstance(cosmo, HasMatterComponent)
-    assert isinstance(cosmo, HasNeutrinoComponent)
-    assert isinstance(cosmo, HasPhotonComponent)
+    assert isinstance(cosmo, BaryonComponent)
+    assert isinstance(cosmo, DarkEnergyComponent)
+    assert isinstance(cosmo, DarkMatterComponent)
+    assert isinstance(cosmo, CurvatureComponent)
+    assert isinstance(cosmo, MatterComponent)
+    assert isinstance(cosmo, NeutrinoComponent)
+    assert isinstance(cosmo, PhotonComponent)
 
     # Check Parametrizations
     assert isinstance(cosmo, HasHubbleMethods)

@@ -1,10 +1,10 @@
-"""Test ``cosmology.api.HasBaryonComponent``."""
+"""Test ``cosmology.api.BaryonComponent``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import HasBaryonComponent
+from cosmology.api import BaryonComponent
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg
@@ -17,16 +17,16 @@ from ..conftest import _default_one, _return_1arg
 def test_noncompliant_baryoncomponent():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.HasBaryonComponent`.
+    `cosmology.api.BaryonComponent`.
     """
     # Simple example: missing everything
 
-    class ExampleHasBaryonComponent:
+    class ExampleBaryonComponent:
         pass
 
-    cosmo = ExampleHasBaryonComponent()
+    cosmo = ExampleBaryonComponent()
 
-    assert not isinstance(cosmo, HasBaryonComponent)
+    assert not isinstance(cosmo, BaryonComponent)
 
     # TODO: more examples?
 
@@ -34,24 +34,24 @@ def test_noncompliant_baryoncomponent():
 def test_compliant_baryoncomponent(matter_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.HasBaryonComponent`.
+    `cosmology.api.BaryonComponent`.
     """
-    ExampleHasBaryonComponent = make_dataclass(
-        "ExampleHasBaryonComponent",
+    ExampleBaryonComponent = make_dataclass(
+        "ExampleBaryonComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {"Omega_b0"}],
         bases=(matter_cls,),
         namespace={"Omega_b": _return_1arg},
         frozen=True,
     )
 
-    cosmo = ExampleHasBaryonComponent()
+    cosmo = ExampleBaryonComponent()
 
-    assert isinstance(cosmo, HasBaryonComponent)
+    assert isinstance(cosmo, BaryonComponent)
 
 
 def test_fixture(baryon_cls):
     """
     Test that the ``baryon_cls`` fixture is a
-    `cosmology.api.HasBaryonComponent`.
+    `cosmology.api.BaryonComponent`.
     """
-    assert isinstance(baryon_cls(), HasBaryonComponent)
+    assert isinstance(baryon_cls(), BaryonComponent)

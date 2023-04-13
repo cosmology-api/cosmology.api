@@ -6,14 +6,14 @@ from typing import Protocol, runtime_checkable
 
 from cosmology.api._array_api import ArrayT_co
 from cosmology.api._components import (
-    HasBaryonComponent,
-    HasDarkEnergyComponent,
-    HasDarkMatterComponent,
-    HasGlobalCurvatureComponent,
-    HasMatterComponent,
-    HasNeutrinoComponent,
-    HasPhotonComponent,
-    HasTotalComponent,
+    BaryonComponent,
+    CurvatureComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
+    TotalComponent,
 )
 from cosmology.api._core import Cosmology, InputT_contra
 from cosmology.api._distances import HasDistanceMeasures
@@ -24,14 +24,14 @@ __all__: list[str] = []
 
 @runtime_checkable
 class StandardCosmology(
-    HasNeutrinoComponent[ArrayT_co, InputT_contra],
-    HasBaryonComponent[ArrayT_co, InputT_contra],
-    HasPhotonComponent[ArrayT_co, InputT_contra],
-    HasDarkMatterComponent[ArrayT_co, InputT_contra],
-    HasMatterComponent[ArrayT_co, InputT_contra],
-    HasDarkEnergyComponent[ArrayT_co, InputT_contra],
-    HasGlobalCurvatureComponent[ArrayT_co, InputT_contra],
-    HasTotalComponent[ArrayT_co, InputT_contra],
+    NeutrinoComponent[ArrayT_co, InputT_contra],
+    BaryonComponent[ArrayT_co, InputT_contra],
+    PhotonComponent[ArrayT_co, InputT_contra],
+    DarkMatterComponent[ArrayT_co, InputT_contra],
+    MatterComponent[ArrayT_co, InputT_contra],
+    DarkEnergyComponent[ArrayT_co, InputT_contra],
+    CurvatureComponent[ArrayT_co, InputT_contra],
+    TotalComponent[ArrayT_co, InputT_contra],
     HasHubbleMethods[ArrayT_co, InputT_contra],
     HasCriticalDensityMethods[ArrayT_co, InputT_contra],
     HasDistanceMeasures[ArrayT_co, InputT_contra],

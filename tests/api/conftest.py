@@ -11,22 +11,22 @@ from typing import TypeVar
 import numpy.array_api as xp
 import pytest
 from cosmology.api import (
+    BaryonComponent,
     Cosmology,
     CosmologyConstantsNamespace,
     CosmologyNamespace,
+    CurvatureComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
     HasBackgroundTemperature,
-    HasBaryonComponent,
     HasCriticalDensityMethods,
-    HasDarkEnergyComponent,
-    HasDarkMatterComponent,
     HasDistanceMeasures,
-    HasGlobalCurvatureComponent,
     HasHubbleMethods,
-    HasMatterComponent,
-    HasNeutrinoComponent,
-    HasPhotonComponent,
-    HasTotalComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
     StandardCosmology,
+    TotalComponent,
 )
 from cosmology.api._array_api import Array
 
@@ -146,66 +146,66 @@ def make_comp_cls(
 @pytest.fixture(scope="session")
 def comptotal_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasTotalComponent | Cosmology]:
+) -> type[TotalComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasTotalComponent, {"Omega_tot0"}, bases=(cosmology_cls,))
+    return make_comp_cls(TotalComponent, {"Omega_tot0"}, bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
 def globalcurvature_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasGlobalCurvatureComponent | Cosmology]:
+) -> type[CurvatureComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasGlobalCurvatureComponent, set(), bases=(cosmology_cls,))
+    return make_comp_cls(CurvatureComponent, set(), bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
 def matter_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasMatterComponent | Cosmology]:
+) -> type[MatterComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasMatterComponent, {"Omega_m0"}, bases=(cosmology_cls,))
+    return make_comp_cls(MatterComponent, {"Omega_m0"}, bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
 def baryon_cls(
     matter_cls: type[Cosmology],
-) -> type[HasBaryonComponent | Cosmology]:
+) -> type[BaryonComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasBaryonComponent, {"Omega_b0"}, bases=(matter_cls,))
+    return make_comp_cls(BaryonComponent, {"Omega_b0"}, bases=(matter_cls,))
 
 
 @pytest.fixture(scope="session")
 def darkmatter_cls(
     matter_cls: type[Cosmology],
-) -> type[HasDarkMatterComponent | Cosmology]:
+) -> type[DarkMatterComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasDarkMatterComponent, {"Omega_dm0"}, bases=(matter_cls,))
+    return make_comp_cls(DarkMatterComponent, {"Omega_dm0"}, bases=(matter_cls,))
 
 
 @pytest.fixture(scope="session")
 def neutrino_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasNeutrinoComponent | Cosmology]:
+) -> type[NeutrinoComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasNeutrinoComponent, {"Neff", "m_nu"}, bases=(cosmology_cls,))
+    return make_comp_cls(NeutrinoComponent, {"Neff", "m_nu"}, bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
 def photon_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasPhotonComponent | Cosmology]:
+) -> type[PhotonComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasPhotonComponent, set(), bases=(cosmology_cls,))
+    return make_comp_cls(PhotonComponent, set(), bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
-@pytest.mark.parametrize("comp_cls", [HasDarkEnergyComponent])
+@pytest.mark.parametrize("comp_cls", [DarkEnergyComponent])
 def darkenergy_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasDarkEnergyComponent | Cosmology]:
+) -> type[DarkEnergyComponent | Cosmology]:
     """An example standard cosmology API class."""
-    return make_comp_cls(HasDarkEnergyComponent, {"Omega_de0"}, bases=(cosmology_cls,))
+    return make_comp_cls(DarkEnergyComponent, {"Omega_de0"}, bases=(cosmology_cls,))
 
 
 # ==============================================================================
@@ -303,13 +303,13 @@ def standard_meths() -> frozenset[str]:
 @pytest.fixture(scope="session")
 def standard_cls(  # noqa: PLR0913
     dists_cls: type[HasDistanceMeasures],
-    globalcurvature_cls: type[HasGlobalCurvatureComponent],
-    matter_cls: type[HasMatterComponent],
-    baryon_cls: type[HasBaryonComponent],
-    darkmatter_cls: type[HasDarkMatterComponent],
-    neutrino_cls: type[HasNeutrinoComponent],
-    photon_cls: type[HasPhotonComponent],
-    darkenergy_cls: type[HasDarkEnergyComponent],
+    globalcurvature_cls: type[CurvatureComponent],
+    matter_cls: type[MatterComponent],
+    baryon_cls: type[BaryonComponent],
+    darkmatter_cls: type[DarkMatterComponent],
+    neutrino_cls: type[NeutrinoComponent],
+    photon_cls: type[PhotonComponent],
+    darkenergy_cls: type[DarkEnergyComponent],
     standard_attrs: set[str],
     standard_meths: set[str],
 ) -> type[StandardCosmology]:

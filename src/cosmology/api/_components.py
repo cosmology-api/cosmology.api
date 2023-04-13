@@ -40,7 +40,7 @@ class HasOmegaTot(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasTotalComponent(
+class TotalComponent(
     HasOmegaTot[ArrayT_co, InputT_contra],
     HasOmegaTot0[ArrayT_co],
     Cosmology[ArrayT_co, InputT_contra],
@@ -82,7 +82,7 @@ class HasOmegaK(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasGlobalCurvatureComponent(
+class CurvatureComponent(
     HasOmegaK[ArrayT_co, InputT_contra],
     HasOmegaK0[ArrayT_co],
     Cosmology[ArrayT_co, InputT_contra],
@@ -129,7 +129,7 @@ class HasOmegaM(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasMatterComponent(
+class MatterComponent(
     HasOmegaM[ArrayT_co, InputT_contra],
     HasOmegaM0[ArrayT_co],
     Cosmology[ArrayT_co, InputT_contra],
@@ -171,7 +171,7 @@ class HasOmegaB(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasBaryonComponent(
+class BaryonComponent(
     HasOmegaB[ArrayT_co, InputT_contra],
     HasOmegaB0[ArrayT_co],
     Cosmology[ArrayT_co, InputT_contra],
@@ -233,7 +233,7 @@ class HasMNu(Protocol[ArrayT_co]):
 
 
 @runtime_checkable
-class HasNeutrinoComponent(
+class NeutrinoComponent(
     HasOmegaNu[ArrayT_co, InputT_contra],
     HasMNu[ArrayT_co],
     HasNeff[ArrayT_co],
@@ -277,7 +277,7 @@ class HasOmegaDE(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasDarkEnergyComponent(
+class DarkEnergyComponent(
     HasOmegaDE[ArrayT_co, InputT_contra],
     HasOmegaDE0[ArrayT_co],
     Cosmology[ArrayT_co, InputT_contra],
@@ -324,7 +324,7 @@ class HasOmegaDM(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasDarkMatterComponent(
+class DarkMatterComponent(
     HasOmegaDM[ArrayT_co, InputT_contra],
     HasOmegaDM0[ArrayT_co],
     Cosmology[ArrayT_co, InputT_contra],
@@ -366,7 +366,7 @@ class HasOmegaGamma(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasPhotonComponent(
+class PhotonComponent(
     HasOmegaGamma[ArrayT_co, InputT_contra],
     HasOmegaGamma0[ArrayT_co],
     Cosmology[ArrayT_co, InputT_contra],

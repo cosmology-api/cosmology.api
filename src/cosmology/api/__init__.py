@@ -1,14 +1,12 @@
 """The Cosmology API standard."""
 
 from cosmology.api._components import (
-    HasBaryonComponent,
-    HasDarkEnergyComponent,
-    HasDarkMatterComponent,
-    HasGlobalCurvatureComponent,
-    HasMatterComponent,
+    BaryonComponent,
+    CurvatureComponent,
+    DarkEnergyComponent,
+    DarkMatterComponent,
     HasMNu,
     HasNeff,
-    HasNeutrinoComponent,
     HasOmegaB,
     HasOmegaB0,
     HasOmegaDE,
@@ -25,8 +23,10 @@ from cosmology.api._components import (
     HasOmegaNu0,
     HasOmegaTot,
     HasOmegaTot0,
-    HasPhotonComponent,
-    HasTotalComponent,
+    MatterComponent,
+    NeutrinoComponent,
+    PhotonComponent,
+    TotalComponent,
 )
 from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
@@ -63,37 +63,37 @@ __all__ = [
     # total
     "HasOmegaTot",
     "HasOmegaTot0",
-    "HasTotalComponent",
+    "TotalComponent",
     # curvature
     "HasOmegaK0",
     "HasOmegaK",
-    "HasGlobalCurvatureComponent",
+    "CurvatureComponent",
     # matter
     "HasOmegaM0",
     "HasOmegaM",
-    "HasMatterComponent",
+    "MatterComponent",
     # baryons
     "HasOmegaB0",
     "HasOmegaB",
-    "HasBaryonComponent",
+    "BaryonComponent",
     # neutrinos
     "HasOmegaNu0",
     "HasOmegaNu",
     "HasNeff",
     "HasMNu",
-    "HasNeutrinoComponent",
+    "NeutrinoComponent",
     # dark energy
     "HasOmegaDE0",
     "HasOmegaDE",
-    "HasDarkEnergyComponent",
+    "DarkEnergyComponent",
     # dark matter
     "HasOmegaDM0",
     "HasOmegaDM",
-    "HasDarkMatterComponent",
+    "DarkMatterComponent",
     # photons
     "HasOmegaGamma0",
     "HasOmegaGamma",
-    "HasPhotonComponent",
+    "PhotonComponent",
     # --- Parametrizations ---
     # critical density
     "HasCriticalDensity0",

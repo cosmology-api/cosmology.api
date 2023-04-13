@@ -1,10 +1,10 @@
-"""Test ``cosmology.api.HasPhotonComponent``."""
+"""Test ``cosmology.api.PhotonComponent``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import HasPhotonComponent
+from cosmology.api import PhotonComponent
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg, _return_one
@@ -17,16 +17,16 @@ from ..conftest import _default_one, _return_1arg, _return_one
 def test_noncompliant_photoncomponent():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.HasPhotonComponent`.
+    `cosmology.api.PhotonComponent`.
     """
     # Simple example: missing everything
 
-    class ExampleHasPhotonComponent:
+    class ExamplePhotonComponent:
         pass
 
-    cosmo = ExampleHasPhotonComponent()
+    cosmo = ExamplePhotonComponent()
 
-    assert not isinstance(cosmo, HasPhotonComponent)
+    assert not isinstance(cosmo, PhotonComponent)
 
     # TODO: more examples?
 
@@ -34,24 +34,24 @@ def test_noncompliant_photoncomponent():
 def test_compliant_photoncomponent(dists_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.HasPhotonComponent`.
+    `cosmology.api.PhotonComponent`.
     """
-    ExampleHasPhotonComponent = make_dataclass(
-        "ExampleHasPhotonComponent",
+    ExamplePhotonComponent = make_dataclass(
+        "ExamplePhotonComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {}],
         bases=(dists_cls,),
         namespace={"Omega_gamma0": _return_one, "Omega_gamma": _return_1arg},
         frozen=True,
     )
 
-    cosmo = ExampleHasPhotonComponent()
+    cosmo = ExamplePhotonComponent()
 
-    assert isinstance(cosmo, HasPhotonComponent)
+    assert isinstance(cosmo, PhotonComponent)
 
 
 def test_fixture(photon_cls):
     """
     Test that the ``photon_cls`` fixture is a
-    `cosmology.api.HasPhotonComponent`.
+    `cosmology.api.PhotonComponent`.
     """
-    assert isinstance(photon_cls(), HasPhotonComponent)
+    assert isinstance(photon_cls(), PhotonComponent)
