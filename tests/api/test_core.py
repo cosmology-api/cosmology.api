@@ -38,12 +38,8 @@ def test_compliant_cosmology(cosmology_ns):
     class Cosmology:
         name: str | None = None
 
-        def __cosmology_namespace__(
-            self,
-            /,
-            *,
-            api_version: str | None = None,
-        ) -> CosmologyNamespace:
+        @property
+        def __cosmology_namespace__(self) -> CosmologyNamespace:
             return cosmology_ns
 
     cosmo = Cosmology()

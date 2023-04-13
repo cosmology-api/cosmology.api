@@ -86,9 +86,8 @@ def cosmology_cls(cosmology_ns: CosmologyNamespace) -> type[Cosmology]:
 
         name: str | None = None  # normally has a default, but not for testing
 
-        def __cosmology_namespace__(
-            self, /, *, api_version: str | None = None
-        ) -> CosmologyNamespace:
+        @property
+        def __cosmology_namespace__(self) -> CosmologyNamespace:
             return cosmology_ns
 
         # === not Cosmology ===

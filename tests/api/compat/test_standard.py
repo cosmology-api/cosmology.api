@@ -53,12 +53,7 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
     def _return_1arg(self, z: Array, /) -> Array:
         return z
 
-    def _cosmology_namespace_(
-        self,
-        /,
-        *,
-        api_version: str | None = None,
-    ) -> CosmologyNamespace:
+    def _cosmology_namespace_(self) -> CosmologyNamespace:
         return cosmology_ns
 
     def name(self) -> str | None:
@@ -73,7 +68,7 @@ def test_compliant_bkg_wrapper(cosmology_ns, standard_attrs, standard_meths):
         namespace={n: property(_return_one) for n in standard_attrs}
         | {n: _return_1arg for n in standard_meths}
         | {
-            "__cosmology_namespace__": _cosmology_namespace_,
+            "__cosmology_namespace__": property(_cosmology_namespace_),
             "name": property(name),
             "__getattr__": _getattr_,
         },
@@ -98,12 +93,8 @@ class Test_StandardCosmologyWrapper:
         class ExampleStandardCosmologyWrapper(StandardCosmologyWrapper):
             cosmo: object
 
-            def __cosmology_namespace__(
-                self,
-                /,
-                *,
-                api_version: str | None = None,
-            ) -> CosmologyNamespace:
+            @property
+            def __cosmology_namespace__(self) -> CosmologyNamespace:
                 return cosmology_ns
 
             @property
