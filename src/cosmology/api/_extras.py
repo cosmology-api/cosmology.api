@@ -91,7 +91,12 @@ class HasH(Protocol[ArrayT_co, InputT_contra]):
         """  # noqa: D402
         ...
 
-    def h_over_h0(self, z: InputT_contra, /) -> ArrayT_co:
+
+@runtime_checkable
+class HasHoverH0(Protocol[ArrayT_co, InputT_contra]):
+    r"""The object has a standardized Hubble parameter method -- :math:`E(z)`."""
+
+    def H_over_H0(self, z: InputT_contra, /) -> ArrayT_co:
         """Standardised Hubble function :math:`E(z) = H(z)/H_0`.
 
         Parameters
@@ -109,10 +114,11 @@ class HasH(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class HubbleParameter(
-    HasH0[ArrayT_co],
+    HasHoverH0[ArrayT_co, InputT_contra],
+    HasH[ArrayT_co, InputT_contra],
     HasHubbleDistance[ArrayT_co],
     HasHubbleTime[ArrayT_co],
-    HasH[ArrayT_co, InputT_contra],
+    HasH0[ArrayT_co],
     Protocol,
 ):
     r"""The object has methods for working with hubble quantities."""
