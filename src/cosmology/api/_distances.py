@@ -146,25 +146,33 @@ class DistanceMeasures(
     # ----------------------------------------------
     # Comoving distance
 
-    def comoving_distance(self, z: InputT_contra, /) -> ArrayT_co:
-        r"""Comoving line-of-sight distance :math:`d_c(z)` in Mpc.
+    def comoving_distance(
+        self, z: InputT_contra, zp: InputT_contra | None = None, /
+    ) -> ArrayT_co:
+        r"""Comoving line-of-sight distance :math:`d_c(z1, z2)` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
         remains constant with time for objects in the Hubble flow.
 
         Parameters
         ----------
-        z : Array, positional-only
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d_c(0, z)` is returned, otherwise the distance :math:`d_c(z,
+            zp)` is returned.
 
         Returns
         -------
         Array
+            The comoving distance :math:`d_c(z1, z2)` in Mpc, where ``(z1, z2)``
+            is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
-    def comoving_transverse_distance(self, z: InputT_contra, /) -> ArrayT_co:
-        r"""Transverse comoving distance :math:`d_M(z)` in Mpc.
+    def comoving_transverse_distance(
+        self, z: InputT_contra, zp: InputT_contra | None = None, /
+    ) -> ArrayT_co:
+        r"""Transverse comoving distance :math:`d_M(z1, z2)` in Mpc.
 
         This value is the transverse comoving distance at redshift ``z``
         corresponding to an angular separation of 1 radian. This is the same as
@@ -173,16 +181,22 @@ class DistanceMeasures(
 
         Parameters
         ----------
-        z : Array, positional-only
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d_M(0, z)` is returned, otherwise the distance :math:`d_M(z,
+            zp)` is returned.
 
         Returns
         -------
         Array
+            The comoving transverse distance :math:`d_M(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
-    def comoving_volume(self, z: InputT_contra, /) -> ArrayT_co:
+    def comoving_volume(
+        self, z: InputT_contra, zp: InputT_contra | None = None, /
+    ) -> ArrayT_co:
         r"""Comoving volume in cubic Mpc.
 
         This is the volume of the universe encompassed by redshifts less than
@@ -191,16 +205,22 @@ class DistanceMeasures(
 
         Parameters
         ----------
-        z : Array
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the
+            volume :math:`V_c(0, z)` is returned, otherwise the
+            volume :math:`V_c(z, zp)` is returned.
 
         Returns
         -------
         Array
+            The comoving volume :math:`V_c(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
-    def differential_comoving_volume(self, z: InputT_contra, /) -> ArrayT_co:
+    def differential_comoving_volume(
+        self, z: InputT_contra, zp: InputT_contra | None = None, /
+    ) -> ArrayT_co:
         r"""Differential comoving volume in cubic Mpc per steradian.
 
         If :math:`V_c` is the comoving volume of a redshift slice with solid
@@ -213,27 +233,45 @@ class DistanceMeasures(
             = \frac{x_M^2(z)}{E(z)}
             = \frac{\mathtt{xm(z)^2}}{\mathtt{ef(z)}} \;.
 
+        Parameters
+        ----------
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the
+            differential volume :math:`dV_c(0, z)` is returned, otherwise the
+            differential volume :math:`dV_c(z, zp)` is returned.
+
+        Returns
+        -------
+        Array
+            The differential comoving volume :math:`dV_c(z1, z2)` in Mpc,
+            where ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
     # ----------------------------------------------
     # Angular diameter distance
 
-    def angular_diameter_distance(self, z: InputT_contra, /) -> ArrayT_co:
+    def angular_diameter_distance(
+        self, z: InputT_contra, zp: InputT_contra | None = None, /
+    ) -> ArrayT_co:
         """Angular diameter distance :math:`d_A(z)` in Mpc.
 
-        This gives the proper (sometimes called 'physical') transverse
-        distance corresponding to an angle of 1 radian for an object
-        at redshift ``z`` ([1]_, [2]_, [3]_).
+        This gives the proper (sometimes called 'physical') transverse distance
+        corresponding to an angle of 1 radian for an object at redshift ``z``
+        ([1]_, [2]_, [3]_).
 
         Parameters
         ----------
-        z : Array, positional-only
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d_A(0, z)` is returned, otherwise the distance :math:`d_A(z,
+            zp)` is returned.
 
         Returns
         -------
         Array
+            The angular diameter distance :math:`d_A(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
 
         References
         ----------
@@ -246,20 +284,26 @@ class DistanceMeasures(
     # ----------------------------------------------
     # Luminosity distance
 
-    def luminosity_distance(self, z: InputT_contra, /) -> ArrayT_co:
-        """Redshift-dependent luminosity distance in Mpc.
+    def luminosity_distance(
+        self, z: InputT_contra, zp: InputT_contra | None = None, /
+    ) -> ArrayT_co:
+        """Redshift-dependent luminosity distance :math:`d_L(z1, z2)` in Mpc.
 
         This is the distance to use when converting between the bolometric flux
         from an object at redshift ``z`` and its bolometric luminosity [1]_.
 
         Parameters
         ----------
-        z : Array
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the
+            distance :math:`d_L(0, z)` is returned, otherwise the
+            distance :math:`d_L(z, zp)` is returned.
 
         Returns
         -------
         Array
+            The luminosity distance :math:`d_L(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
 
         References
         ----------
