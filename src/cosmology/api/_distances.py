@@ -4,27 +4,27 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
-from cosmology.api._array_api import ArrayT_co
-from cosmology.api._core import InputT_contra
+from cosmology.api._array_api import Array
+from cosmology.api._core import InputT
 
 __all__: list[str] = []
 
 
 @runtime_checkable
-class HasTCMB0(Protocol[ArrayT_co]):
+class HasTCMB0(Protocol[Array]):
     r"""The object contains a background temperature -- :math:`T_{CMB}`."""
 
     @property
-    def T_cmb0(self) -> ArrayT_co:
+    def T_cmb0(self) -> Array:
         """CMB temperature in K at z=0."""
         ...
 
 
 @runtime_checkable
-class HasTCMB(Protocol[ArrayT_co, InputT_contra]):
+class HasTCMB(Protocol[Array, InputT]):
     r"""The object contains a background temperature method."""
 
-    def T_cmb(self, z: InputT_contra, /) -> ArrayT_co:
+    def T_cmb(self, z: InputT, /) -> Array:
         """CMB temperature in K at redshift z.
 
         Parameters
@@ -41,8 +41,8 @@ class HasTCMB(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class TemperatureCMB(
-    HasTCMB[ArrayT_co, InputT_contra],
-    HasTCMB0[ArrayT_co],
+    HasTCMB[Array, InputT],
+    HasTCMB0[Array],
     Protocol,
 ):
     r"""The object has attributes and methods for the background temperature."""
@@ -52,20 +52,20 @@ class TemperatureCMB(
 
 
 @runtime_checkable
-class HasScaleFactor0(Protocol[ArrayT_co]):
+class HasScaleFactor0(Protocol[Array]):
     """The object contains a scale factor, described by :math:`a_0`."""
 
     @property
-    def scale_factor0(self) -> ArrayT_co:
+    def scale_factor0(self) -> Array:
         """Scale factor at z=0."""
         ...
 
 
 @runtime_checkable
-class HasScaleFactor(Protocol[ArrayT_co, InputT_contra]):
+class HasScaleFactor(Protocol[Array, InputT]):
     """The object contains a scale factor method."""
 
-    def scale_factor(self, z: InputT_contra, /) -> ArrayT_co:
+    def scale_factor(self, z: InputT, /) -> Array:
         """Redshift-dependenct scale factor.
 
         The scale factor is defined as :math:`a = a_0 / (1 + z)`.
@@ -84,8 +84,8 @@ class HasScaleFactor(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class ScaleFactor(
-    HasScaleFactor[ArrayT_co, InputT_contra],
-    HasScaleFactor0[ArrayT_co],
+    HasScaleFactor[Array, InputT],
+    HasScaleFactor0[Array],
     Protocol,
 ):
     """The object has attributes and methods for the scale factor."""
@@ -97,8 +97,8 @@ class ScaleFactor(
 
 @runtime_checkable
 class DistanceMeasures(
-    ScaleFactor[ArrayT_co, InputT_contra],
-    TemperatureCMB[ArrayT_co, InputT_contra],
+    ScaleFactor[Array, InputT],
+    TemperatureCMB[Array, InputT],
     Protocol,
 ):
     """Cosmology API protocol for isotropic cosmologies.
@@ -112,7 +112,7 @@ class DistanceMeasures(
     # ----------------------------------------------
     # Time
 
-    def age(self, z: InputT_contra, /) -> ArrayT_co:
+    def age(self, z: InputT, /) -> Array:
         """Age of the universe in Gyr at redshift ``z``.
 
         Parameters
@@ -126,7 +126,7 @@ class DistanceMeasures(
         """
         ...
 
-    def lookback_time(self, z: InputT_contra, /) -> ArrayT_co:
+    def lookback_time(self, z: InputT, /) -> Array:
         """Lookback time to redshift ``z`` in Gyr.
 
         The lookback time is the difference between the age of the Universe now
@@ -146,9 +146,7 @@ class DistanceMeasures(
     # ----------------------------------------------
     # Comoving distance
 
-    def comoving_distance(
-        self, z: InputT_contra, zp: InputT_contra | None = None, /
-    ) -> ArrayT_co:
+    def comoving_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
         r"""Comoving line-of-sight distance :math:`d_c(z1, z2)` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
@@ -170,8 +168,8 @@ class DistanceMeasures(
         ...
 
     def comoving_transverse_distance(
-        self, z: InputT_contra, zp: InputT_contra | None = None, /
-    ) -> ArrayT_co:
+        self, z: InputT, zp: InputT | None = None, /
+    ) -> Array:
         r"""Transverse comoving distance :math:`d_M(z1, z2)` in Mpc.
 
         This value is the transverse comoving distance at redshift ``z``
@@ -194,9 +192,7 @@ class DistanceMeasures(
         """
         ...
 
-    def comoving_volume(
-        self, z: InputT_contra, zp: InputT_contra | None = None, /
-    ) -> ArrayT_co:
+    def comoving_volume(self, z: InputT, zp: InputT | None = None, /) -> Array:
         r"""Comoving volume in cubic Mpc.
 
         This is the volume of the universe encompassed by redshifts less than
@@ -219,8 +215,8 @@ class DistanceMeasures(
         ...
 
     def differential_comoving_volume(
-        self, z: InputT_contra, zp: InputT_contra | None = None, /
-    ) -> ArrayT_co:
+        self, z: InputT, zp: InputT | None = None, /
+    ) -> Array:
         r"""Differential comoving volume in cubic Mpc per steradian.
 
         If :math:`V_c` is the comoving volume of a redshift slice with solid
@@ -252,8 +248,8 @@ class DistanceMeasures(
     # Angular diameter distance
 
     def angular_diameter_distance(
-        self, z: InputT_contra, zp: InputT_contra | None = None, /
-    ) -> ArrayT_co:
+        self, z: InputT, zp: InputT | None = None, /
+    ) -> Array:
         """Angular diameter distance :math:`d_A(z)` in Mpc.
 
         This gives the proper (sometimes called 'physical') transverse distance
@@ -284,9 +280,7 @@ class DistanceMeasures(
     # ----------------------------------------------
     # Luminosity distance
 
-    def luminosity_distance(
-        self, z: InputT_contra, zp: InputT_contra | None = None, /
-    ) -> ArrayT_co:
+    def luminosity_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
         """Redshift-dependent luminosity distance :math:`d_L(z1, z2)` in Mpc.
 
         This is the distance to use when converting between the bolometric flux

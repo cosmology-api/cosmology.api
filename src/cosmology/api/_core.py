@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Protocol, TypeVar, runtime_checkable
 
-from cosmology.api._array_api import ArrayT_co
+from cosmology.api._array_api import Array
 
 if TYPE_CHECKING:
     from cosmology.api._constants import CosmologyConstantsNamespace
@@ -12,14 +12,13 @@ if TYPE_CHECKING:
 
 # The inputs types will have defaults if https://peps.python.org/pep-0696/
 # is accepted.
-InputT = TypeVar("InputT")  # -> TypeVar("InputT", default=ArrayT_co | float)
-InputT_contra = TypeVar("InputT_contra", contravariant=True)
+InputT = TypeVar("InputT", contravariant=True)
 
 __all__: list[str] = []
 
 
 @runtime_checkable
-class Cosmology(Protocol[ArrayT_co, InputT_contra]):  # type: ignore[misc]
+class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
     """Cosmology API Protocol."""
 
     @property

@@ -4,27 +4,27 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
-from cosmology.api._array_api import ArrayT_co
-from cosmology.api._core import InputT_contra
+from cosmology.api._array_api import Array
+from cosmology.api._core import InputT
 
 __all__: list[str] = []
 
 
 @runtime_checkable
-class HasOmegaTot0(Protocol[ArrayT_co]):
+class HasOmegaTot0(Protocol[Array]):
     r"""The object has a total density attribute -- :math:`Omega_{\rm tot}`."""
 
     @property
-    def Omega_tot0(self) -> ArrayT_co:
+    def Omega_tot0(self) -> Array:
         r"""Omega total; the total density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaTot(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaTot(Protocol[Array, InputT]):
     r"""The object has a total density method."""
 
-    def Omega_tot(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_tot(self, z: InputT, /) -> Array:
         r"""Redshift-dependent total density parameter.
 
         Parameters
@@ -41,8 +41,8 @@ class HasOmegaTot(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class TotalComponent(
-    HasOmegaTot[ArrayT_co, InputT_contra],
-    HasOmegaTot0[ArrayT_co],
+    HasOmegaTot[Array, InputT],
+    HasOmegaTot0[Array],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the total density."""
@@ -52,20 +52,20 @@ class TotalComponent(
 
 
 @runtime_checkable
-class HasOmegaK0(Protocol[ArrayT_co]):
+class HasOmegaK0(Protocol[Array]):
     r"""The object has a curvature density attribute -- :math:`Omega_K`."""
 
     @property
-    def Omega_k0(self) -> ArrayT_co:
+    def Omega_k0(self) -> Array:
         r"""Omega curvature; the effective curvature density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaK(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaK(Protocol[Array, InputT]):
     r"""The object has a curvature density method."""
 
-    def Omega_k(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_k(self, z: InputT, /) -> Array:
         r"""Redshift-dependent curvature density parameter.
 
         Parameters
@@ -82,8 +82,8 @@ class HasOmegaK(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class CurvatureComponent(
-    HasOmegaK[ArrayT_co, InputT_contra],
-    HasOmegaK0[ArrayT_co],
+    HasOmegaK[Array, InputT],
+    HasOmegaK0[Array],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the global curvature."""
@@ -93,20 +93,20 @@ class CurvatureComponent(
 
 
 @runtime_checkable
-class HasOmegaM0(Protocol[ArrayT_co]):
+class HasOmegaM0(Protocol[Array]):
     r"""The object has a matter density attribute -- :math:`Omega_m`."""
 
     @property
-    def Omega_m0(self) -> ArrayT_co:
+    def Omega_m0(self) -> Array:
         r"""Omega matter; the matter density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaM(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaM(Protocol[Array, InputT]):
     r"""The object has a matter density method."""
 
-    def Omega_m(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_m(self, z: InputT, /) -> Array:
         r"""Redshift-dependent matter density parameter.
 
         Parameters
@@ -128,8 +128,8 @@ class HasOmegaM(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class MatterComponent(
-    HasOmegaM[ArrayT_co, InputT_contra],
-    HasOmegaM0[ArrayT_co],
+    HasOmegaM[Array, InputT],
+    HasOmegaM0[Array],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the matter density."""
@@ -139,20 +139,20 @@ class MatterComponent(
 
 
 @runtime_checkable
-class HasOmegaB0(Protocol[ArrayT_co]):
+class HasOmegaB0(Protocol[Array]):
     r"""The object has a baryon density attribute -- :math:`Omega_b`."""
 
     @property
-    def Omega_b0(self) -> ArrayT_co:
+    def Omega_b0(self) -> Array:
         r"""Omega baryon; the baryon density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaB(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaB(Protocol[Array, InputT]):
     r"""The object has a baryon density method."""
 
-    def Omega_b(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_b(self, z: InputT, /) -> Array:
         r"""Redshift-dependent baryon density parameter.
 
         Parameters
@@ -169,8 +169,8 @@ class HasOmegaB(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class BaryonComponent(
-    HasOmegaB[ArrayT_co, InputT_contra],
-    HasOmegaB0[ArrayT_co],
+    HasOmegaB[Array, InputT],
+    HasOmegaB0[Array],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the baryon density."""
@@ -180,20 +180,20 @@ class BaryonComponent(
 
 
 @runtime_checkable
-class HasOmegaNu0(Protocol[ArrayT_co]):
+class HasOmegaNu0(Protocol[Array]):
     r"""The object has a neutrino density attribute -- :math:`Omega_\nu`."""
 
     @property
-    def Omega_nu0(self) -> ArrayT_co:
+    def Omega_nu0(self) -> Array:
         r"""Omega neutrino; the neutrino density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaNu(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaNu(Protocol[Array, InputT]):
     r"""The object has a neutrino density method."""
 
-    def Omega_nu(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_nu(self, z: InputT, /) -> Array:
         r"""Redshift-dependent neutrino density parameter.
 
         Parameters
@@ -209,31 +209,31 @@ class HasOmegaNu(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class HasNeff(Protocol[ArrayT_co]):
+class HasNeff(Protocol[Array]):
     r"""The object has an attribute for the effective number of neutrino species."""
 
     @property
-    def Neff(self) -> ArrayT_co:
+    def Neff(self) -> Array:
         r"""Effective number of neutrino species."""
         ...
 
 
 @runtime_checkable
-class HasMNu(Protocol[ArrayT_co]):
+class HasMNu(Protocol[Array]):
     r"""The object has a neutrino mass(es) attribute."""
 
     @property
-    def m_nu(self) -> tuple[ArrayT_co, ...]:
+    def m_nu(self) -> tuple[Array, ...]:
         r"""Neutrino mass(es) in eV."""
         ...
 
 
 @runtime_checkable
 class NeutrinoComponent(
-    HasOmegaNu[ArrayT_co, InputT_contra],
-    HasMNu[ArrayT_co],
-    HasNeff[ArrayT_co],
-    HasOmegaNu0[ArrayT_co],
+    HasOmegaNu[Array, InputT],
+    HasMNu[Array],
+    HasNeff[Array],
+    HasOmegaNu0[Array],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the neutrino density."""
@@ -243,20 +243,20 @@ class NeutrinoComponent(
 
 
 @runtime_checkable
-class HasOmegaDE0(Protocol[ArrayT_co]):
+class HasOmegaDE0(Protocol[Array]):
     r"""The object has a dark energy density attribute -- :math:`Omega_{\rm de}`."""
 
     @property
-    def Omega_de0(self) -> ArrayT_co:
+    def Omega_de0(self) -> Array:
         r"""Omega dark energy; the dark energy density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaDE(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaDE(Protocol[Array, InputT]):
     r"""The object has a dark energy density method."""
 
-    def Omega_de(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_de(self, z: InputT, /) -> Array:
         r"""Redshift-dependent dark energy density parameter.
 
         Parameters
@@ -272,9 +272,7 @@ class HasOmegaDE(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class DarkEnergyComponent(
-    HasOmegaDE[ArrayT_co, InputT_contra], HasOmegaDE0[ArrayT_co], Protocol
-):
+class DarkEnergyComponent(HasOmegaDE[Array, InputT], HasOmegaDE0[Array], Protocol):
     r"""The cosmology has attributes and methods for the dark energy."""
 
 
@@ -282,20 +280,20 @@ class DarkEnergyComponent(
 
 
 @runtime_checkable
-class HasOmegaDM0(Protocol[ArrayT_co]):
+class HasOmegaDM0(Protocol[Array]):
     r"""The object has a dark matter density attribute -- :math:`Omega_{\rm dm}`."""
 
     @property
-    def Omega_dm0(self) -> ArrayT_co:
+    def Omega_dm0(self) -> Array:
         r"""Omega dark matter; the dark matter density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaDM(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaDM(Protocol[Array, InputT]):
     r"""The object has a dark matter density method."""
 
-    def Omega_dm(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_dm(self, z: InputT, /) -> Array:
         r"""Redshift-dependent dark matter density parameter.
 
         Parameters
@@ -317,8 +315,8 @@ class HasOmegaDM(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class DarkMatterComponent(
-    HasOmegaDM[ArrayT_co, InputT_contra],
-    HasOmegaDM0[ArrayT_co],
+    HasOmegaDM[Array, InputT],
+    HasOmegaDM0[Array],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the dark matter."""
@@ -328,20 +326,20 @@ class DarkMatterComponent(
 
 
 @runtime_checkable
-class HasOmegaGamma0(Protocol[ArrayT_co]):
+class HasOmegaGamma0(Protocol[Array]):
     r"""The object has a photon density attribute -- :math:`Omega_\gamma`."""
 
     @property
-    def Omega_gamma0(self) -> ArrayT_co:
+    def Omega_gamma0(self) -> Array:
         r"""Omega gamma; the photon density/critical density at z=0."""
         ...
 
 
 @runtime_checkable
-class HasOmegaGamma(Protocol[ArrayT_co, InputT_contra]):
+class HasOmegaGamma(Protocol[Array, InputT]):
     r"""The object has a photon density method."""
 
-    def Omega_gamma(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_gamma(self, z: InputT, /) -> Array:
         r"""Redshift-dependent photon density parameter.
 
         Parameters
@@ -358,8 +356,8 @@ class HasOmegaGamma(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class PhotonComponent(
-    HasOmegaGamma[ArrayT_co, InputT_contra],
-    HasOmegaGamma0[ArrayT_co],
+    HasOmegaGamma[Array, InputT],
+    HasOmegaGamma0[Array],
     Protocol,
 ):
     r"""The cosmology has attributes and methods for the photons."""

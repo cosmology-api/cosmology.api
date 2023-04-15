@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
-from cosmology.api._array_api import ArrayT_co
+from cosmology.api._array_api import Array
 from cosmology.api._components import (
     BaryonComponent,
     CurvatureComponent,
@@ -15,7 +15,7 @@ from cosmology.api._components import (
     PhotonComponent,
     TotalComponent,
 )
-from cosmology.api._core import Cosmology, InputT_contra
+from cosmology.api._core import Cosmology, InputT
 from cosmology.api._distances import DistanceMeasures
 from cosmology.api._extras import CriticalDensity, HubbleParameter
 
@@ -24,18 +24,18 @@ __all__: list[str] = []
 
 @runtime_checkable
 class StandardCosmology(
-    NeutrinoComponent[ArrayT_co, InputT_contra],
-    BaryonComponent[ArrayT_co, InputT_contra],
-    PhotonComponent[ArrayT_co, InputT_contra],
-    DarkMatterComponent[ArrayT_co, InputT_contra],
-    MatterComponent[ArrayT_co, InputT_contra],
-    DarkEnergyComponent[ArrayT_co, InputT_contra],
-    CurvatureComponent[ArrayT_co, InputT_contra],
-    TotalComponent[ArrayT_co, InputT_contra],
-    HubbleParameter[ArrayT_co, InputT_contra],
-    CriticalDensity[ArrayT_co, InputT_contra],
-    DistanceMeasures[ArrayT_co, InputT_contra],
-    Cosmology[ArrayT_co, InputT_contra],
+    NeutrinoComponent[Array, InputT],
+    BaryonComponent[Array, InputT],
+    PhotonComponent[Array, InputT],
+    DarkMatterComponent[Array, InputT],
+    MatterComponent[Array, InputT],
+    DarkEnergyComponent[Array, InputT],
+    CurvatureComponent[Array, InputT],
+    TotalComponent[Array, InputT],
+    HubbleParameter[Array, InputT],
+    CriticalDensity[Array, InputT],
+    DistanceMeasures[Array, InputT],
+    Cosmology[Array, InputT],
     Protocol,
 ):
     """API Protocol for the standard cosmology and expected set of components.
@@ -48,7 +48,7 @@ class StandardCosmology(
 
     # Override from the base classes, for better docstring.
     @property
-    def Omega_tot0(self) -> ArrayT_co:
+    def Omega_tot0(self) -> Array:
         r"""Omega total; the total density/critical density at z=0.
 
         .. math::
@@ -63,7 +63,7 @@ class StandardCosmology(
         ...
 
     # Override from the base classes, for better docstring.
-    def Omega_tot(self, z: InputT_contra, /) -> ArrayT_co:
+    def Omega_tot(self, z: InputT, /) -> Array:
         r"""Redshift-dependent total density parameter.
 
         This is the sum of the matter, radiation, neutrino, dark energy, and
