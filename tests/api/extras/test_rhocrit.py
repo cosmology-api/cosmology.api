@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import HasCriticalDensity
+from cosmology.api import HasCriticalDensityMethods
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg
@@ -21,12 +21,12 @@ def test_noncompliant_hasrhocrit():
     """
     # Simple example: missing everything
 
-    class ExampleHasCriticalDensity:
+    class ExampleHasHasCriticalDensityMethods:
         pass
 
-    cosmo = ExampleHasCriticalDensity()
+    cosmo = ExampleHasHasCriticalDensityMethods()
 
-    assert not isinstance(cosmo, HasCriticalDensity)
+    assert not isinstance(cosmo, HasCriticalDensityMethods)
 
     # TODO: more examples?
 
@@ -36,8 +36,8 @@ def test_compliant_hasrhocrit(hasrhocrit_cls):
     Test that a compliant instance is a
     `cosmology.api.HasCriticalDensity`.
     """
-    ExampleHasCriticalDensity = make_dataclass(
-        "ExampleHasCriticalDensity",
+    ExampleHasCriticalDensityMethods = make_dataclass(
+        "ExampleHasCriticalDensityMethods",
         [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
         bases=(hasrhocrit_cls,),
         namespace={
@@ -47,14 +47,14 @@ def test_compliant_hasrhocrit(hasrhocrit_cls):
         frozen=True,
     )
 
-    cosmo = ExampleHasCriticalDensity()
+    cosmo = ExampleHasCriticalDensityMethods()
 
-    assert isinstance(cosmo, HasCriticalDensity)
+    assert isinstance(cosmo, HasCriticalDensityMethods)
 
 
 def test_fixture(hasrhocrit_cls):
     """
     Test that the ``hasrhocrit_cls`` fixture is a
-    `cosmology.api.HasCriticalDensity`.
+    `cosmology.api.HasCriticalDensityMethods`.
     """
-    assert isinstance(hasrhocrit_cls(), HasCriticalDensity)
+    assert isinstance(hasrhocrit_cls(), HasCriticalDensityMethods)

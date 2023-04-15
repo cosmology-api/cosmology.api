@@ -15,19 +15,20 @@ from cosmology.api import (
     CosmologyConstantsNamespace,
     CosmologyNamespace,
     HasBaryonComponent,
-    HasCriticalDensity,
+    HasCriticalDensityMethods,
     HasDarkEnergyComponent,
     HasDarkMatterComponent,
     HasDistanceMeasures,
     HasGlobalCurvatureComponent,
-    HasHubbleParameter,
+    HasHubbleMethods,
     HasMatterComponent,
     HasNeutrinoComponent,
     HasPhotonComponent,
+    HasTotalComponent,
     StandardCosmology,
 )
 from cosmology.api._array_api import Array
-from cosmology.api._distances import _HasTcmb
+from cosmology.api._distances import HasTcmb
 
 CT = TypeVar("CT", bound=Cosmology)
 
@@ -123,22 +124,39 @@ def get_comp_meths(comp_cls: type) -> set[str]:
     return {k for k in methods_and_attrs if callable(getattr(comp_cls, k))}
 
 
+def make_comp_cls(
+    comp_api_cls: type, fields: set[str], bases: tuple[type, ...]
+) -> type:
+    """Make a component class."""
+    comp_attrs = get_comp_attrs(comp_api_cls)
+    comp_meths = get_comp_meths(comp_api_cls)
+    return make_dataclass(
+        f"Example{comp_api_cls.__name__}",
+        [(n, Array, field(default_factory=_default_one)) for n in fields],
+        bases=bases,
+        namespace={n: property(_return_one) for n in comp_attrs - fields}
+        | {n: _return_1arg for n in comp_meths},
+        frozen=True,
+    )
+
+
+# ----------------------------------
+
+
+@pytest.fixture(scope="session")
+def comptotal_cls(
+    cosmology_cls: type[Cosmology],
+) -> type[HasTotalComponent | Cosmology]:
+    """An example standard cosmology API class."""
+    return make_comp_cls(HasTotalComponent, {"Omega_tot0"}, bases=(cosmology_cls,))
+
+
 @pytest.fixture(scope="session")
 def globalcurvature_cls(
     cosmology_cls: type[Cosmology],
 ) -> type[HasGlobalCurvatureComponent | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasGlobalCurvatureComponent)
-    comp_meths = get_comp_meths(HasGlobalCurvatureComponent)
-    fields = set()  # Omega_k0 is not a field
-    return make_dataclass(
-        "ExampleHasGlobalCurvatureComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - fields}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasGlobalCurvatureComponent, set(), bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
@@ -146,17 +164,7 @@ def matter_cls(
     cosmology_cls: type[Cosmology],
 ) -> type[HasMatterComponent | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasMatterComponent)
-    comp_meths = get_comp_meths(HasMatterComponent)
-    fields = {"Omega_m0"}
-    return make_dataclass(
-        "ExampleHasMatterComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasMatterComponent, {"Omega_m0"}, bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
@@ -164,17 +172,7 @@ def baryon_cls(
     matter_cls: type[Cosmology],
 ) -> type[HasBaryonComponent | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasBaryonComponent)
-    comp_meths = get_comp_meths(HasBaryonComponent)
-    flds = {f.name for f in fields(matter_cls)} | {"Omega_b0"}
-    return make_dataclass(
-        "ExampleHasBaryonComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in flds],
-        bases=(matter_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(flds)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasBaryonComponent, {"Omega_b0"}, bases=(matter_cls,))
 
 
 @pytest.fixture(scope="session")
@@ -182,17 +180,7 @@ def darkmatter_cls(
     matter_cls: type[Cosmology],
 ) -> type[HasDarkMatterComponent | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasDarkMatterComponent)
-    comp_meths = get_comp_meths(HasDarkMatterComponent)
-    flds = {f.name for f in fields(matter_cls)}  # Omega_dm0 is not a field
-    return make_dataclass(
-        "ExampleHasDarkMatterComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in flds],
-        bases=(matter_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(flds)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasDarkMatterComponent, {"Omega_dm0"}, bases=(matter_cls,))
 
 
 @pytest.fixture(scope="session")
@@ -200,17 +188,7 @@ def neutrino_cls(
     cosmology_cls: type[Cosmology],
 ) -> type[HasNeutrinoComponent | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasNeutrinoComponent)
-    comp_meths = get_comp_meths(HasNeutrinoComponent)
-    fields = {"Neff", "m_nu"}
-    return make_dataclass(
-        "ExampleHasNeutrinoComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasNeutrinoComponent, {"Neff", "m_nu"}, bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
@@ -218,17 +196,7 @@ def photon_cls(
     cosmology_cls: type[Cosmology],
 ) -> type[HasPhotonComponent | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasPhotonComponent)
-    comp_meths = get_comp_meths(HasPhotonComponent)
-    fields = set()  # Omega_gamma0 is not a field
-    return make_dataclass(
-        "ExampleHasPhotonComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasPhotonComponent, set(), bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
@@ -237,17 +205,7 @@ def darkenergy_cls(
     cosmology_cls: type[Cosmology],
 ) -> type[HasDarkEnergyComponent | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasDarkEnergyComponent)
-    comp_meths = get_comp_meths(HasDarkEnergyComponent)
-    fields = {"Omega_de0"}
-    return make_dataclass(
-        "ExampleHasDarkEnergyComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasDarkEnergyComponent, {"Omega_de0"}, bases=(cosmology_cls,))
 
 
 # ==============================================================================
@@ -255,39 +213,19 @@ def darkenergy_cls(
 
 
 @pytest.fixture(scope="session")
-def hashubbleparamet_cls(
+def hashubble_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasHubbleParameter | Cosmology]:
+) -> type[HasHubbleMethods | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasHubbleParameter)
-    comp_meths = get_comp_meths(HasHubbleParameter)
-    fields = {"H0"}
-    return make_dataclass(
-        "ExampleHasHubbleParameter",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasHubbleMethods, {"H0"}, bases=(cosmology_cls,))
 
 
 @pytest.fixture(scope="session")
 def hasrhocrit_cls(
     cosmology_cls: type[Cosmology],
-) -> type[HasCriticalDensity | Cosmology]:
+) -> type[HasCriticalDensityMethods | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(HasCriticalDensity)
-    comp_meths = get_comp_meths(HasCriticalDensity)
-    fields = {}
-    return make_dataclass(
-        "ExampleHasCriticalDensity",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasCriticalDensityMethods, set(), bases=(cosmology_cls,))
 
 
 # ==============================================================================
@@ -297,19 +235,9 @@ def hasrhocrit_cls(
 @pytest.fixture(scope="session")
 def hastcmb_cls(
     cosmology_cls: type[Cosmology],
-) -> type[_HasTcmb | Cosmology]:
+) -> type[HasTcmb | Cosmology]:
     """An example standard cosmology API class."""
-    comp_attrs = get_comp_attrs(_HasTcmb)
-    comp_meths = get_comp_meths(_HasTcmb)
-    fields = {"T_cmb0"}
-    return make_dataclass(
-        "Example_HasTcmb",
-        [(n, Array, field(default_factory=_default_one)) for n in fields],
-        bases=(cosmology_cls,),
-        namespace={n: property(_return_one) for n in comp_attrs - set(fields)}
-        | {n: _return_1arg for n in comp_meths},
-        frozen=True,
-    )
+    return make_comp_cls(HasTcmb, {"T_cmb0"}, bases=(cosmology_cls,))
 
 
 DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(HasDistanceMeasures, Cosmology)

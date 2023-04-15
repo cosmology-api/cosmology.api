@@ -10,21 +10,26 @@ from cosmology.api._core import Cosmology, InputT_contra
 __all__: list[str] = []
 
 
-# This is currently private
-class _HasTcmb(Cosmology[ArrayT_co, InputT_contra], Protocol):
-    r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
+@runtime_checkable
+class HasTcmb0(Protocol[ArrayT_co]):
+    r"""The cosmology contains a background temperature -- :math:`T_{CMB}`."""
 
     @property
     def T_cmb0(self) -> ArrayT_co:
         """CMB temperature in K at z=0."""
         ...
 
+
+@runtime_checkable
+class HasTcmb(Protocol[ArrayT_co, InputT_contra]):
+    r"""The cosmology contains a background temperature method."""
+
     def T_cmb(self, z: InputT_contra, /) -> ArrayT_co:
         """CMB temperature in K at redshift z.
 
         Parameters
         ----------
-        z : Array, positional-only
+        z : Array or float, positional-only
             Input redshift.
 
         Returns
@@ -34,27 +39,32 @@ class _HasTcmb(Cosmology[ArrayT_co, InputT_contra], Protocol):
         ...
 
 
-##############################################################################
-# Total
+@runtime_checkable
+class HasBackgroundTemperature(
+    HasTcmb[ArrayT_co, InputT_contra],
+    HasTcmb0[ArrayT_co],
+    Cosmology[ArrayT_co, InputT_contra],
+    Protocol,
+):
+    r"""The cosmology has attributes and methods for the background temperature."""
+
+
+# ==============================================================================
 
 
 @runtime_checkable
-class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
-    """Cosmology API protocol for isotropic cosmologies.
-
-    This is a protocol class that defines the standard API for isotropic
-    background calculations. It is not intended to be instantiated. Instead, it
-    should be used for ``isinstance`` checks or as an ABC for libraries that
-    wish to define a compatible cosmology class.
-    """
+class HasScaleFactor0(Protocol[ArrayT_co]):
+    """The cosmology contains a scale factor, described by :math:`a_0`."""
 
     @property
     def scale_factor0(self) -> ArrayT_co:
         """Scale factor at z=0."""
         ...
 
-    # ==============================================================
-    # Methods
+
+@runtime_checkable
+class HasScaleFactor(Protocol[ArrayT_co, InputT_contra]):
+    """The cosmology contains a scale factor method."""
 
     def scale_factor(self, z: InputT_contra, /) -> ArrayT_co:
         """Redshift-dependenct scale factor.
@@ -71,6 +81,35 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
         Array
         """
         ...
+
+
+@runtime_checkable
+class HasScaleFactorDistance(
+    HasScaleFactor[ArrayT_co, InputT_contra],
+    HasScaleFactor0[ArrayT_co],
+    Cosmology[ArrayT_co, InputT_contra],
+    Protocol,
+):
+    """The cosmology has attributes and methods for the scale factor."""
+
+
+##############################################################################
+# Total
+
+
+@runtime_checkable
+class HasDistanceMeasures(
+    HasScaleFactorDistance[ArrayT_co, InputT_contra],
+    HasBackgroundTemperature[ArrayT_co, InputT_contra],
+    Protocol,
+):
+    """Cosmology API protocol for isotropic cosmologies.
+
+    This is a protocol class that defines the standard API for isotropic
+    background calculations. It is not intended to be instantiated. Instead, it
+    should be used for ``isinstance`` checks or as an ABC for libraries that
+    wish to define a compatible cosmology class.
+    """
 
     # ----------------------------------------------
     # Time
