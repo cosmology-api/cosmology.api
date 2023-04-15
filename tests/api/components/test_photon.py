@@ -7,7 +7,7 @@ from dataclasses import field, make_dataclass
 from cosmology.api import PhotonComponent
 from cosmology.api._array_api import Array
 
-from ..conftest import _default_one, _return_1arg, _return_one
+from ..conftest import _default_one, _return_1arg
 
 ################################################################################
 # TESTS
@@ -15,10 +15,7 @@ from ..conftest import _default_one, _return_1arg, _return_one
 
 
 def test_noncompliant_photoncomponent():
-    """
-    Test that a non-compliant instance is not a
-    `cosmology.api.PhotonComponent`.
-    """
+    """Test that a non-compliant instance is not a `cosmology.api.PhotonComponent`."""
     # Simple example: missing everything
 
     class ExamplePhotonComponent:
@@ -31,16 +28,13 @@ def test_noncompliant_photoncomponent():
     # TODO: more examples?
 
 
-def test_compliant_photoncomponent(dists_cls):
-    """
-    Test that a compliant instance is a
-    `cosmology.api.PhotonComponent`.
-    """
+def test_compliant_photoncomponent(cosmology_cls):
+    """Test that a compliant instance is a `cosmology.api.PhotonComponent`."""
     ExamplePhotonComponent = make_dataclass(
         "ExamplePhotonComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {}],
-        bases=(dists_cls,),
-        namespace={"Omega_gamma0": _return_one, "Omega_gamma": _return_1arg},
+        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_gamma0"}],
+        bases=(cosmology_cls,),
+        namespace={"Omega_gamma": _return_1arg},
         frozen=True,
     )
 
@@ -50,8 +44,5 @@ def test_compliant_photoncomponent(dists_cls):
 
 
 def test_fixture(photon_cls):
-    """
-    Test that the ``photon_cls`` fixture is a
-    `cosmology.api.PhotonComponent`.
-    """
+    """Test that the ``photon_cls`` fixture is a `cosmology.api.PhotonComponent`."""
     assert isinstance(photon_cls(), PhotonComponent)

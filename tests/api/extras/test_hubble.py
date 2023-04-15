@@ -14,7 +14,7 @@ from ..conftest import _default_one, _return_1arg
 ################################################################################
 
 
-def test_noncompliant_hubbleparametrized():
+def test_noncompliant_hubbleparameter():
     """
     Test that a non-compliant instance is not a
     `cosmology.api.HubbleParameter`.
@@ -31,7 +31,7 @@ def test_noncompliant_hubbleparametrized():
     # TODO: more examples?
 
 
-def test_compliant_hubbleparametrized(hubble_cls):
+def test_compliant_hubbleparameter(hubble_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.HubbleParameter`.

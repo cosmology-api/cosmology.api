@@ -1,4 +1,4 @@
-"""Test ``cosmology.api.BackgroundTemperature``."""
+"""Test ``cosmology.api.ScaleFactor``."""
 
 from __future__ import annotations
 
@@ -15,10 +15,7 @@ from ..conftest import _default_one, _return_1arg
 
 
 def test_noncompliant_scalefactor():
-    """
-    Test that a non-compliant instance is not a
-    `cosmology.api.BackgroundTemperature`.
-    """
+    """Test that a non-compliant instance is not a `cosmology.api.ScaleFactor`."""
     # Simple example: missing everything
 
     class ExampleScaleFactor:
@@ -31,19 +28,13 @@ def test_noncompliant_scalefactor():
     # TODO: more examples?
 
 
-def test_compliant_scalefactor(scalefactor_cls):
-    """
-    Test that a compliant instance is a
-    `cosmology.api.BackgroundTemperature`.
-    """
+def test_compliant_scalefactor(cosmology_cls):
+    """Test that a compliant instance is a `cosmology.api.ScaleFactor`."""
     ExampleScaleFactor = make_dataclass(
         "ExampleScaleFactor",
-        [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
-        bases=(scalefactor_cls,),
-        namespace={
-            "T_cmb0": _default_one,
-            "Tcmb": _return_1arg,
-        },
+        [(n, Array, field(default_factory=_default_one)) for n in {"scale_factor0"}],
+        bases=(cosmology_cls,),
+        namespace={"scale_factor": _return_1arg},
         frozen=True,
     )
 
@@ -53,8 +44,5 @@ def test_compliant_scalefactor(scalefactor_cls):
 
 
 def test_fixture(scalefactor_cls):
-    """
-    Test that the ``scalefactor_cls`` fixture is a
-    `cosmology.api.ScaleFactor`.
-    """
+    """Test that the ``scalefactor_cls`` fixture is a `cosmology.api.ScaleFactor`."""
     assert isinstance(scalefactor_cls(), ScaleFactor)

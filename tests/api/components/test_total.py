@@ -31,7 +31,7 @@ def test_noncompliant_totalcomponent():
     # TODO: more examples?
 
 
-def test_compliant_totalomponent(comptotal_cls):
+def test_compliant_totalcomponent(comptotal_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.TotalComponent`.

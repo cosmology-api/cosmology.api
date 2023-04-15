@@ -11,7 +11,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class HasTcmb0(Protocol[ArrayT_co]):
+class HasTCMB0(Protocol[ArrayT_co]):
     r"""The object contains a background temperature -- :math:`T_{CMB}`."""
 
     @property
@@ -21,7 +21,7 @@ class HasTcmb0(Protocol[ArrayT_co]):
 
 
 @runtime_checkable
-class HasTcmb(Protocol[ArrayT_co, InputT_contra]):
+class HasTCMB(Protocol[ArrayT_co, InputT_contra]):
     r"""The object contains a background temperature method."""
 
     def T_cmb(self, z: InputT_contra, /) -> ArrayT_co:
@@ -40,8 +40,10 @@ class HasTcmb(Protocol[ArrayT_co, InputT_contra]):
 
 
 @runtime_checkable
-class BackgroundTemperature(
-    HasTcmb[ArrayT_co, InputT_contra], HasTcmb0[ArrayT_co], Protocol
+class TemperatureCMB(
+    HasTCMB[ArrayT_co, InputT_contra],
+    HasTCMB0[ArrayT_co],
+    Protocol,
 ):
     r"""The object has attributes and methods for the background temperature."""
 
@@ -82,7 +84,9 @@ class HasScaleFactor(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class ScaleFactor(
-    HasScaleFactor[ArrayT_co, InputT_contra], HasScaleFactor0[ArrayT_co], Protocol
+    HasScaleFactor[ArrayT_co, InputT_contra],
+    HasScaleFactor0[ArrayT_co],
+    Protocol,
 ):
     """The object has attributes and methods for the scale factor."""
 
@@ -94,7 +98,7 @@ class ScaleFactor(
 @runtime_checkable
 class DistanceMeasures(
     ScaleFactor[ArrayT_co, InputT_contra],
-    BackgroundTemperature[ArrayT_co, InputT_contra],
+    TemperatureCMB[ArrayT_co, InputT_contra],
     Protocol,
 ):
     """Cosmology API protocol for isotropic cosmologies.

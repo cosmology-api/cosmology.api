@@ -1,10 +1,10 @@
-"""Test ``cosmology.api.BackgroundTemperature``."""
+"""Test ``cosmology.api.TemperatureCMB``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import BackgroundTemperature
+from cosmology.api import TemperatureCMB
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg
@@ -17,16 +17,16 @@ from ..conftest import _default_one, _return_1arg
 def test_noncompliant_hastcmbs():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.BackgroundTemperature`.
+    `cosmology.api.TemperatureCMB`.
     """
     # Simple example: missing everything
 
-    class ExampleBackgroundTemperature:
+    class ExampleTemperatureCMB:
         pass
 
-    cosmo = ExampleBackgroundTemperature()
+    cosmo = ExampleTemperatureCMB()
 
-    assert not isinstance(cosmo, BackgroundTemperature)
+    assert not isinstance(cosmo, TemperatureCMB)
 
     # TODO: more examples?
 
@@ -34,27 +34,24 @@ def test_noncompliant_hastcmbs():
 def test_compliant_hastcmbs(bkgt_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.BackgroundTemperature`.
+    `cosmology.api.TemperatureCMB`.
     """
-    ExampleBackgroundTemperature = make_dataclass(
-        "ExampleBackgroundTemperature",
-        [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
+    ExampleTemperatureCMB = make_dataclass(
+        "ExampleTemperatureCMB",
+        [(n, Array, field(default_factory=_default_one)) for n in {"T_cmb0"}],
         bases=(bkgt_cls,),
-        namespace={
-            "T_cmb0": _default_one,
-            "Tcmb": _return_1arg,
-        },
+        namespace={"T_cmb": _return_1arg},
         frozen=True,
     )
 
-    cosmo = ExampleBackgroundTemperature()
+    cosmo = ExampleTemperatureCMB()
 
-    assert isinstance(cosmo, BackgroundTemperature)
+    assert isinstance(cosmo, TemperatureCMB)
 
 
 def test_fixture(bkgt_cls):
     """
     Test that the ``bkgt_cls`` fixture is a
-    `cosmology.api.BackgroundTemperature`.
+    `cosmology.api.TemperatureCMB`.
     """
-    assert isinstance(bkgt_cls(), BackgroundTemperature)
+    assert isinstance(bkgt_cls(), TemperatureCMB)

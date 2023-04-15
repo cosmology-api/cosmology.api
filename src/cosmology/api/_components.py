@@ -41,7 +41,9 @@ class HasOmegaTot(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class TotalComponent(
-    HasOmegaTot[ArrayT_co, InputT_contra], HasOmegaTot0[ArrayT_co], Protocol
+    HasOmegaTot[ArrayT_co, InputT_contra],
+    HasOmegaTot0[ArrayT_co],
+    Protocol,
 ):
     r"""The cosmology has attributes and methods for the total density."""
 
@@ -80,7 +82,9 @@ class HasOmegaK(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class CurvatureComponent(
-    HasOmegaK[ArrayT_co, InputT_contra], HasOmegaK0[ArrayT_co], Protocol
+    HasOmegaK[ArrayT_co, InputT_contra],
+    HasOmegaK0[ArrayT_co],
+    Protocol,
 ):
     r"""The cosmology has attributes and methods for the global curvature."""
 
@@ -124,7 +128,9 @@ class HasOmegaM(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class MatterComponent(
-    HasOmegaM[ArrayT_co, InputT_contra], HasOmegaM0[ArrayT_co], Protocol
+    HasOmegaM[ArrayT_co, InputT_contra],
+    HasOmegaM0[ArrayT_co],
+    Protocol,
 ):
     r"""The cosmology has attributes and methods for the matter density."""
 
@@ -163,7 +169,9 @@ class HasOmegaB(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class BaryonComponent(
-    HasOmegaB[ArrayT_co, InputT_contra], HasOmegaB0[ArrayT_co], Protocol
+    HasOmegaB[ArrayT_co, InputT_contra],
+    HasOmegaB0[ArrayT_co],
+    Protocol,
 ):
     r"""The cosmology has attributes and methods for the baryon density."""
 
@@ -309,7 +317,9 @@ class HasOmegaDM(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class DarkMatterComponent(
-    HasOmegaDM[ArrayT_co, InputT_contra], HasOmegaDM0[ArrayT_co], Protocol
+    HasOmegaDM[ArrayT_co, InputT_contra],
+    HasOmegaDM0[ArrayT_co],
+    Protocol,
 ):
     r"""The cosmology has attributes and methods for the dark matter."""
 
@@ -348,6 +358,8 @@ class HasOmegaGamma(Protocol[ArrayT_co, InputT_contra]):
 
 @runtime_checkable
 class PhotonComponent(
-    HasOmegaGamma[ArrayT_co, InputT_contra], HasOmegaGamma0[ArrayT_co], Protocol
+    HasOmegaGamma[ArrayT_co, InputT_contra],
+    HasOmegaGamma0[ArrayT_co],
+    Protocol,
 ):
     r"""The cosmology has attributes and methods for the photons."""

@@ -11,7 +11,6 @@ from typing import TypeVar
 import numpy.array_api as xp
 import pytest
 from cosmology.api import (
-    BackgroundTemperature,
     BaryonComponent,
     Cosmology,
     CosmologyConstantsNamespace,
@@ -27,6 +26,7 @@ from cosmology.api import (
     PhotonComponent,
     ScaleFactor,
     StandardCosmology,
+    TemperatureCMB,
     TotalComponent,
 )
 from cosmology.api._array_api import Array
@@ -229,9 +229,9 @@ def scalefactor_cls(
 @pytest.fixture(scope="session")
 def bkgt_cls(
     cosmology_cls: type[Cosmology],
-) -> type[BackgroundTemperature | Cosmology]:
+) -> type[TemperatureCMB | Cosmology]:
     """An example standard cosmology API class."""
-    return make_cls(BackgroundTemperature, {"T_cmb0"})
+    return make_cls(TemperatureCMB, {"T_cmb0"})
 
 
 DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(DistanceMeasures, Cosmology)
