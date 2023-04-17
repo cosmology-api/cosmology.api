@@ -1,10 +1,10 @@
-"""Test ``cosmology.api.HasDarkMatterComponent``."""
+"""Test ``cosmology.api.DarkMatterComponent``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import HasDarkMatterComponent
+from cosmology.api import DarkMatterComponent
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg, _return_one
@@ -17,16 +17,16 @@ from ..conftest import _default_one, _return_1arg, _return_one
 def test_noncompliant_darkmattercomponent():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.HasDarkMatterComponent`.
+    `cosmology.api.DarkMatterComponent`.
     """
     # Simple example: missing everything
 
-    class ExampleHasDarkMatterComponent:
+    class ExampleDarkMatterComponent:
         pass
 
-    cosmo = ExampleHasDarkMatterComponent()
+    cosmo = ExampleDarkMatterComponent()
 
-    assert not isinstance(cosmo, HasDarkMatterComponent)
+    assert not isinstance(cosmo, DarkMatterComponent)
 
     # TODO: more examples?
 
@@ -34,24 +34,24 @@ def test_noncompliant_darkmattercomponent():
 def test_compliant_darkmattercomponent(matter_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.HasDarkMatterComponent`.
+    `cosmology.api.DarkMatterComponent`.
     """
-    ExampleHasDarkMatterComponent = make_dataclass(
-        "ExampleHasDarkMatterComponent",
+    ExampleDarkMatterComponent = make_dataclass(
+        "ExampleDarkMatterComponent",
         [(n, Array, field(default_factory=_default_one)) for n in {}],
         bases=(matter_cls,),
         namespace={"Omega_dm0": _return_one, "Omega_dm": _return_1arg},
         frozen=True,
     )
 
-    cosmo = ExampleHasDarkMatterComponent()
+    cosmo = ExampleDarkMatterComponent()
 
-    assert isinstance(cosmo, HasDarkMatterComponent)
+    assert isinstance(cosmo, DarkMatterComponent)
 
 
 def test_fixture(darkmatter_cls):
     """
     Test that the ``darkmatter_cls`` fixture is a
-    `cosmology.api.HasDarkMatterComponent`.
+    `cosmology.api.DarkMatterComponent`.
     """
-    assert isinstance(darkmatter_cls(), HasDarkMatterComponent)
+    assert isinstance(darkmatter_cls(), DarkMatterComponent)

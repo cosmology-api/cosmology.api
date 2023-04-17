@@ -1,10 +1,10 @@
-"""Test ``cosmology.api.HasHubbleParameter``."""
+"""Test ``cosmology.api.HubbleParameter``."""
 
 from __future__ import annotations
 
 from dataclasses import field, make_dataclass
 
-from cosmology.api import HasHubbleParameter
+from cosmology.api import HubbleParameter
 from cosmology.api._array_api import Array
 
 from ..conftest import _default_one, _return_1arg
@@ -14,51 +14,48 @@ from ..conftest import _default_one, _return_1arg
 ################################################################################
 
 
-def test_noncompliant_hubbleparametrized():
+def test_noncompliant_hubbleparameter():
     """
     Test that a non-compliant instance is not a
-    `cosmology.api.HasHubbleParameter`.
+    `cosmology.api.HubbleParameter`.
     """
     # Simple example: missing everything
 
-    class ExampleHasHubbleParameter:
+    class ExampleHubbleParameter:
         pass
 
-    cosmo = ExampleHasHubbleParameter()
+    cosmo = ExampleHubbleParameter()
 
-    assert not isinstance(cosmo, HasHubbleParameter)
+    assert not isinstance(cosmo, HubbleParameter)
 
     # TODO: more examples?
 
 
-def test_compliant_hubbleparametrized(hashubbleparamet_cls):
+def test_compliant_hubbleparameter(hubble_cls):
     """
     Test that a compliant instance is a
-    `cosmology.api.HasHubbleParameter`.
+    `cosmology.api.HubbleParameter`.
     """
-    ExampleHasHubbleParameter = make_dataclass(
-        "ExampleHasHubbleParameter",
+    ExampleHubbleParameter = make_dataclass(
+        "ExampleHubbleParameter",
         [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
-        bases=(hashubbleparamet_cls,),
+        bases=(hubble_cls,),
         namespace={
-            "h": _default_one,
             "hubble_time": _default_one,
             "hubble_distance": _default_one,
             "H": _return_1arg,
-            "efunc": _return_1arg,
-            "inv_efunc": _return_1arg,
         },
         frozen=True,
     )
 
-    cosmo = ExampleHasHubbleParameter()
+    cosmo = ExampleHubbleParameter()
 
-    assert isinstance(cosmo, HasHubbleParameter)
+    assert isinstance(cosmo, HubbleParameter)
 
 
-def test_fixture(hashubbleparamet_cls):
+def test_fixture(hubble_cls):
     """
-    Test that the ``hashubbleparamet_cls`` fixture is a
-    `cosmology.api.HasHubbleParameter`.
+    Test that the ``hubble_cls`` fixture is a
+    `cosmology.api.HubbleParameter`.
     """
-    assert isinstance(hashubbleparamet_cls(), HasHubbleParameter)
+    assert isinstance(hubble_cls(), HubbleParameter)

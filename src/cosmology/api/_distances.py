@@ -4,27 +4,32 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
-from cosmology.api._array_api import ArrayT_co
-from cosmology.api._core import Cosmology, InputT_contra
+from cosmology.api._array_api import Array
+from cosmology.api._core import InputT
 
 __all__: list[str] = []
 
 
-# This is currently private
-class _HasTcmb(Cosmology[ArrayT_co, InputT_contra], Protocol):
-    r"""The cosmology contains a CMB temperature, described by :math:`T_{CMB}`."""
+@runtime_checkable
+class HasTCMB0(Protocol[Array]):
+    r"""The object contains a background temperature -- :math:`T_{CMB}`."""
 
     @property
-    def T_cmb0(self) -> ArrayT_co:
+    def T_cmb0(self) -> Array:
         """CMB temperature in K at z=0."""
         ...
 
-    def T_cmb(self, z: InputT_contra, /) -> ArrayT_co:
+
+@runtime_checkable
+class HasTCMB(Protocol[Array, InputT]):
+    r"""The object contains a background temperature method."""
+
+    def T_cmb(self, z: InputT, /) -> Array:
         """CMB temperature in K at redshift z.
 
         Parameters
         ----------
-        z : Array, positional-only
+        z : Array or float, positional-only
             Input redshift.
 
         Returns
@@ -34,29 +39,33 @@ class _HasTcmb(Cosmology[ArrayT_co, InputT_contra], Protocol):
         ...
 
 
-##############################################################################
-# Total
+@runtime_checkable
+class TemperatureCMB(
+    HasTCMB[Array, InputT],
+    HasTCMB0[Array],
+    Protocol,
+):
+    r"""The object has attributes and methods for the background temperature."""
+
+
+# ==============================================================================
 
 
 @runtime_checkable
-class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
-    """Cosmology API protocol for isotropic cosmologies.
-
-    This is a protocol class that defines the standard API for isotropic
-    background calculations. It is not intended to be instantiated. Instead, it
-    should be used for ``isinstance`` checks or as an ABC for libraries that
-    wish to define a compatible cosmology class.
-    """
+class HasScaleFactor0(Protocol[Array]):
+    """The object contains a scale factor, described by :math:`a_0`."""
 
     @property
-    def scale_factor0(self) -> ArrayT_co:
+    def scale_factor0(self) -> Array:
         """Scale factor at z=0."""
         ...
 
-    # ==============================================================
-    # Methods
 
-    def scale_factor(self, z: InputT_contra, /) -> ArrayT_co:
+@runtime_checkable
+class HasScaleFactor(Protocol[Array, InputT]):
+    """The object contains a scale factor method."""
+
+    def scale_factor(self, z: InputT, /) -> Array:
         """Redshift-dependenct scale factor.
 
         The scale factor is defined as :math:`a = a_0 / (1 + z)`.
@@ -72,10 +81,38 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
         """
         ...
 
+
+@runtime_checkable
+class ScaleFactor(
+    HasScaleFactor[Array, InputT],
+    HasScaleFactor0[Array],
+    Protocol,
+):
+    """The object has attributes and methods for the scale factor."""
+
+
+##############################################################################
+# Total
+
+
+@runtime_checkable
+class DistanceMeasures(
+    ScaleFactor[Array, InputT],
+    TemperatureCMB[Array, InputT],
+    Protocol,
+):
+    """Cosmology API protocol for isotropic cosmologies.
+
+    This is a protocol class that defines the standard API for isotropic
+    background calculations. It is not intended to be instantiated. Instead, it
+    should be used for ``isinstance`` checks or as an ABC for libraries that
+    wish to define a compatible cosmology class.
+    """
+
     # ----------------------------------------------
     # Time
 
-    def age(self, z: InputT_contra, /) -> ArrayT_co:
+    def age(self, z: InputT, /) -> Array:
         """Age of the universe in Gyr at redshift ``z``.
 
         Parameters
@@ -89,7 +126,7 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
         """
         ...
 
-    def lookback_time(self, z: InputT_contra, /) -> ArrayT_co:
+    def lookback_time(self, z: InputT, /) -> Array:
         """Lookback time to redshift ``z`` in Gyr.
 
         The lookback time is the difference between the age of the Universe now
@@ -109,25 +146,31 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
     # ----------------------------------------------
     # Comoving distance
 
-    def comoving_distance(self, z: InputT_contra, /) -> ArrayT_co:
-        r"""Comoving line-of-sight distance :math:`d_c(z)` in Mpc.
+    def comoving_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
+        r"""Comoving line-of-sight distance :math:`d_c(z1, z2)` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
         remains constant with time for objects in the Hubble flow.
 
         Parameters
         ----------
-        z : Array, positional-only
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d_c(0, z)` is returned, otherwise the distance :math:`d_c(z,
+            zp)` is returned.
 
         Returns
         -------
         Array
+            The comoving distance :math:`d_c(z1, z2)` in Mpc, where ``(z1, z2)``
+            is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
-    def comoving_transverse_distance(self, z: InputT_contra, /) -> ArrayT_co:
-        r"""Transverse comoving distance :math:`d_M(z)` in Mpc.
+    def comoving_transverse_distance(
+        self, z: InputT, zp: InputT | None = None, /
+    ) -> Array:
+        r"""Transverse comoving distance :math:`d_M(z1, z2)` in Mpc.
 
         This value is the transverse comoving distance at redshift ``z``
         corresponding to an angular separation of 1 radian. This is the same as
@@ -136,16 +179,20 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
 
         Parameters
         ----------
-        z : Array, positional-only
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d_M(0, z)` is returned, otherwise the distance :math:`d_M(z,
+            zp)` is returned.
 
         Returns
         -------
         Array
+            The comoving transverse distance :math:`d_M(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
-    def comoving_volume(self, z: InputT_contra, /) -> ArrayT_co:
+    def comoving_volume(self, z: InputT, zp: InputT | None = None, /) -> Array:
         r"""Comoving volume in cubic Mpc.
 
         This is the volume of the universe encompassed by redshifts less than
@@ -154,16 +201,22 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
 
         Parameters
         ----------
-        z : Array
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the
+            volume :math:`V_c(0, z)` is returned, otherwise the
+            volume :math:`V_c(z, zp)` is returned.
 
         Returns
         -------
         Array
+            The comoving volume :math:`V_c(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
-    def differential_comoving_volume(self, z: InputT_contra, /) -> ArrayT_co:
+    def differential_comoving_volume(
+        self, z: InputT, zp: InputT | None = None, /
+    ) -> Array:
         r"""Differential comoving volume in cubic Mpc per steradian.
 
         If :math:`V_c` is the comoving volume of a redshift slice with solid
@@ -176,27 +229,45 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
             = \frac{x_M^2(z)}{E(z)}
             = \frac{\mathtt{xm(z)^2}}{\mathtt{ef(z)}} \;.
 
+        Parameters
+        ----------
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the
+            differential volume :math:`dV_c(0, z)` is returned, otherwise the
+            differential volume :math:`dV_c(z, zp)` is returned.
+
+        Returns
+        -------
+        Array
+            The differential comoving volume :math:`dV_c(z1, z2)` in Mpc,
+            where ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
 
     # ----------------------------------------------
     # Angular diameter distance
 
-    def angular_diameter_distance(self, z: InputT_contra, /) -> ArrayT_co:
+    def angular_diameter_distance(
+        self, z: InputT, zp: InputT | None = None, /
+    ) -> Array:
         """Angular diameter distance :math:`d_A(z)` in Mpc.
 
-        This gives the proper (sometimes called 'physical') transverse
-        distance corresponding to an angle of 1 radian for an object
-        at redshift ``z`` ([1]_, [2]_, [3]_).
+        This gives the proper (sometimes called 'physical') transverse distance
+        corresponding to an angle of 1 radian for an object at redshift ``z``
+        ([1]_, [2]_, [3]_).
 
         Parameters
         ----------
-        z : Array, positional-only
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d_A(0, z)` is returned, otherwise the distance :math:`d_A(z,
+            zp)` is returned.
 
         Returns
         -------
         Array
+            The angular diameter distance :math:`d_A(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
 
         References
         ----------
@@ -209,20 +280,24 @@ class HasDistanceMeasures(_HasTcmb[ArrayT_co, InputT_contra], Protocol):
     # ----------------------------------------------
     # Luminosity distance
 
-    def luminosity_distance(self, z: InputT_contra, /) -> ArrayT_co:
-        """Redshift-dependent luminosity distance in Mpc.
+    def luminosity_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
+        """Redshift-dependent luminosity distance :math:`d_L(z1, z2)` in Mpc.
 
         This is the distance to use when converting between the bolometric flux
         from an object at redshift ``z`` and its bolometric luminosity [1]_.
 
         Parameters
         ----------
-        z : Array
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the
+            distance :math:`d_L(0, z)` is returned, otherwise the
+            distance :math:`d_L(z, zp)` is returned.
 
         Returns
         -------
         Array
+            The luminosity distance :math:`d_L(z1, z2)` in Mpc, where
+            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
 
         References
         ----------
