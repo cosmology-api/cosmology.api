@@ -91,60 +91,12 @@ class ScaleFactor(
     """The object has attributes and methods for the scale factor."""
 
 
-##############################################################################
-# Total
+# ==============================================================================
 
 
 @runtime_checkable
-class DistanceMeasures(
-    ScaleFactor[Array, InputT],
-    TemperatureCMB[Array, InputT],
-    Protocol,
-):
-    """Cosmology API protocol for isotropic cosmologies.
-
-    This is a protocol class that defines the standard API for isotropic
-    background calculations. It is not intended to be instantiated. Instead, it
-    should be used for ``isinstance`` checks or as an ABC for libraries that
-    wish to define a compatible cosmology class.
-    """
-
-    # ----------------------------------------------
-    # Time
-
-    def age(self, z: InputT, /) -> Array:
-        """Age of the universe in Gyr at redshift ``z``.
-
-        Parameters
-        ----------
-        z : Array
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    def lookback_time(self, z: InputT, /) -> Array:
-        """Lookback time to redshift ``z`` in Gyr.
-
-        The lookback time is the difference between the age of the Universe now
-        and the age at redshift ``z``.
-
-        Parameters
-        ----------
-        z : Array, positional-only
-            Input redshift.
-
-        Returns
-        -------
-        Array
-        """
-        ...
-
-    # ----------------------------------------------
-    # Comoving distance
+class HasComovingDistance(Protocol[Array, InputT]):
+    """The object has a comoving distance method."""
 
     def comoving_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
         r"""Comoving line-of-sight distance :math:`d_c(z1, z2)` in Mpc.
@@ -166,6 +118,11 @@ class DistanceMeasures(
             is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
+
+
+@runtime_checkable
+class HasComovingTransverseDistance(Protocol[Array, InputT]):
+    """The object has a comoving transverse distance method."""
 
     def comoving_transverse_distance(
         self, z: InputT, zp: InputT | None = None, /
@@ -192,6 +149,11 @@ class DistanceMeasures(
         """
         ...
 
+
+@runtime_checkable
+class HasComovingVolume(Protocol[Array, InputT]):
+    """The object has a comoving volume method."""
+
     def comoving_volume(self, z: InputT, zp: InputT | None = None, /) -> Array:
         r"""Comoving volume in cubic Mpc.
 
@@ -213,6 +175,11 @@ class DistanceMeasures(
             ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
         """
         ...
+
+
+@runtime_checkable
+class HasDifferentialComovingVolume(Protocol[Array, InputT]):
+    """The object has a differential comoving volume method."""
 
     def differential_comoving_volume(
         self, z: InputT, zp: InputT | None = None, /
@@ -244,8 +211,67 @@ class DistanceMeasures(
         """
         ...
 
-    # ----------------------------------------------
-    # Angular diameter distance
+
+@runtime_checkable
+class ComovingDistanceMeasures(
+    HasComovingDistance[Array, InputT],
+    HasComovingTransverseDistance[Array, InputT],
+    HasComovingVolume[Array, InputT],
+    HasDifferentialComovingVolume[Array, InputT],
+    Protocol,
+):
+    """The object has attributes and methods for comoving distance measures."""
+
+    ...
+
+
+# ============================================================================
+
+
+@runtime_checkable
+class HasAge(Protocol[Array, InputT]):
+    """The object has an age method."""
+
+    def age(self, z: InputT, /) -> Array:
+        """Age of the universe in Gyr at redshift ``z``.
+
+        Parameters
+        ----------
+        z : Array
+            Input redshift.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+
+@runtime_checkable
+class HasLookbackTime(Protocol[Array, InputT]):
+    """The object has a lookback time method."""
+
+    def lookback_time(self, z: InputT, /) -> Array:
+        """Lookback time to redshift ``z`` in Gyr.
+
+        The lookback time is the difference between the age of the Universe now
+        and the age at redshift ``z``.
+
+        Parameters
+        ----------
+        z : Array
+            Input redshift.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+
+@runtime_checkable
+class HasAngularDiameterDistance(Protocol[Array, InputT]):
+    """The object has an angular diameter distance method."""
 
     def angular_diameter_distance(
         self, z: InputT, zp: InputT | None = None, /
@@ -277,8 +303,10 @@ class DistanceMeasures(
         """
         ...
 
-    # ----------------------------------------------
-    # Luminosity distance
+
+@runtime_checkable
+class HasLuminosityDistance(Protocol[Array, InputT]):
+    """The object has a luminosity distance method."""
 
     def luminosity_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
         """Redshift-dependent luminosity distance :math:`d_L(z1, z2)` in Mpc.
@@ -304,3 +332,27 @@ class DistanceMeasures(
         .. [1] Weinberg, 1972, pp 420-424; Weedman, 1986, pp 60-62.
         """
         ...
+
+
+##############################################################################
+# Total
+
+
+@runtime_checkable
+class DistanceMeasures(
+    ScaleFactor[Array, InputT],
+    TemperatureCMB[Array, InputT],
+    ComovingDistanceMeasures[Array, InputT],
+    HasAge[Array, InputT],
+    HasLookbackTime[Array, InputT],
+    HasAngularDiameterDistance[Array, InputT],
+    HasLuminosityDistance[Array, InputT],
+    Protocol,
+):
+    """Cosmology API protocol for isotropic cosmologies.
+
+    This is a protocol class that defines the standard API for isotropic
+    background calculations. It is not intended to be instantiated. Instead, it
+    should be used for ``isinstance`` checks or as an ABC for libraries that
+    wish to define a compatible cosmology class.
+    """
