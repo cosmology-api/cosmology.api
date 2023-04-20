@@ -20,7 +20,37 @@ if TYPE_CHECKING:
 
 @runtime_checkable
 class CosmologyNamespace(Protocol):
-    """Runtime-checkable Protocol for the Cosmology API namespace."""
+    """Runtime-checkable Protocol for the Cosmology API namespace.
+
+    Examples
+    --------
+    A library can be checked for conformance with the Cosmology API namespace.
+
+        >>> from cosmology.api import CosmologyNamespace
+        >>> from astropy import cosmology as astropy_cosmology
+        >>> isinstance(astropy_cosmology, CosmologyNamespace)
+        False
+
+    We can check what is missing from the library.
+
+        >>> print(set(dir(CosmologyNamespace)) - set(dir(astropy_cosmology)))
+        {'constants'}
+
+    Most libraries are not yet Cosmology API compatible. There are compatibility
+    wrappers to help with this, with documentation upcoming.
+
+    Notes
+    -----
+    This is a Protocol, so it is not meant to be instantiated. It is meant to be
+    used for static and runtime type checking. See
+    https://docs.python.org/3/library/typing.html#typing.Protocol for more
+    details.
+
+    When used in a runtime check, `isinstance` will only look for the existence
+    of objects, not details like their type. For example, ``constants`` should
+    be a `~cosmology.api.CosmologyConstantsNamespace`, but `isinstance` will not
+    check this.
+    """
 
     @property
     def constants(self) -> CosmologyConstantsNamespace:

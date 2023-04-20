@@ -31,20 +31,13 @@
     "coverage[toml]",
     "numpy>=1.20",
     "pytest",
-    "pytest-astropy",
+    "pytest-cov",
   ]
   docs = [
-    "furo",
-    "graphviz",
-    "IPython",
-    "jupyter_client",
-    "matplotlib",
-    "nbsphinx",
-    "pydata-sphinx-theme",
     "sphinx",
-    "sphinx-astropy",
-    "sphinxcontrib.bibtex < 3.0.0",
-    "tomlkit",
+    "furo",
+    "numpydoc",
+    "tomli",
   ]
 
 [project.urls]

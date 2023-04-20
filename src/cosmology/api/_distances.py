@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Protocol, runtime_checkable
+from typing import Protocol, overload, runtime_checkable
 
 from cosmology.api._array_api import Array
 from cosmology.api._core import InputT
@@ -98,24 +98,32 @@ class ScaleFactor(
 class HasComovingDistance(Protocol[Array, InputT]):
     """The object has a comoving distance method."""
 
-    def comoving_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
-        r"""Comoving line-of-sight distance :math:`d_c(z1, z2)` in Mpc.
+    @overload
+    def comoving_distance(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def comoving_distance(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def comoving_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
+        r"""Comoving line-of-sight distance :math:`d_c` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
         remains constant with time for objects in the Hubble flow.
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the distance
-            :math:`d_c(0, z)` is returned, otherwise the distance :math:`d_c(z,
-            zp)` is returned.
+        z : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If called with one argument ``z``, the distance
+            :math:`d_c(0, z)` is returned. If called with two arguments ``z1,
+            z2``, the distance :math:`d_c(z_1, z_2)` is returned.
 
         Returns
         -------
         Array
-            The comoving distance :math:`d_c(z1, z2)` in Mpc, where ``(z1, z2)``
-            is (0, `z`) if `zp` is `None` else (`z`, `zp`).
+            The comoving distance.
         """
         ...
 
