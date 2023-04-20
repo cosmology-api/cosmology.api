@@ -32,6 +32,14 @@ from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
 from cosmology.api._distances import (
     DistanceMeasures,
+    HasAge,
+    HasAngularDiameterDistance,
+    HasComovingDistance,
+    HasComovingTransverseDistance,
+    HasComovingVolume,
+    HasDifferentialComovingVolume,
+    HasLookbackTime,
+    HasLuminosityDistance,
     HasScaleFactor,
     HasScaleFactor0,
     HasTCMB,
@@ -45,6 +53,7 @@ from cosmology.api._extras import (
     HasCriticalDensity0,
     HasH,
     HasH0,
+    HasHoverH0,
     HasHubbleDistance,
     HasHubbleTime,
     HubbleParameter,
@@ -104,6 +113,7 @@ __all__ = [
     "HasHubbleDistance",
     "HasHubbleTime",
     "HasH",
+    "HasHoverH0",
     "HubbleParameter",
     # --- Distances ---
     "DistanceMeasures",
@@ -115,6 +125,16 @@ __all__ = [
     "HasTCMB0",
     "HasTCMB",
     "TemperatureCMB",
+    # distance
+    "HasComovingDistance",
+    "HasComovingTransverseDistance",
+    "HasComovingVolume",
+    "HasDifferentialComovingVolume",
+    "HasLuminosityDistance",
+    "HasAngularDiameterDistance",
+    # time
+    "HasAge",
+    "HasLookbackTime",
     # -- Wrappers --
     "CosmologyWrapper",
     "StandardCosmologyWrapper",
