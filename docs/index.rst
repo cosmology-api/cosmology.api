@@ -32,7 +32,6 @@ your code!
    :caption: API
    :hidden:
 
-   api/typing
    api/protocols
    api/reference
 
@@ -42,6 +41,7 @@ your code!
 
    dev/wrapping
    dev/new
+   dev/typing
 
 .. toctree::
    :caption: Other
