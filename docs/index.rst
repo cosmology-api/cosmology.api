@@ -32,6 +32,7 @@ your code!
    :caption: API
    :hidden:
 
+   api/typing
    api/protocols
    api/reference
 

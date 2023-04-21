@@ -2,24 +2,19 @@
 Typing
 ======
 
-[Introduction about typing support in the cosmology protocols.]
-
-If you do not require static or dynamic type checking of cosmology instances,
-the :doc:`reference </api/reference>` provides a flat list of all methods and
-properties that a cosmology instance can support.
-
-
-Generic cosmology types
------------------------
-
-[Introduction about generic cosmology types, including the ``Array`` and
-``InputT`` type variables.]
-
-
 Support for ``float`` input
 ---------------------------
 
-[Introduction about accepting ``float`` input to the cosmology methods.]
+The default input type to cosmology methods is ``Array | float``. This means
+that you can pass in a single float, or an array. This is useful for example
+when you want to compute the angular diameter distance for a single redshift, or
+for an array of redshifts. The ``float`` input is converted to an array of
+length 1, and the result is returned as an array.
+
+We document which array libraries support ``float`` inputs in the table below.
+If you are using a library that does not support ``float`` inputs, you can use
+the ``<array>.__array_namespace__().asarray`` function to convert your input to
+an array.
 
 .. table:: Float support in common array libraries
    :widths: auto
