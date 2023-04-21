@@ -250,18 +250,28 @@ class ComovingDistanceMeasures(
 class HasProperDistance(Protocol[Array, InputT]):
     """The object has a proper distance method."""
 
-    def proper_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
+    @overload
+    def proper_distance(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def proper_distance(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def proper_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Proper distance :math:`d(z1, z2)` in Mpc.
 
-        The proper distance is the comoving distance divided by the angular
-        diameter distance.
+        The proper distance is the distance between two objects at redshifts
+        ``z1`` and ``z2``, including the effects of the expansion of the
+        universe.
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the distance
-            :math:`d(0, z)` is returned, otherwise the distance :math:`d(z,
-            zp)` is returned.
+        z1 : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the distance
+            :math:`d(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the distance :math:`d(z_1, z_2)` is returned.
 
         Returns
         -------
@@ -275,17 +285,27 @@ class HasProperDistance(Protocol[Array, InputT]):
 class HasProperTime(Protocol[Array, InputT]):
     """The object has a proper time method."""
 
-    def proper_time(self, z: InputT, zp: InputT | None = None, /) -> Array:
+    @overload
+    def proper_time(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def proper_time(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def proper_time(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Proper time :math:`t(z1, z2)` in Gyr.
 
-        The proper time is the lookback time divided by the Hubble parameter.
+        The proper time is the proper distance divided by
+        :attr:`cosmology.api.CosmologyConstanceNamespace.c`.
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the time
-            :math:`t(0, z)` is returned, otherwise the time :math:`t(z,
-            zp)` is returned.
+        z1 : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the time
+            :math:`t(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the time :math:`t(z_1, z_2)` is returned.
 
         Returns
         -------
@@ -313,18 +333,27 @@ class ProperDistanceMeasures(
 class HasLookbackDistance(Protocol[Array, InputT]):
     """The object has a lookback distance method."""
 
-    def lookback_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
+    @overload
+    def lookback_distance(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def lookback_distance(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def lookback_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Lookback distance :math:`d_T(z1, z2)` in Mpc.
 
-        The lookback distance is the subjective distance it took light to
-        travel from redshift ``z1`` to  ``z2``.
+        The lookback distance is the subjective distance it took light to travel
+        from redshift ``z1`` to  ``z2``.
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the distance
-            :math:`d_T(0, z)` is returned, otherwise the distance :math:`d_T(z,
-            zp)` is returned.
+        z1 : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the distance
+            :math:`d_T(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the distance :math:`d_T(z_1, z_2)` is returned.
 
         Returns
         -------
@@ -338,7 +367,15 @@ class HasLookbackDistance(Protocol[Array, InputT]):
 class HasLookbackTime(Protocol[Array, InputT]):
     """The object has a lookback time method."""
 
-    def lookback_time(self, z: InputT, zp: InputT | None = None, /) -> Array:
+    @overload
+    def lookback_time(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def lookback_time(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def lookback_time(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         """Lookback time to redshift ``z`` in Gyr.
 
         The lookback time is the time that it took light to travel on a
@@ -347,9 +384,11 @@ class HasLookbackTime(Protocol[Array, InputT]):
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then :math:`t_T(0,
-            z)` is returned, otherwise :math:`t_T(z, zp)` is returned.
+        z : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the time
+            :math:`t_T(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the time :math:`t_T(z_1, z_2)` is returned.
 
         Returns
         -------
