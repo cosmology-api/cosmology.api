@@ -129,18 +129,18 @@ class HasComovingDistance(Protocol[Array, InputT]):
 
 
 @runtime_checkable
-class HasComovingTransverseDistance(Protocol[Array, InputT]):
+class HasTransverseComovingDistance(Protocol[Array, InputT]):
     """The object has a comoving transverse distance method."""
 
     @overload
-    def comoving_transverse_distance(self, z: InputT, /) -> Array:
+    def transverse_comoving_distance(self, z: InputT, /) -> Array:
         ...
 
     @overload
-    def comoving_transverse_distance(self, z1: InputT, z2: InputT, /) -> Array:
+    def transverse_comoving_distance(self, z1: InputT, z2: InputT, /) -> Array:
         ...
 
-    def comoving_transverse_distance(
+    def transverse_comoving_distance(
         self, z1: InputT, z2: InputT | None = None, /
     ) -> Array:
         r"""Transverse comoving distance :math:`d_M` in Mpc.
@@ -233,7 +233,7 @@ class HasDifferentialComovingVolume(Protocol[Array, InputT]):
 @runtime_checkable
 class ComovingDistanceMeasures(
     HasComovingDistance[Array, InputT],
-    HasComovingTransverseDistance[Array, InputT],
+    HasTransverseComovingDistance[Array, InputT],
     HasComovingVolume[Array, InputT],
     HasDifferentialComovingVolume[Array, InputT],
     Protocol,

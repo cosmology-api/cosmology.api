@@ -35,7 +35,6 @@ from cosmology.api._distances import (
     HasAge,
     HasAngularDiameterDistance,
     HasComovingDistance,
-    HasComovingTransverseDistance,
     HasComovingVolume,
     HasDifferentialComovingVolume,
     HasLookbackTime,
@@ -44,6 +43,7 @@ from cosmology.api._distances import (
     HasScaleFactor0,
     HasTCMB,
     HasTCMB0,
+    HasTransverseComovingDistance,
     ScaleFactor,
     TemperatureCMB,
 )
@@ -127,7 +127,7 @@ __all__ = [
     "TemperatureCMB",
     # distance
     "HasComovingDistance",
-    "HasComovingTransverseDistance",
+    "HasTransverseComovingDistance",
     "HasComovingVolume",
     "HasDifferentialComovingVolume",
     "HasLuminosityDistance",
