@@ -297,7 +297,7 @@ class HasProperTime(Protocol[Array, InputT]):
         r"""Proper time :math:`t` in Gyr.
 
         The proper time is the proper distance divided by
-        :attr:`~cosmology.api.CosmologyConstanceNamespace.c`.
+        :attr:`~cosmology.api.CosmologyConstantsNamespace.c`.
 
         Parameters
         ----------
