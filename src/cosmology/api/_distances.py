@@ -259,7 +259,7 @@ class HasProperDistance(Protocol[Array, InputT]):
         ...
 
     def proper_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
-        r"""Proper distance :math:`d(z1, z2)` in Mpc.
+        r"""Proper distance :math:`d` in Mpc.
 
         The proper distance is the distance between two objects at redshifts
         ``z1`` and ``z2``, including the effects of the expansion of the
@@ -267,7 +267,7 @@ class HasProperDistance(Protocol[Array, InputT]):
 
         Parameters
         ----------
-        z1 : Array, positional-only
+        z : Array, positional-only
         z1, z2 : Array, positional-only
             Input redshifts. If one argument ``z`` is given, the distance
             :math:`d(0, z)` is returned. If two arguments ``z1, z2`` are
@@ -276,7 +276,7 @@ class HasProperDistance(Protocol[Array, InputT]):
         Returns
         -------
         Array
-            The proper distance :math:`d(z1, z2)` in Mpc.
+            The proper distance :math:`d` in Mpc.
         """
         ...
 
@@ -294,14 +294,14 @@ class HasProperTime(Protocol[Array, InputT]):
         ...
 
     def proper_time(self, z1: InputT, z2: InputT | None = None, /) -> Array:
-        r"""Proper time :math:`t(z1, z2)` in Gyr.
+        r"""Proper time :math:`t` in Gyr.
 
         The proper time is the proper distance divided by
-        :attr:`cosmology.api.CosmologyConstanceNamespace.c`.
+        :attr:`~cosmology.api.CosmologyConstanceNamespace.c`.
 
         Parameters
         ----------
-        z1 : Array, positional-only
+        z : Array, positional-only
         z1, z2 : Array, positional-only
             Input redshifts. If one argument ``z`` is given, the time
             :math:`t(0, z)` is returned. If two arguments ``z1, z2`` are
@@ -310,7 +310,7 @@ class HasProperTime(Protocol[Array, InputT]):
         Returns
         -------
         Array
-            The proper time :math:`t(z1, z2)` in Gyr.
+            The proper time :math:`t` in Gyr.
         """
         ...
 
@@ -342,14 +342,14 @@ class HasLookbackDistance(Protocol[Array, InputT]):
         ...
 
     def lookback_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
-        r"""Lookback distance :math:`d_T(z1, z2)` in Mpc.
+        r"""Lookback distance :math:`d_T` in Mpc.
 
         The lookback distance is the subjective distance it took light to travel
         from redshift ``z1`` to  ``z2``.
 
         Parameters
         ----------
-        z1 : Array, positional-only
+        z : Array, positional-only
         z1, z2 : Array, positional-only
             Input redshifts. If one argument ``z`` is given, the distance
             :math:`d_T(0, z)` is returned. If two arguments ``z1, z2`` are
@@ -358,7 +358,7 @@ class HasLookbackDistance(Protocol[Array, InputT]):
         Returns
         -------
         Array
-            The lookback distance :math:`d_T(z1, z2)` in Mpc.
+            The lookback distance :math:`d_T` in Mpc.
         """
         ...
 
@@ -376,10 +376,10 @@ class HasLookbackTime(Protocol[Array, InputT]):
         ...
 
     def lookback_time(self, z1: InputT, z2: InputT | None = None, /) -> Array:
-        """Lookback time to redshift ``z`` in Gyr.
+        """Lookback time in Gyr.
 
-        The lookback time is the time that it took light to travel on a
-        straight-line path from redshift ``z1`` to ``z2``. Effectively it is the
+        The lookback time is the time that it took light from being emitted at
+        one redshift to being observed at another redshift. Effectively it is the
         difference between the age of the Universe at the two redshifts.
 
         Parameters
@@ -393,6 +393,7 @@ class HasLookbackTime(Protocol[Array, InputT]):
         Returns
         -------
         Array
+            The lookback time in Gyr.
         """
         ...
 
@@ -416,7 +417,7 @@ class HasAge(Protocol[Array, InputT]):
     """The object has an age method."""
 
     def age(self, z: InputT, /) -> Array:
-        r"""Age of the universe in Gyr at redshift ``z``.
+        r"""Age of the universe at redshift ``z`` in Gyr.
 
         Parameters
         ----------
