@@ -247,20 +247,89 @@ class ComovingDistanceMeasures(
 
 
 @runtime_checkable
-class HasAge(Protocol[Array, InputT]):
-    """The object has an age method."""
+class HasProperDistance(Protocol[Array, InputT]):
+    """The object has a proper distance method."""
 
-    def age(self, z: InputT, /) -> Array:
-        """Age of the universe in Gyr at redshift ``z``.
+    def proper_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
+        r"""Proper distance :math:`d(z1, z2)` in Mpc.
+
+        The proper distance is the comoving distance divided by the angular
+        diameter distance.
 
         Parameters
         ----------
-        z : Array
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d(0, z)` is returned, otherwise the distance :math:`d(z,
+            zp)` is returned.
 
         Returns
         -------
         Array
+            The proper distance :math:`d(z1, z2)` in Mpc.
+        """
+        ...
+
+
+@runtime_checkable
+class HasProperTime(Protocol[Array, InputT]):
+    """The object has a proper time method."""
+
+    def proper_time(self, z: InputT, zp: InputT | None = None, /) -> Array:
+        r"""Proper time :math:`t(z1, z2)` in Gyr.
+
+        The proper time is the lookback time divided by the Hubble parameter.
+
+        Parameters
+        ----------
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the time
+            :math:`t(0, z)` is returned, otherwise the time :math:`t(z,
+            zp)` is returned.
+
+        Returns
+        -------
+        Array
+            The proper time :math:`t(z1, z2)` in Gyr.
+        """
+        ...
+
+
+@runtime_checkable
+class ProperDistanceMeasures(
+    HasProperDistance[Array, InputT],
+    HasProperTime[Array, InputT],
+    Protocol,
+):
+    """The object has attributes and methods for proper distance measures."""
+
+    ...
+
+
+# ============================================================================
+
+
+@runtime_checkable
+class HasLookbackDistance(Protocol[Array, InputT]):
+    """The object has a lookback distance method."""
+
+    def lookback_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
+        r"""Lookback distance :math:`d_T(z1, z2)` in Mpc.
+
+        The lookback distance is the subjective distance it took light to
+        travel from redshift ``z1`` to  ``z2``.
+
+        Parameters
+        ----------
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then the distance
+            :math:`d_T(0, z)` is returned, otherwise the distance :math:`d_T(z,
+            zp)` is returned.
+
+        Returns
+        -------
+        Array
+            The lookback distance :math:`d_T(z1, z2)` in Mpc.
         """
         ...
 
@@ -272,14 +341,48 @@ class HasLookbackTime(Protocol[Array, InputT]):
     def lookback_time(self, z: InputT, zp: InputT | None = None, /) -> Array:
         """Lookback time to redshift ``z`` in Gyr.
 
-        The lookback time is the difference between the age of the Universe now
-        and the age at redshift ``z``.
+        The lookback time is the time that it took light to travel on a
+        straight-line path from redshift ``z1`` to ``z2``. Effectively it is the
+        difference between the age of the Universe at the two redshifts.
 
         Parameters
         ----------
         z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then :math:`t_L(0,
-            z)` is returned, otherwise :math:`t_L(z, zp)` is returned.
+            Input redshifts. If ``zp`` is `None` (default), then :math:`t_T(0,
+            z)` is returned, otherwise :math:`t_T(z, zp)` is returned.
+
+        Returns
+        -------
+        Array
+        """
+        ...
+
+
+@runtime_checkable
+class LookbackDistanceMeasures(
+    HasLookbackDistance[Array, InputT],
+    HasLookbackTime[Array, InputT],
+    Protocol,
+):
+    """The object has attributes and methods for lookback distance measures."""
+
+    ...
+
+
+# ============================================================================
+
+
+@runtime_checkable
+class HasAge(Protocol[Array, InputT]):
+    """The object has an age method."""
+
+    def age(self, z: InputT, /) -> Array:
+        r"""Age of the universe in Gyr at redshift ``z``.
+
+        Parameters
+        ----------
+        z : Array
+            Input redshift.
 
         Returns
         -------
@@ -378,8 +481,9 @@ class DistanceMeasures(
     ScaleFactor[Array, InputT],
     TemperatureCMB[Array, InputT],
     ComovingDistanceMeasures[Array, InputT],
+    ProperDistanceMeasures[Array, InputT],
+    LookbackDistanceMeasures[Array, InputT],
     HasAge[Array, InputT],
-    HasLookbackTime[Array, InputT],
     HasAngularDiameterDistance[Array, InputT],
     HasLuminosityDistance[Array, InputT],
     Protocol,

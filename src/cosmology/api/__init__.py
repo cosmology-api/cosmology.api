@@ -37,13 +37,18 @@ from cosmology.api._distances import (
     HasComovingDistance,
     HasComovingVolume,
     HasDifferentialComovingVolume,
+    HasLookbackDistance,
     HasLookbackTime,
     HasLuminosityDistance,
+    HasProperDistance,
+    HasProperTime,
     HasScaleFactor,
     HasScaleFactor0,
     HasTCMB,
     HasTCMB0,
     HasTransverseComovingDistance,
+    LookbackDistanceMeasures,
+    ProperDistanceMeasures,
     ScaleFactor,
     TemperatureCMB,
 )
@@ -125,16 +130,23 @@ __all__ = [
     "HasTCMB0",
     "HasTCMB",
     "TemperatureCMB",
-    # distance
+    # comoving
     "HasComovingDistance",
     "HasTransverseComovingDistance",
     "HasComovingVolume",
     "HasDifferentialComovingVolume",
+    # proper
+    "HasProperDistance",
+    "HasProperTime",
+    "ProperDistanceMeasures",
+    # lookback
+    "HasLookbackDistance",
+    "HasLookbackTime",
+    "LookbackDistanceMeasures",
+    # other distances
     "HasLuminosityDistance",
     "HasAngularDiameterDistance",
-    # time
     "HasAge",
-    "HasLookbackTime",
     # -- Wrappers --
     "CosmologyWrapper",
     "StandardCosmologyWrapper",
