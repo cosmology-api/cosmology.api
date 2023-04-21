@@ -10,19 +10,9 @@ properties.  The names of these protocols are of the form *Has<Attribute>*.
 At a higher level of abstraction, groups of related attributes form
 :doc:`components </api/components>`.
 
-.. autoclass:: HasAge()
-.. autoclass:: HasAngularDiameterDistance()
-.. autoclass:: HasComovingDistance()
-.. autoclass:: HasComovingTransverseDistance()
-.. autoclass:: HasComovingVolume()
-.. autoclass:: HasDifferentialComovingVolume()
-.. autoclass:: HasH()
-.. autoclass:: HasH0()
-.. autoclass:: HasHoverH0()
-.. autoclass:: HasHubbleDistance()
-.. autoclass:: HasHubbleTime()
-.. autoclass:: HasLookbackTime()
-.. autoclass:: HasLuminosityDistance()
+Physical Components
+-------------------
+
 .. autoclass:: HasOmegaB()
 .. autoclass:: HasOmegaB0()
 .. autoclass:: HasOmegaDE()
@@ -39,6 +29,29 @@ At a higher level of abstraction, groups of related attributes form
 .. autoclass:: HasOmegaNu0()
 .. autoclass:: HasOmegaTot()
 .. autoclass:: HasOmegaTot0()
+
+The critical density:
+
+.. autoclass:: HasCriticalDensity0()
+.. autoclass:: HasCriticalDensity()
+
+
+Distance Measures
+-----------------
+
+.. autoclass:: HasAge()
+.. autoclass:: HasAngularDiameterDistance()
+.. autoclass:: HasComovingDistance()
+.. autoclass:: HasComovingTransverseDistance()
+.. autoclass:: HasComovingVolume()
+.. autoclass:: HasDifferentialComovingVolume()
+.. autoclass:: HasH()
+.. autoclass:: HasH0()
+.. autoclass:: HasHoverH0()
+.. autoclass:: HasHubbleDistance()
+.. autoclass:: HasHubbleTime()
+.. autoclass:: HasLookbackTime()
+.. autoclass:: HasLuminosityDistance()
 .. autoclass:: HasScaleFactor()
 .. autoclass:: HasScaleFactor0()
 .. autoclass:: HasTCMB()
