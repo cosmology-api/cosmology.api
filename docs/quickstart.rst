@@ -180,8 +180,8 @@ Note the :class:`typing.TypeAlias`. We recommend using type aliases to decrease
 the verbosity and increase readability of the function type hints.
 
 
-Going Further
--------------
+Runtime Checks
+--------------
 
 The Cosmology API can also be used for runtime introspection --
 :func:`isinstance` and :func:`issubclass` -- since all the protocols are decorated
