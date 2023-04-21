@@ -105,7 +105,7 @@ built on the Array API and all outputs must be some conformant array type.
             return np.array(self.cosmo.H0)
 
         def H(self, z: np.ndarray | float) -> np.ndarray:
-            ...  # up to you to implement this
+            return example_library.hubble_parameter(self.cosmo, z)
 
         @property
         def hubble_distance(self) -> np.ndarray:
@@ -165,7 +165,7 @@ interface?  No! But this class can still be used anywhere that only requires the
 :class:`~cosmology.api.HubbleParameter`,
 :class:`~cosmology.api.MatterComponent`,
 :class:`~cosmology.api.PhotonComponent`,
-:class:`~cosmology.api.DarkEnergyComponent`, and
+:class:`~cosmology.api.DarkEnergyComponent`, or
 :class:`~cosmology.api.ComovingDistanceMeasures` methods. If functions are well
 written to only require the cosmology attributes and methods that they need,
 then this wrapper can be used in those functions.
