@@ -43,7 +43,7 @@ uses. For example, a function requiring only :math:`H_0` and
 the all-encompassing :class:`~cosmology.api.StandardCosmology`.
 
 The last level, the "meta" level, is most useful for developers of cosmology
-libraries and is described in the :doc:`dev section </dev/index>`.
+libraries and is described in the :doc:`dev section </dev/new>`.
 
 
 Static Type Hints
