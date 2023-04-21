@@ -31,7 +31,7 @@ def test_noncompliant_hastcmbs():
     # TODO: more examples?
 
 
-def test_compliant_hastcmbs(bkgt_cls):
+def test_compliant_hastcmbs(tcmb_cls):
     """
     Test that a compliant instance is a
     `cosmology.api.TemperatureCMB`.
@@ -39,7 +39,7 @@ def test_compliant_hastcmbs(bkgt_cls):
     ExampleTemperatureCMB = make_dataclass(
         "ExampleTemperatureCMB",
         [(n, Array, field(default_factory=_default_one)) for n in {"T_cmb0"}],
-        bases=(bkgt_cls,),
+        bases=(tcmb_cls,),
         namespace={"T_cmb": _return_1arg},
         frozen=True,
     )
@@ -49,9 +49,9 @@ def test_compliant_hastcmbs(bkgt_cls):
     assert isinstance(cosmo, TemperatureCMB)
 
 
-def test_fixture(bkgt_cls):
+def test_fixture(tcmb_cls):
     """
-    Test that the ``bkgt_cls`` fixture is a
+    Test that the ``tcmb_cls`` fixture is a
     `cosmology.api.TemperatureCMB`.
     """
-    assert isinstance(bkgt_cls(), TemperatureCMB)
+    assert isinstance(tcmb_cls(), TemperatureCMB)

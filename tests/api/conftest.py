@@ -12,6 +12,7 @@ import numpy.array_api as xp
 import pytest
 from cosmology.api import (
     BaryonComponent,
+    ComovingDistanceMeasures,
     Cosmology,
     CosmologyConstantsNamespace,
     CosmologyNamespace,
@@ -21,9 +22,11 @@ from cosmology.api import (
     DarkMatterComponent,
     DistanceMeasures,
     HubbleParameter,
+    LookbackDistanceMeasures,
     MatterComponent,
     NeutrinoComponent,
     PhotonComponent,
+    ProperDistanceMeasures,
     ScaleFactor,
     StandardCosmology,
     TemperatureCMB,
@@ -227,12 +230,38 @@ def scalefactor_cls(
 
 
 @pytest.fixture(scope="session")
-def bkgt_cls(
+def tcmb_cls(
     cosmology_cls: type[Cosmology],
 ) -> type[TemperatureCMB | Cosmology]:
     """An example standard cosmology API class."""
     return make_cls(TemperatureCMB, {"T_cmb0"})
 
+
+@pytest.fixture(scope="session")
+def comoving_cls(
+    cosmology_cls: type[Cosmology],
+) -> type[ComovingDistanceMeasures | Cosmology]:
+    """An example standard cosmology API class."""
+    return make_cls(ComovingDistanceMeasures, set())
+
+
+@pytest.fixture(scope="session")
+def lookback_cls(
+    cosmology_cls: type[Cosmology],
+) -> type[LookbackDistanceMeasures | Cosmology]:
+    """An example standard cosmology API class."""
+    return make_cls(LookbackDistanceMeasures, set())
+
+
+@pytest.fixture(scope="session")
+def proper_cls(
+    cosmology_cls: type[Cosmology],
+) -> type[ProperDistanceMeasures | Cosmology]:
+    """An example standard cosmology API class."""
+    return make_cls(ProperDistanceMeasures, set())
+
+
+# ----------------------------------
 
 DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(DistanceMeasures, Cosmology)
 
@@ -252,6 +281,11 @@ def dists_meths() -> frozenset[str]:
 @pytest.fixture(scope="session")
 def dists_cls(
     cosmology_cls: type[Cosmology],
+    scalefactor_cls: type[ScaleFactor | Cosmology],
+    tcmb_cls: type[TemperatureCMB | Cosmology],
+    comoving_cls: type[ComovingDistanceMeasures | Cosmology],
+    lookback_cls: type[LookbackDistanceMeasures | Cosmology],
+    proper_cls: type[ProperDistanceMeasures | Cosmology],
     dists_attrs: set[str],
     dists_meths: set[str],
 ) -> type[DistanceMeasures]:
@@ -260,7 +294,7 @@ def dists_cls(
     return make_dataclass(
         "ExampleDistanceMeasures",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
-        bases=(),
+        bases=(scalefactor_cls, tcmb_cls, comoving_cls, lookback_cls, proper_cls),
         namespace={n: property(_return_one) for n in dists_attrs - flds}
         | {n: _return_1arg for n in dists_meths},
         frozen=True,
@@ -295,7 +329,7 @@ def standard_meths() -> frozenset[str]:
 
 
 @pytest.fixture(scope="session")
-def standard_cls(  # noqa: PLR0913
+def standard_cls(
     dists_cls: type[DistanceMeasures],
     globalcurvature_cls: type[CurvatureComponent],
     matter_cls: type[MatterComponent],
