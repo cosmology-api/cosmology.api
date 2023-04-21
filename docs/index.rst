@@ -14,7 +14,6 @@ or transfer functions.
 
    install
    quickstart
-   how-to-create
 
 .. toctree::
    :caption: API
@@ -23,6 +22,12 @@ or transfer functions.
    api/typing
    api/protocols
    api/reference
+
+.. toctree::
+   :caption: Dev
+   :hidden:
+
+   dev/index
 
 .. toctree::
    :caption: Other
