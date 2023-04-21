@@ -34,8 +34,8 @@ The :doc:`Cosmology-API <../index>` package provides two run-time checkable
 Protocols that can be used for static and run-time checks that the library and the
 constants module conform to the API. See the protocols for details.
 
-- :class:`~cosmology.api.CosmologyConstantsNamespace`
-- :class:`~cosmology.constants.CosmologyConstantsNamespace`)
+- :class:`~cosmology.api.CosmologyNamespace`
+- :class:`~cosmology.api.CosmologyConstantsNamespace`)
 
 
 Cosmology Classes
