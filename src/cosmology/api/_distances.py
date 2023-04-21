@@ -269,7 +269,7 @@ class HasAge(Protocol[Array, InputT]):
 class HasLookbackTime(Protocol[Array, InputT]):
     """The object has a lookback time method."""
 
-    def lookback_time(self, z: InputT, /) -> Array:
+    def lookback_time(self, z: InputT, zp: InputT | None = None, /) -> Array:
         """Lookback time to redshift ``z`` in Gyr.
 
         The lookback time is the difference between the age of the Universe now
@@ -277,8 +277,9 @@ class HasLookbackTime(Protocol[Array, InputT]):
 
         Parameters
         ----------
-        z : Array
-            Input redshift.
+        z, zp : Array, positional-only
+            Input redshifts. If ``zp`` is `None` (default), then :math:`t_L(0,
+            z)` is returned, otherwise :math:`t_L(z, zp)` is returned.
 
         Returns
         -------
