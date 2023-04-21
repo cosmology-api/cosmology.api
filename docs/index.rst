@@ -13,7 +13,7 @@ or transfer functions.
    :hidden:
 
    install
-   how-to-use
+   quickstart
    how-to-create
 
 .. toctree::

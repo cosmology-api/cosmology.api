@@ -10,8 +10,6 @@ Protocols
    attributes
    namespaces
 
-[Introduction about protocols in the cosmology API.]
-
 The :doc:`reference </api/reference>` provides a flat list of all attributes
 which can potentially be supported by cosmology instances.  Conversely, the
 protocols allow you to specify and inspect which attributes are supported by a
@@ -32,11 +30,3 @@ The cosmology protocols are arranged grouped in levels:
   existence of individual methods and properties.
 * Meta-level :doc:`namespace protocols </api/namespaces>` which describe the
   cosmology API itself.
-
-[Some additional explanation about the hierarchy.]
-
-
-Using protocols
----------------
-
-[Introduction and examples of how these protocols are to be used.]

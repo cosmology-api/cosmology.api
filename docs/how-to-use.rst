@@ -1,3 +1,0 @@
-
-Using cosmology instances
-=========================
