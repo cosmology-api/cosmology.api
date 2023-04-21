@@ -26,7 +26,7 @@ At a lower level of abstraction, a cosmology consists of individual
 
 
 Wrappers
-========
+--------
 
 In order to provide a consistent interface, existing cosmology libraries can be
 wrapped to conform to the :doc:`Cosmology-API <../index>`.  The form of these
