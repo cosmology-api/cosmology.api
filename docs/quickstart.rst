@@ -39,7 +39,7 @@ course, the protocols can also be used in simple functions. However, the
 lower-level protocols allow for a more precise description of what a function
 uses. For example, a function requiring only :math:`H_0` and
 :math:`\Omega_{m,0}` can use the corresponding low-level protocols
-:class:`~cosmology.api.HasH0` and :class:`~cosmology.api.OmegaM0`, instead of
+:class:`~cosmology.api.HasH0` and :class:`~cosmology.api.HasOmegaM0`, instead of
 the all-encompassing :class:`~cosmology.api.StandardCosmology`.
 
 The last level, the "meta" level, is most useful for developers of cosmology
@@ -97,9 +97,9 @@ with the protocols at each of the hierarchy levels:
 
 
 If you have a static type checker handy and use it on the previous examples it
-should be complaining that :class:`~cosmolopy.api.StandardCosmology`,
-:class:`~cosmolopy.api.DarkEnergyComponent`, and
-:class:`~cosmolopy.api.HasOmegaDE0` are missing type hints.
+should be complaining that :class:`~cosmology.api.StandardCosmology`,
+:class:`~cosmology.api.DarkEnergyComponent`, and
+:class:`~cosmology.api.HasOmegaDE0` are missing type hints.
 
 The Cosmology API Protocols are `generic
 <https://peps.python.org/pep-0484/#generics>`_ with respect to the return types
