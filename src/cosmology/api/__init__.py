@@ -31,6 +31,7 @@ from cosmology.api._components import (
 from cosmology.api._constants import CosmologyConstantsNamespace
 from cosmology.api._core import Cosmology
 from cosmology.api._distances import (
+    ComovingDistanceMeasures,
     DistanceMeasures,
     HasAge,
     HasAngularDiameterDistance,
@@ -135,6 +136,7 @@ __all__ = [
     "HasTransverseComovingDistance",
     "HasComovingVolume",
     "HasDifferentialComovingVolume",
+    "ComovingDistanceMeasures",
     # proper
     "HasProperDistance",
     "HasProperTime",
