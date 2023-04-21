@@ -15,10 +15,10 @@ Protocol hierarchy
 .. toctree::
    :hidden:
 
-   cosmology
-   components
-   attributes
-   namespaces
+   api/cosmology
+   api/components
+   api/attributes
+   api/namespaces
 
 The cosmology protocols are grouped in levels:
 
