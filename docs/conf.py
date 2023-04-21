@@ -32,7 +32,7 @@ def read_pyproject():
 
 package_version, package_authors = read_pyproject()
 
-project = "cosmology"
+project = "cosmology.api"
 author = package_authors
 copyright = f"2023, {author}"
 
@@ -100,6 +100,10 @@ intersphinx_mapping = {
 # a list of builtin themes.
 #
 html_theme = "furo"
+
+# The name for this set of Sphinx documents.  If None, it defaults to
+# "<project> v<release> documentation".
+html_title = f"{project} v{release}"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
