@@ -27,7 +27,8 @@ or transfer functions.
    :caption: Dev
    :hidden:
 
-   dev/index
+   dev/wrapping
+   dev/new
 
 .. toctree::
    :caption: Other
