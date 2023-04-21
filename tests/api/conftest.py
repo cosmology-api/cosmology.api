@@ -281,11 +281,6 @@ def dists_meths() -> frozenset[str]:
 @pytest.fixture(scope="session")
 def dists_cls(
     cosmology_cls: type[Cosmology],
-    scalefactor_cls: type[ScaleFactor | Cosmology],
-    tcmb_cls: type[TemperatureCMB | Cosmology],
-    comoving_cls: type[ComovingDistanceMeasures | Cosmology],
-    lookback_cls: type[LookbackDistanceMeasures | Cosmology],
-    proper_cls: type[ProperDistanceMeasures | Cosmology],
     dists_attrs: set[str],
     dists_meths: set[str],
 ) -> type[DistanceMeasures]:
@@ -294,7 +289,7 @@ def dists_cls(
     return make_dataclass(
         "ExampleDistanceMeasures",
         [(n, Array, field(default_factory=_default_one)) for n in flds],
-        bases=(scalefactor_cls, tcmb_cls, comoving_cls, lookback_cls, proper_cls),
+        bases=(),
         namespace={n: property(_return_one) for n in dists_attrs - flds}
         | {n: _return_1arg for n in dists_meths},
         frozen=True,

@@ -50,6 +50,6 @@ def test_compliant_comoving(cosmology_cls):
     assert isinstance(cosmo, ComovingDistanceMeasures)
 
 
-def test_fixture(compoving_cls):
-    """Test that the ``compoving_cls`` fixture is a ``ComovingDistanceMeasures``."""
-    assert isinstance(compoving_cls(), ComovingDistanceMeasures)
+def test_fixture(comoving_cls):
+    """Test that the ``comoving_cls`` fixture is a ``ComovingDistanceMeasures``."""
+    assert isinstance(comoving_cls(), ComovingDistanceMeasures)

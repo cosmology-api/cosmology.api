@@ -37,10 +37,8 @@ def test_compliant_comoving(cosmology_cls):
         [],
         bases=(cosmology_cls,),
         namespace={
-            "comoving_distance": _return_1arg,
-            "transverse_comoving_distance": _return_1arg,
-            "comoving_volume": _return_1arg,
-            "differential_comoving_volume": _return_1arg,
+            "proper_distance": _return_1arg,
+            "proper_time": _return_1arg,
         },
         frozen=True,
     )
