@@ -1,6 +1,6 @@
 
-Using the Cosmology API
-=======================
+Quick Start
+===========
 
 The Cosmology API is a collection of runtime-checkable Protocols that describe
 the whole and parts of the interface of a cosmology object. The Protocols us to
