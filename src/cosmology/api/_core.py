@@ -23,17 +23,7 @@ class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
 
     @property
     def __cosmology_namespace__(self) -> CosmologyNamespace:
-        """Returns an object that has all the cosmology API functions on it.
-
-        Returns
-        -------
-        `cosmology.api.CosmologyNamespace`
-            An object representing the cosmology API namespace. It should have
-            every top-level function defined in the specification as an
-            attribute. It may contain other public names as well, but it is
-            recommended to only include those names that are part of the
-            specification.
-        """
+        """The cosmology namespace for this cosmology object."""
         ...
 
     @property
@@ -46,15 +36,5 @@ class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
 
     @property
     def constants(self) -> CosmologyConstantsNamespace:
-        """Returns an object that has all the cosmology API functions on it.
-
-        Returns
-        -------
-        `cosmology.api.CosmologyConstantsNamespace`
-            An object representing the cosmology constants API namespace. It
-            should have every top-level function defined in the specification as
-            an attribute. It may contain other public names as well, but it is
-            recommended to only include those names that are part of the
-            specification.
-        """
+        """The constants namespace for this cosmology object."""
         return self.__cosmology_namespace__.constants

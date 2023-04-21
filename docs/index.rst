@@ -9,19 +9,26 @@ switch to e.g. a CAMB result instance if you happen to require the power spectra
 or transfer functions.
 
 .. toctree::
-   :caption: Table of Contents
-   :name: toptoc
-   :maxdepth: 2
+   :caption: Usage
    :hidden:
 
-   install.rst
-
+   install
+   how-to-use
+   how-to-create
 
 .. toctree::
-   :name: details
-   :maxdepth: 1
+   :caption: API
+   :hidden:
 
-   typing.rst
+   api/typing
+   api/protocols
+   api/reference
+
+.. toctree::
+   :caption: Other
+   :hidden:
+
+   changelog
 
 
 Contributors

@@ -1,3 +1,5 @@
+# ruff: noqa
+
 """Configuration file for the Sphinx documentation builder.
 
 This file only contains a selection of the most common options. For a full
@@ -6,50 +8,44 @@ list see the documentation:
 """
 
 
-import pathlib
+import os
 import sys
-from importlib import import_module
-from importlib.metadata import version as get_version
-
 import tomli
+
+sys.path.append(os.path.abspath("../src"))
+
 
 # -- Project information -----------------------------------------------------
 
 
-def get_authors() -> set[str]:
-    """Get author information from ``pyproject.toml``s.
-
-    Returns
-    -------
-    set[str]
-        The authors.
-    """
-    authors: set[str] = set()
-    cfg = pathlib.Path(__file__).parent.parent / "pyproject.toml"
-
-    with cfg.open("rb") as f:
+def read_pyproject():
+    """Get author information from package metadata."""
+    with open(os.path.abspath("../pyproject.toml"), "rb") as f:
         toml = tomli.load(f)
 
     project = dict(toml["project"])
-    authors.update({d["name"] for d in project["authors"]})
+    version = project["version"]
+    authors = ", ".join(d["name"] for d in project["authors"])
 
-    return authors
+    return version, authors
 
+
+package_version, package_authors = read_pyproject()
 
 project = "cosmology"
-author = ", ".join(get_authors())
-copyright = f"2002, {author}"  # noqa: A001
+author = package_authors
+copyright = f"2023, {author}"
 
-import_module(project)
-package = sys.modules[project]
 
-# The short X.Y version.
-version = get_version("cosmology-api").split("-", 1)[0]
 # The full version, including alpha/beta/rc tags.
-release = get_version("cosmology-api")
+release = package_version
+# The short X.Y version.
+version = release.partition("-")[0]
 
 
 # -- General configuration ---------------------------------------------------
+
+sys.path.append(os.path.abspath("./_ext"))
 
 # By default, highlight as Python 3.
 highlight_language = "python3"
@@ -60,10 +56,10 @@ highlight_language = "python3"
 extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
-    "sphinx_automodapi.automodapi",
-    "matplotlib.sphinxext.plot_directive",
+    "sphinx.ext.intersphinx",
     "numpydoc",
-    "pytest_doctestplus.sphinx.doctestplus",
+    "sphinx_ext_autosummary_context",
+    "sphinx_ext_cosmology_api",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -73,15 +69,6 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
-
-autosummary_generate = True
-
-automodapi_toctreedirnm = "api"
-
-# Class documentation should contain *both* the class docstring and
-# the __init__ docstring
-autoclass_content = "both"
-
 
 # This is added to the end of RST files - a good place to put substitutions to
 # be used globally.
@@ -96,24 +83,13 @@ intersphinx_mapping = {
         "https://docs.python.org/3/",
         (None, "http://data.astropy.org/intersphinx/python3.inv"),
     ),
-    "pythonloc": (
-        "http://docs.python.org/",
-        (
-            None,
-            (
-                pathlib.Path(__file__).parent.parent
-                / "local"
-                / "python3_local_links.inv"
-            ).resolve(),
-        ),
-    ),
     "numpy": (
         "https://numpy.org/doc/stable/",
         (None, "http://data.astropy.org/intersphinx/numpy.inv"),
     ),
     "scipy": (
         "https://docs.scipy.org/doc/scipy/reference/",
-        (None, "http://data.astropy.org/intersphinx/scipy.inv"),
+        (None, "https://docs.scipy.org/doc/scipy/objects.inv"),
     ),
 }
 
@@ -131,13 +107,49 @@ html_theme = "furo"
 html_static_path = ["_static"]
 
 
-# -- numpydoc extension -----------------------------------------------------
+# -- autodoc extension -------------------------------------------------------
 
-numpydoc_use_plots = True
+# The default options for autodoc directives. They are applied to all autodoc
+# directives automatically. It must be a dictionary which maps option names to
+# the values.
+autodoc_default_options = {
+    "members": False,
+    "inherited-members": False,
+    "show-inheritance": True,
+}
 
-# Don't show summaries of the members in each class along with the
-# class' docstring
+
+add_module_names = False
+
+# autodoc_class_signature = "separated"
+
+autosummary_generate = True
+
+
+# -- numpydoc extension ------------------------------------------------------
+
+# Whether to show all members of a class in the Methods and Attributes sections
+# automatically. True by default.
 numpydoc_show_class_members = True
+
+# Whether to show all inherited members of a class in the Methods and
+# Attributes sections automatically. If it's false, inherited members won't
+# shown. True by default.
+numpydoc_show_inherited_class_members = True
+
+# Whether to create a Sphinx table of contents for the lists of class methods
+# and attributes. If a table of contents is made, Sphinx expects each entry to
+# have a separate page. True by default.
+numpydoc_class_members_toctree = False
+
+# A regular expression matching citations which should be mangled to avoid
+# conflicts due to duplication across the documentation. Defaults to '[\w-]+'.
+# > numpydoc_citation_re = '[\w-]+'
+
+# Whether to format the Attributes section of a class page in the same way as
+# the Parameter section. If it's False, the Attributes section will be
+# formatted as the Methods section using an autosummary table. True by default.
+numpydoc_attributes_as_param_list = False
 
 # Whether to create cross-references for the parameter types in the
 # Parameters, Other Parameters, Returns and Yields sections of the docstring.
@@ -145,8 +157,8 @@ numpydoc_xref_param_type = True
 
 # Words not to cross-reference. Most likely, these are common words used in
 # parameter type descriptions that may be confused for classes of the same
-# name. This can be overwritten or modified in packages and is provided here for
-# convenience.
+# name. This can be overwritten or modified in packages and is provided here
+# for convenience.
 numpydoc_xref_ignore = {
     "or",
     "default",
@@ -154,10 +166,3 @@ numpydoc_xref_ignore = {
     "positional-only",
     "keyword-only",
 }
-
-
-# -- matplotlib extension ----------------------------------------------------
-
-plot_include_source = True
-plot_html_show_source_link = False
-plot_html_show_formats = False

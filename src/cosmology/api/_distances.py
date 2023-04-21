@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Protocol, runtime_checkable
+from typing import Protocol, overload, runtime_checkable
 
 from cosmology.api._array_api import Array
 from cosmology.api._core import InputT
@@ -98,24 +98,32 @@ class ScaleFactor(
 class HasComovingDistance(Protocol[Array, InputT]):
     """The object has a comoving distance method."""
 
-    def comoving_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
-        r"""Comoving line-of-sight distance :math:`d_c(z1, z2)` in Mpc.
+    @overload
+    def comoving_distance(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def comoving_distance(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def comoving_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
+        r"""Comoving line-of-sight distance :math:`d_c` in Mpc.
 
         The comoving distance along the line-of-sight between two objects
         remains constant with time for objects in the Hubble flow.
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the distance
-            :math:`d_c(0, z)` is returned, otherwise the distance :math:`d_c(z,
-            zp)` is returned.
+        z : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the distance
+            :math:`d_c(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the distance :math:`d_c(z_1, z_2)` is returned.
 
         Returns
         -------
         Array
-            The comoving distance :math:`d_c(z1, z2)` in Mpc, where ``(z1, z2)``
-            is (0, `z`) if `zp` is `None` else (`z`, `zp`).
+            The comoving distance :math:`d_c` in Mpc.
         """
         ...
 
@@ -124,10 +132,18 @@ class HasComovingDistance(Protocol[Array, InputT]):
 class HasComovingTransverseDistance(Protocol[Array, InputT]):
     """The object has a comoving transverse distance method."""
 
+    @overload
+    def comoving_transverse_distance(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def comoving_transverse_distance(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
     def comoving_transverse_distance(
-        self, z: InputT, zp: InputT | None = None, /
+        self, z1: InputT, z2: InputT | None = None, /
     ) -> Array:
-        r"""Transverse comoving distance :math:`d_M(z1, z2)` in Mpc.
+        r"""Transverse comoving distance :math:`d_M` in Mpc.
 
         This value is the transverse comoving distance at redshift ``z``
         corresponding to an angular separation of 1 radian. This is the same as
@@ -136,16 +152,16 @@ class HasComovingTransverseDistance(Protocol[Array, InputT]):
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the distance
-            :math:`d_M(0, z)` is returned, otherwise the distance :math:`d_M(z,
-            zp)` is returned.
+        z : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the distance
+            :math:`d_M(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the distance :math:`d_M(z_1, z_2)` is returned.
 
         Returns
         -------
         Array
-            The comoving transverse distance :math:`d_M(z1, z2)` in Mpc, where
-            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
+            The comoving transverse distance :math:`d_M` in Mpc.
         """
         ...
 
@@ -154,8 +170,16 @@ class HasComovingTransverseDistance(Protocol[Array, InputT]):
 class HasComovingVolume(Protocol[Array, InputT]):
     """The object has a comoving volume method."""
 
-    def comoving_volume(self, z: InputT, zp: InputT | None = None, /) -> Array:
-        r"""Comoving volume in cubic Mpc.
+    @overload
+    def comoving_volume(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def comoving_volume(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def comoving_volume(self, z1: InputT, z2: InputT | None = None, /) -> Array:
+        r"""Comoving volume :math:`V_c` in Mpc3.
 
         This is the volume of the universe encompassed by redshifts less than
         ``z``. For the case of :math:`\Omega_k = 0` it is a sphere of radius
@@ -163,16 +187,16 @@ class HasComovingVolume(Protocol[Array, InputT]):
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the
-            volume :math:`V_c(0, z)` is returned, otherwise the
-            volume :math:`V_c(z, zp)` is returned.
+        z : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the volume
+            :math:`V_c(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the volume :math:`V_c(z_1, z_2)` is returned.
 
         Returns
         -------
         Array
-            The comoving volume :math:`V_c(z1, z2)` in Mpc, where
-            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
+            The comoving volume :math:`V_c` in Mpc3.
         """
         ...
 
@@ -181,33 +205,27 @@ class HasComovingVolume(Protocol[Array, InputT]):
 class HasDifferentialComovingVolume(Protocol[Array, InputT]):
     """The object has a differential comoving volume method."""
 
-    def differential_comoving_volume(
-        self, z: InputT, zp: InputT | None = None, /
-    ) -> Array:
-        r"""Differential comoving volume in cubic Mpc per steradian.
+    def differential_comoving_volume(self, z: InputT, /) -> Array:
+        r"""Differential comoving volume in Mpc3 per steradian.
 
         If :math:`V_c` is the comoving volume of a redshift slice with solid
         angle :math:`\Omega`, this function returns
 
         .. math::
 
-            \mathtt{dvc(z)}
-            = \frac{1}{d_H^3} \, \frac{dV_c}{d\Omega \, dz}
-            = \frac{x_M^2(z)}{E(z)}
-            = \frac{\mathtt{xm(z)^2}}{\mathtt{ef(z)}} \;.
+            \mathtt{differential\_comoving\_volume(z)}
+            = \frac{dV_c}{d\Omega \, dz}
+            = \frac{c \, d_M^2(z)}{H(z)} \;.
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the
-            differential volume :math:`dV_c(0, z)` is returned, otherwise the
-            differential volume :math:`dV_c(z, zp)` is returned.
+        z : Array, positional-only
+            Input redshift.
 
         Returns
         -------
         Array
-            The differential comoving volume :math:`dV_c(z1, z2)` in Mpc,
-            where ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
+            The differential comoving volume :math:`dV_c` in Mpc3 sr-1.
         """
         ...
 
@@ -273,10 +291,18 @@ class HasLookbackTime(Protocol[Array, InputT]):
 class HasAngularDiameterDistance(Protocol[Array, InputT]):
     """The object has an angular diameter distance method."""
 
+    @overload
+    def angular_diameter_distance(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def angular_diameter_distance(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
     def angular_diameter_distance(
-        self, z: InputT, zp: InputT | None = None, /
+        self, z1: InputT, z2: InputT | None = None, /
     ) -> Array:
-        """Angular diameter distance :math:`d_A(z)` in Mpc.
+        """Angular diameter distance :math:`d_A` in Mpc.
 
         This gives the proper (sometimes called 'physical') transverse distance
         corresponding to an angle of 1 radian for an object at redshift ``z``
@@ -284,16 +310,16 @@ class HasAngularDiameterDistance(Protocol[Array, InputT]):
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the distance
-            :math:`d_A(0, z)` is returned, otherwise the distance :math:`d_A(z,
-            zp)` is returned.
+        z : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the distance
+            :math:`d_A(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the distance :math:`d_A(z_1, z_2)` is returned.
 
         Returns
         -------
         Array
-            The angular diameter distance :math:`d_A(z1, z2)` in Mpc, where
-            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
+            The angular diameter distance :math:`d_A` in Mpc.
 
         References
         ----------
@@ -308,24 +334,32 @@ class HasAngularDiameterDistance(Protocol[Array, InputT]):
 class HasLuminosityDistance(Protocol[Array, InputT]):
     """The object has a luminosity distance method."""
 
-    def luminosity_distance(self, z: InputT, zp: InputT | None = None, /) -> Array:
-        """Redshift-dependent luminosity distance :math:`d_L(z1, z2)` in Mpc.
+    @overload
+    def luminosity_distance(self, z: InputT, /) -> Array:
+        ...
+
+    @overload
+    def luminosity_distance(self, z1: InputT, z2: InputT, /) -> Array:
+        ...
+
+    def luminosity_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
+        """Redshift-dependent luminosity distance :math:`d_L` in Mpc.
 
         This is the distance to use when converting between the bolometric flux
         from an object at redshift ``z`` and its bolometric luminosity [1]_.
 
         Parameters
         ----------
-        z, zp : Array, positional-only
-            Input redshifts. If ``zp`` is `None` (default), then the
-            distance :math:`d_L(0, z)` is returned, otherwise the
-            distance :math:`d_L(z, zp)` is returned.
+        z : Array, positional-only
+        z1, z2 : Array, positional-only
+            Input redshifts. If one argument ``z`` is given, the distance
+            :math:`d_L(0, z)` is returned. If two arguments ``z1, z2`` are
+            given, the distance :math:`d_L(z_1, z_2)` is returned.
 
         Returns
         -------
         Array
-            The luminosity distance :math:`d_L(z1, z2)` in Mpc, where
-            ``(z1, z2)`` is (0, `z`) if `zp` is `None` else (`z`, `zp`).
+            The luminosity distance :math:`d_L` in Mpc.
 
         References
         ----------
