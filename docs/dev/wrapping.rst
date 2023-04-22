@@ -26,7 +26,7 @@ calculations.  The library looks something like this:
         cosmology_class.py
             - ExampleCosmology
         functions.py
-            - comoving_distance()
+            - comoving_distance_z1z2()
             - hubble_parameter()
             - omega_matter()
             - omega_photon()
@@ -144,16 +144,28 @@ built on the Array API and all outputs must be some conformant array type.
 
         # - ComovingDistanceMeasures -----
 
-        def comoving_distance(self, z: np.ndarray | float) -> np.ndarray:
-            return example_library.comoving_distance(self.cosmo, z)
+        def comoving_distance(
+            self, z1: np.ndarray | float, z2: np.ndarray | float | None = None
+        ) -> np.ndarray:
+            z1, z2 = (z1, z2) if z2 is not None else (0, z1)
+            return example_library.comoving_distance_z1z2(self.cosmo, z1, z2)
 
-        def transverse_comoving_distance(self, z: np.ndarray | float) -> np.ndarray:
+        def transverse_comoving_distance(
+            self, z: np.ndarray | float, z2: np.ndarray | float | None = None
+        ) -> np.ndarray:
+            z1, z2 = (z1, z2) if z2 is not None else (0, z1)
             return ...  # up to you to implement this
 
-        def comoving_volume(self, z: np.ndarray | float) -> np.ndarray:
+        def comoving_volume(
+            self, z: np.ndarray | float, z2: np.ndarray | float | None = None
+        ) -> np.ndarray:
+            z1, z2 = (z1, z2) if z2 is not None else (0, z1)
             return ...  # up to you to implement this
 
-        def differential_comoving_volume(self, z: np.ndarray | float) -> np.ndarray:
+        def differential_comoving_volume(
+            self, z: np.ndarray | float, z2: np.ndarray | float | None = None
+        ) -> np.ndarray:
+            z1, z2 = (z1, z2) if z2 is not None else (0, z1)
             return ...  # up to you to implement this
 
 
