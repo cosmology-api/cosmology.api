@@ -18,7 +18,7 @@ jobs:
       upload_to_pypi: false
       upload_to_anaconda: false
       test_extras: test
-      test_command: pytest -p no:warnings
+      test_command: pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
 
   build_and_publish:
     needs: test_wheel_building
@@ -32,7 +32,7 @@ jobs:
       anaconda_package: cosmology.api
 
       test_extras: test
-      test_command: pytest -p no:warnings
+      test_command: pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
 
     secrets:
       pypi_token: ${{ secrets.pypi_token }}

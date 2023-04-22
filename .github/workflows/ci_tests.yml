@@ -40,6 +40,7 @@ jobs:
 
   tests:
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    needs: initial_checks
     with:
       envs: |
         - linux: py311-test-cov
@@ -56,11 +57,12 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   wheels_tests:
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
+    needs: initial_checks
     permissions:
       contents: none
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
     with:
       upload_to_pypi: false
       upload_to_anaconda: false
       test_extras: test
-      test_command: pytest -p no:warnings
+      test_command: pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
