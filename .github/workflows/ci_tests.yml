@@ -54,3 +54,15 @@ jobs:
       fail-fast: true
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  wheels_tests:
+    permissions:
+      contents: none
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish.yml@v1
+    with:
+      upload_to_pypi: false
+      upload_to_anaconda: false
+      test_extras: test
+      test_command: pytest -p no:warnings
+      targets: |
+        - cp39-manylinux_x86_64
