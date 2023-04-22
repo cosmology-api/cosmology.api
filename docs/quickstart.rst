@@ -1,9 +1,8 @@
-
 Quick Start
 ===========
 
 The Cosmology API is a collection of runtime-checkable Protocols that describe
-the whole and parts of the interface of a cosmology object. The Protocols us to
+the parts of the interface of a cosmology object. The Protocols can be used to
 describe and build functions that work with any compatible cosmology library
 (and any Array libraries that cosmology library might support), without even
 having the cosmology library as a hard dependency.
@@ -11,14 +10,6 @@ having the cosmology library as a hard dependency.
 
 Protocol hierarchy
 ------------------
-
-.. toctree::
-   :hidden:
-
-   api/cosmology
-   api/components
-   api/attributes
-   api/namespaces
 
 The cosmology protocols are grouped in levels:
 
