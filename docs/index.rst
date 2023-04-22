@@ -2,7 +2,7 @@
 The Cosmology API for Python
 ############################
 
-The ``cosmology.api`` package aims to provide a standard interface describing
+The ``cosmology.api`` package provides a standard interface describing
 all the pieces and the whole of a cosmology instance. This is done by defining a
 collection of Protocols, which are a way to describe the interface of an object
 / class without actually implementing it. This means you can write code that

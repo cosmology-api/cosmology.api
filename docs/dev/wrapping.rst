@@ -2,17 +2,26 @@
 Wrapping an Existing Library
 ============================
 
-If you have an existing library that you would like to wrap, the Cosmology API
-is designed to be as simple as possible.  Essentially, you need to create an
+Many cosmology libraries already exist, such as ``astropy.cosmology``,
+``CLASS``, and ``CAMB``, and all have different inerfaces that are not
+compatible with each other.  The Cosmology API is designed to be a common
+interface and we can easily wrap existing codes to make them compatible with the
+Cosmology API.  Many of the common cosmology libraries are already wrapped and
+available in the `cosmology.compat
+<https://github.com/cosmology-api/cosmology-compat>`_ module.
+
+
+If there is an unsopported library that you would like to wrap, the Cosmology
+API is designed to be as simple as possible.  Essentially, you need to create an
 object that implements the :class:`cosmology.api.CosmologyWrapper` interface, as
 well any other pieces (e.g. :class:`cosmology.api.DistanceMeasures`) that you
-want to support and map the methods to the appropriate functions on your
-cosmology object / in your library.
+want to support and map the methods to the appropriate functions on the
+cosmology object / in the library.
 
 Let's work through an example.  Suppose you have a library that provides a
 :class:`Cosmology` class that only has the cosmological parameters and the rest
-of the cosmological calculations are done by functions in the library. The library
-also has some constants, such as the speed of light, that are used in the
+of the cosmological calculations are done by functions in the library. The
+library also has some constants, such as the speed of light, that are used in
 calculations.  The library looks something like this:
 
 .. code-block::
@@ -47,9 +56,10 @@ The cosmology class looks something like this:
         Ode0: float
 
 
-Now let's wrap this library.  First, we need to create a wrapping of the library
-so that it implements the :class:`cosmology.api.CosmologyNamespace` interface.
-
+Now let's wrap this library.  First, we need to create a wrapping of the
+top-level namespace so that it implements the
+:class:`cosmology.api.CosmologyNamespace` interface. This will also require
+creating a namespace for the constants.
 
 .. code-block:: python
 
@@ -63,8 +73,9 @@ so that it implements the :class:`cosmology.api.CosmologyNamespace` interface.
 
 
 Next we need to create a wrapper class that implements the
-:class:`cosmology.api.CosmologyWrapper` interface. Note that we do not need to
-subclass anything, we just need to implement the methods.
+:class:`~cosmology.api.CosmologyWrapper` interface. Note that by the magic of
+protocols we do not need to subclass anything to be considered a subclass of
+:class:`~cosmology.api.CosmologyWrapper`, we just need to implement the methods.
 
 .. code-block:: python
 
@@ -84,8 +95,6 @@ subclass anything, we just need to implement the methods.
         def constants(self):
             return self.__cosmology_namespace__.constants
 
-        ...
-
 
 To this base wrapper, we can add any other pieces that we want to support, such
 as :class:`~cosmology.api.HubbleParameter`,
@@ -93,7 +102,9 @@ as :class:`~cosmology.api.HubbleParameter`,
 :class:`~cosmology.api.PhotonComponent`,
 :class:`~cosmology.api.DarkEnergyComponent`,
 :class:`~cosmology.api.ComovingDistanceMeasures`. Note that the Cosmology API is
-built on the Array API and all outputs must be some conformant array type.
+built on the Array API and all outputs must be some conformant array type. A
+common choice is :class:`numpy.ndarray`, but any array type that implements the
+Array API will work.
 
 .. code-block:: python
 
@@ -170,14 +181,24 @@ built on the Array API and all outputs must be some conformant array type.
 
 
 Great! Now we have a wrapper that implements the base Cosmology API and supports
-a number of additional components -- all the ones that are directly releated to the contents of ``example_library``.
+a number of additional components -- all the ones that are directly releated to
+the contents of ``example_library``.
 
 Does this implement the full :class:`~cosmology.api.StandardCosmology`
-interface?  No! But this class can still be used anywhere that only requires the
-:class:`~cosmology.api.HubbleParameter`,
+interface?  No! But instances of this class can be used anywhere that only
+requires the :class:`~cosmology.api.HubbleParameter`,
 :class:`~cosmology.api.MatterComponent`,
 :class:`~cosmology.api.PhotonComponent`,
 :class:`~cosmology.api.DarkEnergyComponent`, or
 :class:`~cosmology.api.ComovingDistanceMeasures` methods. If functions are well
 written to only require the cosmology attributes and methods that they need,
 then this wrapper can be used in those functions.
+
+.. code-block:: python
+
+    def littleh_too_broad(cosmo: StandardCosmology):  # Not guaranteed to work!
+        return cosmo.H0 / 100
+
+
+    def littleh(cosmo: HasH0):  # Guaranteed to work!
+        return cosmo.H0 / 100
