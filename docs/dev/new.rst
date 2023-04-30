@@ -30,7 +30,7 @@ library must have a top-level module called "constants".
         constants.py
 
 
-The :doc:`Cosmology-API <../index>` package provides two run-time checkable
+The :doc:`Cosmology API <../index>` package provides two run-time checkable
 Protocols that can be used for static and run-time checks that the library and the
 constants module conform to the API. See the protocols for details.
 
@@ -43,7 +43,7 @@ Cosmology Classes
 
 The second part to a conformant library is to have a cosmology class that
 conforms to the Cosmology API. This is a bit more involved, but not too bad. The
-:doc:`Cosmology-API <../index>` package provides many protocols for the various
+:doc:`Cosmology API <../index>` package provides many protocols for the various
 methods and attributes of the Cosmology API. These protocols can be used as
 abstract base classes, or only as reference, or both. By the magic of protocols,
 inheritance from the protocols is not required for the cosmology class and its

@@ -29,10 +29,10 @@ Wrappers
 --------
 
 In order to provide a consistent interface, existing cosmology libraries can be
-wrapped to conform to the :doc:`Cosmology-API <../index>`.  The form of these
+wrapped to conform to the :doc:`Cosmology API <../index>`.  The form of these
 wrappers is specified here.
 
-Details of using these wrappers is upcoming. You can see the development of the Astropy and CAMB wrappers in the ``cosmology-api`` github repo.
+Details of using these wrappers is upcoming. You can see the development of the Astropy and CAMB wrappers in the ``cosmology.api`` GitHub repo.
 
 For details of how to write your own wrapper, see the :doc:`developer documentation <../dev/wrapping>`.
 

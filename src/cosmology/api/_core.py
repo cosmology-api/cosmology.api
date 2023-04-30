@@ -33,7 +33,7 @@ class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
         This is a human-friendly label for the cosmology instance. It is
         optional, and may be `None`. If set, it should be a string. The name is
         useful for identifying the cosmology instance, for example logging the
-        name in an analysis pipeline, presenting helpful errors messages, and
+        name in an analysis pipeline, presenting helpful error messages, and
         for plotting.
 
         Examples

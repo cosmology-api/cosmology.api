@@ -37,7 +37,7 @@ your code!
    api/reference
 
 .. toctree::
-   :caption: Dev
+   :caption: Developers
    :hidden:
 
    dev/wrapping
