@@ -42,7 +42,7 @@ your code!
 
    dev/wrapping
    dev/new
-   dev/typing
+   dev/types
 
 .. toctree::
    :caption: Other

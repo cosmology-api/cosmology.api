@@ -1,6 +1,6 @@
 
-Typing
-======
+Types
+=====
 
 Support for ``float`` input
 ---------------------------
