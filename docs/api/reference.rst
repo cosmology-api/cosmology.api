@@ -35,15 +35,18 @@ Reference
    ~cosmo.age
    ~cosmo.angular_diameter_distance
    ~cosmo.comoving_distance
-   ~cosmo.comoving_transverse_distance
    ~cosmo.comoving_volume
    ~cosmo.critical_density
    ~cosmo.critical_density0
    ~cosmo.differential_comoving_volume
    ~cosmo.hubble_distance
    ~cosmo.hubble_time
+   ~cosmo.lookback_distance
    ~cosmo.lookback_time
    ~cosmo.luminosity_distance
    ~cosmo.m_nu
+   ~cosmo.proper_distance
+   ~cosmo.proper_time
    ~cosmo.scale_factor
    ~cosmo.scale_factor0
+   ~cosmo.transverse_comoving_distance

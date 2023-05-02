@@ -15,7 +15,6 @@ At a higher level of abstraction, groups of related attributes form
 .. autoclass:: HasAngularDiameterDistance()
 
 .. autoclass:: HasComovingDistance()
-.. autoclass:: HasComovingTransverseDistance()
 .. autoclass:: HasComovingVolume()
 
 .. autoclass:: HasCriticalDensity()
@@ -29,6 +28,7 @@ At a higher level of abstraction, groups of related attributes form
 .. autoclass:: HasHubbleDistance()
 .. autoclass:: HasHubbleTime()
 
+.. autoclass:: HasLookbackDistance()
 .. autoclass:: HasLookbackTime()
 
 .. autoclass:: HasLuminosityDistance()
@@ -57,8 +57,12 @@ At a higher level of abstraction, groups of related attributes form
 .. autoclass:: HasOmegaTot()
 .. autoclass:: HasOmegaTot0()
 
+.. autoclass:: HasProperDistance()
+.. autoclass:: HasProperTime()
+
 .. autoclass:: HasScaleFactor()
 .. autoclass:: HasScaleFactor0()
 
 .. autoclass:: HasTCMB()
 .. autoclass:: HasTCMB0()
+.. autoclass:: HasTransverseComovingDistance()

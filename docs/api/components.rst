@@ -36,4 +36,8 @@ Distance Measures
 .. autoclass:: HubbleParameter()
 .. autoclass:: ScaleFactor()
 .. autoclass:: TemperatureCMB()
+.. autoclass:: LookbackDistances()
+.. autoclass:: ComovingDistances()
+.. autoclass:: ProperDistances()
+
 .. autoclass:: DistanceMeasures()
