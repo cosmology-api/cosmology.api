@@ -15,6 +15,9 @@ At a higher level of abstraction, the sum of components makes a :doc:`cosmology
 At a lower level of abstraction, a component consists of individual
 :doc:`attributes </api/attributes>`.
 
+Physical Components
+-------------------
+
 .. autoclass:: NeutrinoComponent()
 .. autoclass:: BaryonComponent()
 .. autoclass:: PhotonComponent()
@@ -23,8 +26,14 @@ At a lower level of abstraction, a component consists of individual
 .. autoclass:: DarkEnergyComponent()
 .. autoclass:: CurvatureComponent()
 .. autoclass:: TotalComponent()
-.. autoclass:: HubbleParameter()
+
 .. autoclass:: CriticalDensity()
-.. autoclass:: DistanceMeasures()
+
+
+Distance Measures
+-----------------
+
+.. autoclass:: HubbleParameter()
 .. autoclass:: ScaleFactor()
 .. autoclass:: TemperatureCMB()
+.. autoclass:: DistanceMeasures()

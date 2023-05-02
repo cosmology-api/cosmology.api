@@ -28,7 +28,21 @@ class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
 
     @property
     def name(self) -> str | None:
-        """The name of the cosmology instance."""
+        """The name of the cosmology instance.
+
+        This is a human-friendly label for the cosmology instance. It is
+        optional, and may be `None`. If set, it should be a string. The name is
+        useful for identifying the cosmology instance, for example logging the
+        name in an analysis pipeline, presenting helpful error messages, and
+        for plotting.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            cosmo = CosmologyClass(..., name="Planck18")
+            cosmo.name
+        """
         ...
 
     # ========================================================================
