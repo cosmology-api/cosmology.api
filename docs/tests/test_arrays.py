@@ -65,6 +65,7 @@ def get_array_from_library(name: ArrayLibraries) -> tuple[str, object]:  # noqa:
         import xarray as xr
 
         return xr.__version__, xr.DataArray([1.0, 2.0, 3.0])
+    return None
 
 
 if __name__ == "__main__":
