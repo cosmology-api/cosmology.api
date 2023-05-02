@@ -27,7 +27,7 @@ jobs:
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
     with:
       upload_to_pypi: refs/tags/v
-      upload_to_anaconda: true
+      upload_to_anaconda: false  # TODO!
       anaconda_user: cosmology
       anaconda_package: cosmology.api
 
