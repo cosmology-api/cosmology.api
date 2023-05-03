@@ -159,9 +159,9 @@ Or
     foo: 1.0
 
 
-Note again that neither ``NamedValueClass1`` nor ``NamedValueClass2`` inherit from
-``NamedValue``. This is the power of structural subtyping with
-:class:``typing.Protocol`.
+Note again that neither ``NamedValueClass1`` nor ``NamedValueClass2`` inherit
+from ``NamedValue``. This is the power of structural subtyping with
+:class:`typing.Protocol`.
 
 Returning to our ``add`` function, we can now use a :class:`~typing.Protocol` to
 describe any of the Array libraries.
