@@ -7,6 +7,9 @@ describe and build functions that work with any compatible cosmology library
 (and any Array libraries that cosmology library might support), without even
 having the cosmology library as a hard dependency.
 
+If you didn't understand the previous paragraph, don't worry, we have a
+:doc:`doc introducing Python's typing and Protocols </api/typing>`.
+
 
 Protocol hierarchy
 ------------------
