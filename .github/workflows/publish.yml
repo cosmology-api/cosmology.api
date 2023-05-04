@@ -1,38 +1,28 @@
 name: Build and Publish
 
 on:
-  push:
-    tags:
-    - '*'
+  release:
+    types:
+      - published
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  test_wheel_building:
+  build_and_publish:
     permissions:
       contents: none
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
     with:
-      upload_to_pypi: false
-      upload_to_anaconda: false
       test_extras: test
       test_command: pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
 
-  build_and_publish:
-    needs: test_wheel_building
-    permissions:
-      contents: none
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
-    with:
       upload_to_pypi: refs/tags/v
+
       upload_to_anaconda: false  # TODO!
       anaconda_user: cosmology
       anaconda_package: cosmology.api
-
-      test_extras: test
-      test_command: pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
 
     secrets:
       pypi_token: ${{ secrets.pypi_token }}
