@@ -6,7 +6,8 @@
 # https://github.com/actions/labeler
 
 name: PR Labeler
-on: [pull_request]
+on:
+- pull_request_target
 
 jobs:
   label:
@@ -17,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/labeler@v2
+    - uses: actions/labeler@v4
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        sync-labels: true
