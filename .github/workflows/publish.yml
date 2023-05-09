@@ -1,0 +1,29 @@
+name: Build and Publish
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build_and_publish:
+    permissions:
+      contents: none
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
+    with:
+      test_extras: test
+      test_command: pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
+
+      upload_to_pypi: refs/tags/v
+
+      upload_to_anaconda: false  # TODO!
+      anaconda_user: cosmology
+      anaconda_package: cosmology.api
+
+    secrets:
+      pypi_token: ${{ secrets.pypi_token }}
+      anaconda_token: ${{ secrets.anaconda_token }}
