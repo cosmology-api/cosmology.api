@@ -16,7 +16,7 @@ for cosmology codes, from individual methods and functions up to fully-featured
 cosmology objects, even whole libraries. Best of all, using the Cosmology API
 does not require any run-time dependencies, even this library!
 
-With the Cosmology API you can **write code that works with any object that
+With the Cosmology API you can **write code that works with anything that
 implements the API**, i.e many different cosmology libraries. We provide the
 easy-to-use, well-defined descriptions, you can build functions that work with
 any supporting library. For example
