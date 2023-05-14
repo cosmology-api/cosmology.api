@@ -1,9 +1,10 @@
 
-Typing
-======
+Typing Introduction
+===================
 
-An Introduction to Typing
--------------------------
+
+An Introduction to Type Annotations
+-----------------------------------
 
 Since Python 3.5, the Python standard library has included the :mod:`typing`
 module for annotating function and method arguments and return values with type
@@ -22,7 +23,8 @@ and the return value is annotated as :class:`float`. This tells the static type
 checker that the function expects two :class:`float` arguments and returns a
 :class:`float` value. The static type checker can then check that the function
 is called with the correct types of arguments and that the return value is used
-correctly.
+correctly. It is important to note that the type annotations are not enforced
+at runtime.
 
 Typing in Python also supports generic types, where the types of the arguments
 and return value is contextual, and can be different for different calls to the
@@ -31,7 +33,7 @@ function. For example, instead of taking two :class:`float` arguments, the
 value of that type.
 
     >>> from typing import TypeVar  # How we express generic type variable
-
+    ...
     >>> T = TypeVar("T")  # Declare a generic type variable
 
     >>> def add(x: T, y: T) -> T:  # two arguments of the same type -> same return type
@@ -39,10 +41,10 @@ value of that type.
 
     >>> add(1, 2)  # int + int -> int
     3
-
+    ...
     >>> add(1.0, 2.0)  # float + float -> float
     3.0
-
+    ...
     >>> add("foo", "bar")  # str + str -> str
     'foobar'
 
@@ -58,7 +60,7 @@ variable ``T`` to numerical types.
 
     >>> from typing import TypeVar
     >>> from numbers import Number
-
+    ...
     >>> T = TypeVar("T", bound=Number)
 
     >>> def add(x: T, y: T) -> T:
@@ -74,7 +76,7 @@ allow either :class:`~numbers.Number` or :class:`~numpy.ndarray` as arguments.
     >>> from typing import TypeVar, Union
     >>> from numbers import Number
     >>> import numpy as np
-
+    ...
     >>> T = TypeVar("T", bound=Union[Number, np.ndarray])
 
     >>> def add(x: T, y: T) -> T:
@@ -82,10 +84,10 @@ allow either :class:`~numbers.Number` or :class:`~numpy.ndarray` as arguments.
 
     >>> add(1, 2)
     3
-
+    ...
     >>> add(1.0, 2.0)
     3.0
-
+    ...
     >>> add(np.array([1, 2]), np.array([3, 4]))
     array([4, 6])
 
@@ -93,21 +95,21 @@ allow either :class:`~numbers.Number` or :class:`~numpy.ndarray` as arguments.
 Now numpy is great, but what about a Dask array or a Jax array? They are not a
 subclass of :class:`~numbers.Number` or :class:`~numpy.ndarray`, but they
 support addition. We could just add them to the :class:`~typing.Union` type, but
-that would be tedious and wouldn't help. with Cupy or Pytorch, etc. Instead of
-listing all the types that support addition, we can instead use the tools in
+that would be tedious and wouldn't help with Cupy or Pytorch, etc. Instead of
+listing *each* types that we want to support, we can instead use the tools in
 :mod:`typing` to build a generic type that describes *all* of the types that we
-want to support. This is called duck-typing or structural subtyping and is
+want to support. This is called duck-typing (or structural subtyping) and is
 implemented in Python using :class:`typing.Protocol`.
 
 
 An Introduction to Protocols
 ----------------------------
 
-Since [PEP 544](https://peps.python.org/pep-0544/) was implemented in Python
+Since `PEP 544 <https://peps.python.org/pep-0544/>`_ was implemented in Python
 3.8, Python can now separate the description of an API from its implementation.
 This is done using the :class:`typing.Protocol` class. Protocols are essentially
 abstract base classes that don't require inheritance. Instead, they are used to
-describe the interface of a class. Any class that implements the interface is
+describe the interface of an object. Any object that implements the interface is
 considered a subclass of the Protocol and the class' instances are likewise
 instances of the Protocol. This is called "structural subtyping" or "duck
 typing".
@@ -116,10 +118,10 @@ As an example, consider the following Protocol that describes the interface of
 an object that has a name and a value.
 
     >>> from typing import Protocol
-
+    ...
     >>> class NamedValue(Protocol):
     ...     """API for Quantity."""
-
+    ...
     ...     value: float
     ...     name: str
 
@@ -138,23 +140,23 @@ can be used as an argument to ``print_value``.
     ...     def __init__(self, name: str, value: float):
     ...         self.name = name
     ...         self.value = value
-
+    ...
     >>> v = NamedValueClass1("foo", 1.0)
-
+    ...
     >>> isinstance(v, NamedValue)
     True
-
+    ...
     >>> print_value(NamedValueClass1("foo", 1.0))
     foo: 1.0
 
 Or
 
     >>> from typing import NamedTuple
-
+    ...
     >>> class NamedValueClass2(NamedTuple):
     ...     name: str
     ...     value: float
-
+    ...
     >>> print_value(NamedValueClass2("foo", 1.0))
     foo: 1.0
 
@@ -187,7 +189,7 @@ Applying this to our ``add`` function, we get the following.
     >>> from typing import TypeVar, Union, Protocol
     >>> from numbers import Number
     >>> import numpy as np
-
+    ...
     >>> T = TypeVar("T", bound=Union[Number, Array])
 
     >>> def add(x: T, y: T) -> T:
@@ -195,29 +197,30 @@ Applying this to our ``add`` function, we get the following.
 
     >>> add(1.0, 2.0)
     3.0
-
+    ...
     >>> add(np.array([1, 2]), np.array([3, 4]))
     array([4, 6])
 
 
 The ``add`` function now works with any numerical type or any array type that
 looks like ``Array``, like :class:`numpy.ndarray`, :class:`dask.array.Array`,
-:class:`jax.Array`, etc. Rather than building this ``Array`` Protocol ourselves,
-the :mod:`cosmology.api` project is built on the `Array API project
-<https://data-apis.org/array-api/latest/>`_.
-
-.. we should explain this more.
-
-In this project you will see the ``Array`` Protocol used throughout the API. Also,
-there is a generic type variable ``InputT`` that is used to describe the type of
-the input to a function. This is a :class:`~typing.TypeVar`. Due to the
-limitations of Python, this is an unconstrained :class:`~typing.TypeVar` but it
-is intended to be constrained to ``Array`` + other, e.g. :class:`float`. In
-future, ``InputT`` will be constrained.
+:class:`jax.Array`, etc.
 
 
+In this Project
+---------------
 
+This API is built on the ``Array`` interface of the `Array API project
+<https://data-apis.org/array-api/latest/>`_. The ``Array`` interface is not
+(yet) a :class:`~typing.Protocol`, so this project privately defines a
+:class:`~typing.Protocol` for ``Array``. We note that our version is a subset of
+the ``Array`` interface defined by the Array API project. This is because the
+Array API project is new and standard :class:`numpy.ndarray` is not yet fully
+compatible, though :mod:`numpy` plans full support.
 
-If you do not require static or dynamic type checking of cosmology instances,
-the :doc:`reference </api/reference>` provides a flat list of all methods and
-properties that a cosmology instance can support.
+In this project you will see the ``Array`` Protocol used throughout the API.
+Also, there is a generic type variable ``InputT`` that is used to describe the
+type of the input to a function. This is a :class:`~typing.TypeVar`. Due to the
+cuurent limitations of Python, this is an unconstrained :class:`~typing.TypeVar`
+but it is intended to be constrained to ``Array`` + other, e.g. :class:`float`.
+In future, ``InputT`` will be constrained.

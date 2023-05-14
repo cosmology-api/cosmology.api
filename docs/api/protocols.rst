@@ -10,10 +10,11 @@ Protocols
    attributes
    namespaces
 
-The :doc:`reference </api/reference>` provides a flat list of all attributes
-which can potentially be supported by cosmology instances.  Conversely, the
-protocols allow you to specify and inspect which attributes are supported by a
-given cosmology object.
+These protocols allow you to specify and inspect which attributes are
+supported by a given cosmology object.
+If you do not require static or dynamic type checking of cosmology instances,
+the :doc:`reference </api/reference>` provides a flat list of all methods and
+attributes which can potentially be supported by cosmology instances.
 
 
 Protocol hierarchy

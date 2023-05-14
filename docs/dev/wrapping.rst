@@ -59,7 +59,8 @@ The cosmology class looks something like this:
 Now let's wrap this library.  First, we need to create a wrapping of the
 top-level namespace so that it implements the
 :class:`cosmology.api.CosmologyNamespace` interface. This will also require
-creating a namespace for the constants.
+creating a namespace for the constants. We don't recommend building dynamic
+libraries and modules and do it here only for demonstration purposes.
 
 .. code-block:: python
 

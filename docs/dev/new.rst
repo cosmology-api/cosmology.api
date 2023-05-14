@@ -52,18 +52,18 @@ instances to be considered subclasses and instances of the protocol!
 As an example, let's look at the base :class:`~cosmology.api.Cosmology` protocol.
 
     >>> from dataclasses import dataclass
-
+    ...
     >>> @dataclass
     >>> class MyCosmology:  # NOT a subclass of Cosmology!
     ...     name: str | None
     ...
     ...     @property
     ...     def __cosmology_namespace__(self):
-    ...         return None  # Technically incorrect, see above warning.
+    ...         return None  # Technically incorrect, see `isinstance` warning.
     ...
     ...    @property
     ...    def constants(self):
-    ...        return None  # Technically incorrect, see above warning.
+    ...        return None  # Technically incorrect, see `isinstance` warning.
 
     >>> from cosmology.api import Cosmology
     >>> isinstance(MyCosmology, Cosmology)
@@ -81,8 +81,8 @@ for users, the cosmology class should also have a ``constants`` attribute, which
 is a :class:`~cosmology.api.CosmologyConstantsNamespace`, which allows users to
 see the constants used by the cosmology. Normally the ``constants`` attribute
 just returns ``self.__cosmology_namespace__.constants``, but this is not a
-strict requirement, allowing for more flexibility in the implementation such as
-implementing different constants.
+strict requirement, allowing for more flexibility, such as implementing
+different constants.
 
 The following example shows more correct outputs to the
 ``__cosmology_namespace__`` and ``constants`` attributes. We don't recommend
@@ -90,11 +90,10 @@ building dynamic libraries and modules and do it here only for demonstration
 purposes.
 
     >>> from typing import SimpleNamespace
-    >>> from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
-
+    ...
     >>> constants = SimpleNamespace(G=1, c=2)
     >>> library = SimpleNamespace(constants=constants)
-
+    ...
     >>> @dataclass
     >>> class MyCosmology:  # NOT a subclass of Cosmology!
     ...     name: str | None
@@ -107,6 +106,7 @@ purposes.
     ...    def constants(self) -> CosmologyConstantsNamespace:
     ...        return self.__cosmology_namespace__.constants
 
+    >>> from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
     >>> isinstance(MyCosmology.__cosmology_namespace__, CosmologyNamespace)
     True
     >>> isinstance(MyCosmology.constants, CosmologyConstantsNamespace)

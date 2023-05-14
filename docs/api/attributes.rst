@@ -33,6 +33,9 @@ At a higher level of abstraction, groups of related attributes form
 
 .. autoclass:: HasLuminosityDistance()
 
+.. autoclass:: HasMNu()
+.. autoclass:: HasNeff()
+
 .. autoclass:: HasOmegaB()
 .. autoclass:: HasOmegaB0()
 
