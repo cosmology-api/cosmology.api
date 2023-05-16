@@ -109,76 +109,73 @@ Array API will work.
 
 .. code-block:: python
 
+    Array: TypeAlias = np.ndarray[Any, np.floating[Any]]
+    InputT: TypeAlias = Array | float
+
+
     class ExampleLibraryWrapper(BaseExampleLibraryWrapper):
         # - HubbleParameter -----
 
         @property
-        def H0(self) -> ndarray:
+        def H0(self) -> Array:
             return np.array(self.cosmo.H0)
 
-        def H(self, z: np.ndarray | float) -> np.ndarray:
+        def H(self, z: InputT) -> Array:
             return example_library.hubble_parameter(self.cosmo, z)
 
         @property
-        def hubble_distance(self) -> np.ndarray:
+        def hubble_distance(self) -> Array:
             return np.array(self.constants.c / self.H0 * converstion_to_Mpc)
 
         @property
-        def hubble_time(self) -> np.ndarray:
+        def hubble_time(self) -> Array:
             return np.array(1 / self.H0 * converstion_to_Gyr)
 
         # - MatterComponent -----
 
         @property
-        def Omega_m0(self) -> np.ndarray:
+        def Omega_m0(self) -> Array:
             return np.array(self.cosmo.Om0)
 
-        def Omega_m(self, z: np.ndarray | float) -> np.ndarray:
+        def Omega_m(self, z: InputT) -> Array:
             return example_library.omega_matter(self.cosmo, z)
 
         # - PhotonComponent -----
 
         @property
-        def Omega_gamma0(self) -> np.ndarray:
+        def Omega_gamma0(self) -> Array:
             return np.array(self.cosmo.Ogamma0)
 
-        def Omega_gamma(self, z: np.ndarray | float) -> np.ndarray:
+        def Omega_gamma(self, z: InputT) -> Array:
             return example_library.omega_photon(self.cosmo, z)
 
         # - DarkEnergyComponent -----
 
         @property
-        def Omega_de0(self) -> np.ndarray:
+        def Omega_de0(self) -> Array:
             return np.array(self.cosmo.Ode0)
 
-        def Omega_de(self, z: np.ndarray | float) -> np.ndarray:
+        def Omega_de(self, z: InputT) -> Array:
             return example_library.omega_lambda(self.cosmo, z)
 
         # - ComovingDistanceMeasures -----
 
-        def comoving_distance(
-            self, z1: np.ndarray | float, z2: np.ndarray | float | None = None
-        ) -> np.ndarray:
+        def comoving_distance(self, z1: InputT, z2: InputT | None = None) -> Array:
             z1, z2 = (z1, z2) if z2 is not None else (0, z1)
             return example_library.comoving_distance_z1z2(self.cosmo, z1, z2)
 
         def transverse_comoving_distance(
-            self, z: np.ndarray | float, z2: np.ndarray | float | None = None
-        ) -> np.ndarray:
-            z1, z2 = (z1, z2) if z2 is not None else (0, z1)
-            return ...  # up to you to implement this
+            self, z1: InputT, z2: InputT | None = None
+        ) -> Array:
+            ...  # up to you to implement this
 
-        def comoving_volume(
-            self, z: np.ndarray | float, z2: np.ndarray | float | None = None
-        ) -> np.ndarray:
-            z1, z2 = (z1, z2) if z2 is not None else (0, z1)
-            return ...  # up to you to implement this
+        def comoving_volume(self, z1: InputT, z2: InputT | None = None) -> Array:
+            ...  # up to you to implement this
 
         def differential_comoving_volume(
-            self, z: np.ndarray | float, z2: np.ndarray | float | None = None
-        ) -> np.ndarray:
-            z1, z2 = (z1, z2) if z2 is not None else (0, z1)
-            return ...  # up to you to implement this
+            self, z1: InputT, z2: InputT | None = None
+        ) -> Array:
+            ...  # up to you to implement this
 
 
 Great! Now we have a wrapper that implements the base Cosmology API and supports
