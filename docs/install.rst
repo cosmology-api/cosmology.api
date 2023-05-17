@@ -4,6 +4,23 @@
 Installation
 ************
 
+With ``pip`` (recommended)
+==========================
+
+To install the latest stable version using ``pip``, use
+
+.. code-block:: bash
+
+    python -m pip install cosmology.api
+
+
+To install the latest development version, use:
+
+.. code-block:: bash
+
+    python -m pip install git+https://github.com/cosmology-api/cosmology.api
+
+
 
 From Source: Cloning, Building, Installing
 ==========================================
