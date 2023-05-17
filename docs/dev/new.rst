@@ -51,6 +51,11 @@ instances to be considered subclasses and instances of the protocol!
 
 As an example, let's look at the base :class:`~cosmology.api.Cosmology` protocol.
 
+.. invisible-code-block: python
+
+    import sys
+
+.. skip: next if(sys.version_info < (3, 10), reason="py3.10+")
 .. code-block:: python
 
     from dataclasses import dataclass
@@ -132,6 +137,7 @@ The following example shows more correct outputs to the
             return self.__cosmology_namespace__.constants
 
 
+.. skip: next if(sys.version_info < (3, 10), reason="py3.10+")
 .. invisible-code-block: python
 
     from types import SimpleNamespace

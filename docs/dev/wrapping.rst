@@ -85,7 +85,7 @@ Next we need to create a wrapper class that implements the
 protocols we do not need to subclass anything to be considered a subclass of
 :class:`~cosmology.api.CosmologyWrapper`, we just need to implement the methods.
 
-.. skip: next
+.. skip: next next if(sys.version_info < (3, 10), reason="py310+")
 .. code-block:: python
 
     import wrapper
@@ -108,6 +108,7 @@ protocols we do not need to subclass anything to be considered a subclass of
             return self.__cosmology_namespace__.constants
 
 
+.. skip: next next if(sys.version_info < (3, 10), reason="py310+")
 .. invisible-code-block: python
 
     from types import SimpleNamespace
@@ -140,6 +141,7 @@ built on the Array API and all outputs must be some conformant array type. A
 common choice is :class:`numpy.ndarray`, but any array type that implements the
 Array API will work.
 
+.. skip: next next if(sys.version_info < (3, 10), reason="py310+")
 .. code-block:: python
 
     from typing import Any, Union

@@ -168,6 +168,7 @@ can be used as an argument to ``print_value``.
 
 .. sybil doesn't have a __name__ in globals()
 .. skip: start
+::
 
     >>> isinstance(v, NamedValue)
     True
@@ -193,6 +194,7 @@ Or
 
 .. sybil doesn't have a __name__ in globals()
 .. skip: start
+::
 
     >>> isinstance(v, NamedValue)
     True

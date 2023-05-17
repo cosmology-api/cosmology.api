@@ -221,8 +221,10 @@ decorated with the :func:`typing.runtime_checkable` decorator.
 
 .. invisible-code-block: python
 
+    import sys
     from cosmology.api._array_api import Array
 
+.. skip: next if(sys.version_info < (3, 10), reason="py3.10+")
 .. code-block:: python
 
     from cosmology.api import HasOmegaDE0, HasOmegaDE
