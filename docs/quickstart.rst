@@ -7,10 +7,10 @@ functions that work with any compatible cosmology library (and any Array
 libraries that cosmology library might support), without even having a single
 cosmology library as a run-time dependency.
 
-If you didn't understand the previous paragraph, don't worry, the previous
-section -- :doc:`doc introducing Python's typing and Protocols </introduction>`
--- explains the concepts in more detail. Alternatively, we hope the examples in
-this Quick Start are sufficient you can just jump right in.
+If you didn't understand the previous paragraph, don't worry, the
+:doc:`Introduction to Python Typing and Protocols </introduction>` explains the
+concepts in more detail. Alternatively, we hope the examples in this Quick
+Start are sufficient that you can just jump right in.
 
 
 Protocol hierarchy
