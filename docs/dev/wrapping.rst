@@ -59,18 +59,25 @@ The cosmology class looks something like this:
 Now let's wrap this library.  First, we need to create a wrapping of the
 top-level namespace so that it implements the
 :class:`cosmology.api.CosmologyNamespace` interface. This will also require
-creating a namespace for the constants. We don't recommend building dynamic
-libraries and modules and do it here only for demonstration purposes.
+creating a namespace for the constants.
 
+.. skip: next
 .. code-block:: python
 
-    from typing import SimpleNamespace
+    # wrapper/__init__.py
+    from . import constants
+
+    ...
+
+
+.. skip: next
+.. code-block:: python
+
+    # wrapper/constants.py
     from example_library import some_constants, other_constants
 
-    constants = SimpleNamespace(
-        c=some_constants.speed_of_light, G=other_constants.gravitational_constant
-    )
-    namespace = SimpleNamespace(constants=constants)
+    c = some_constants.speed_of_light
+    G = other_constants.gravitational_constant
 
 
 Next we need to create a wrapper class that implements the
@@ -78,7 +85,11 @@ Next we need to create a wrapper class that implements the
 protocols we do not need to subclass anything to be considered a subclass of
 :class:`~cosmology.api.CosmologyWrapper`, we just need to implement the methods.
 
+.. skip: next
 .. code-block:: python
+
+    import wrapper
+
 
     @dataclass(frozen=True)
     class BaseExampleLibraryWrapper:
@@ -90,7 +101,29 @@ protocols we do not need to subclass anything to be considered a subclass of
 
         @property
         def __cosmology_namespace__(self):
-            return namespace
+            return wrapper
+
+        @property
+        def constants(self):
+            return self.__cosmology_namespace__.constants
+
+
+.. invisible-code-block: python
+
+    from types import SimpleNamespace
+    from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
+
+    constants = SimpleNamespace(G=1, c=2)
+    library = SimpleNamespace(constants=constants)
+
+    @dataclass(frozen=True)
+    class BaseExampleLibraryWrapper:
+        cosmo: ExampleCosmology
+        name: str | None = None
+
+        @property
+        def __cosmology_namespace__(self):
+            return library
 
         @property
         def constants(self):
@@ -108,6 +141,9 @@ common choice is :class:`numpy.ndarray`, but any array type that implements the
 Array API will work.
 
 .. code-block:: python
+
+    from typing import Any, TypeAlias
+    import numpy as np
 
     Array: TypeAlias = np.ndarray[Any, np.floating[Any]]
     InputT: TypeAlias = Array | float
@@ -193,6 +229,9 @@ written to only require the cosmology attributes and methods that they need,
 then this wrapper can be used in those functions.
 
 .. code-block:: python
+
+    from cosmology.api import HasH0, StandardCosmology
+
 
     def littleh_too_broad(cosmo: StandardCosmology):  # Not guaranteed to work!
         return cosmo.H0 / 100

@@ -15,8 +15,10 @@ provide type hints and even autocompletion.
 A simple example of type annotations is the following function that takes two
 arguments, ``x`` and ``y``, and returns their sum.
 
-    >>> def add(x: float, y: float) -> float:
-    ...     return x + y
+.. code-block:: python
+
+    def add(x: float, y: float) -> float:
+        return x + y
 
 In this example, the ``x`` and ``y`` arguments are annotated as :class:`float`
 and the return value is annotated as :class:`float`. This tells the static type
@@ -32,19 +34,24 @@ function. For example, instead of taking two :class:`float` arguments, the
 ``add`` function could take any two arguments of the same type and return a
 value of that type.
 
-    >>> from typing import TypeVar  # How we express generic type variable
-    ...
-    >>> T = TypeVar("T")  # Declare a generic type variable
+.. code-block:: python
 
-    >>> def add(x: T, y: T) -> T:  # two arguments of the same type -> same return type
-    ...     return x + y
+    from typing import TypeVar  # How we express generic type variable
+
+    T = TypeVar("T")  # Declare a generic type variable
+
+
+    def add(x: T, y: T) -> T:  # two arguments of the same type -> same return type
+        return x + y
+
+::
 
     >>> add(1, 2)  # int + int -> int
     3
-    ...
+
     >>> add(1.0, 2.0)  # float + float -> float
     3.0
-    ...
+
     >>> add("foo", "bar")  # str + str -> str
     'foobar'
 
@@ -58,13 +65,16 @@ variable. The details of how to do this are beyond the scope of this
 introduction, but the following example shows how to constrain the generic type
 variable ``T`` to numerical types.
 
-    >>> from typing import TypeVar
-    >>> from numbers import Number
-    ...
-    >>> T = TypeVar("T", bound=Number)
+.. code-block:: python
 
-    >>> def add(x: T, y: T) -> T:
-    ...     return x + y
+    from typing import TypeVar
+    from numbers import Number
+
+    T = TypeVar("T", bound=Number)
+
+
+    def add(x: T, y: T) -> T:
+        return x + y
 
 Now the ``add`` function can only be called with arguments that are instances or
 subclasses of :class:`~numbers.Number`, like :class:`int` and :class:`float`.
@@ -73,21 +83,26 @@ But what about a :class:`~numpy.ndarray`? It is not a subclass of
 :class:`~numpy.ndarray` as well, we can use the :class:`typing.Union` type to
 allow either :class:`~numbers.Number` or :class:`~numpy.ndarray` as arguments.
 
-    >>> from typing import TypeVar, Union
-    >>> from numbers import Number
-    >>> import numpy as np
-    ...
-    >>> T = TypeVar("T", bound=Union[Number, np.ndarray])
+.. code-block:: python
 
-    >>> def add(x: T, y: T) -> T:
-    ...     return x + y
+    from typing import TypeVar, Union
+    from numbers import Number
+    import numpy as np
+
+    T = TypeVar("T", bound=Union[Number, np.ndarray])
+
+
+    def add(x: T, y: T) -> T:
+        return x + y
+
+::
 
     >>> add(1, 2)
     3
-    ...
+
     >>> add(1.0, 2.0)
     3.0
-    ...
+
     >>> add(np.array([1, 2]), np.array([3, 4]))
     array([4, 6])
 
@@ -117,48 +132,75 @@ typing".
 As an example, consider the following Protocol that describes the interface of
 an object that has a name and a value.
 
-    >>> from typing import Protocol
-    ...
-    >>> class NamedValue(Protocol):
-    ...     """API for Quantity."""
-    ...
-    ...     value: float
-    ...     name: str
+.. code-block:: python
+
+    from typing import Protocol
+
+
+    class NamedValue(Protocol):
+        """Interface for an object that has a name and a value."""
+
+        value: float
+        name: str
 
 This Protocol can be used to annotate a function that takes a ``NamedValue``
 duck-type as an argument.
 
-    >>> def print_value(x: NamedValue) -> None:
-    ...     print(f"{x.name}: {x.value}")
+.. code-block:: python
+
+    def print_value(x: NamedValue) -> None:
+        print(f"{x.name}: {x.value}")
 
 
 Any class that has a ``value`` attribute of type :class:`float` and a ``name``
 attribute of type :class:`str` is considered a subclass of ``NamedValue`` and
 can be used as an argument to ``print_value``.
 
-    >>> class NamedValueClass1:
-    ...     def __init__(self, name: str, value: float):
-    ...         self.name = name
-    ...         self.value = value
-    ...
-    >>> v = NamedValueClass1("foo", 1.0)
-    ...
+.. code-block:: python
+
+    class NamedValueClass1:
+        def __init__(self, name: str, value: float):
+            self.name = name
+            self.value = value
+
+
+    v = NamedValueClass1("foo", 1.0)
+
+.. sybil doesn't have a __name__ in globals()
+.. skip: start
+
     >>> isinstance(v, NamedValue)
     True
-    ...
+
     >>> print_value(NamedValueClass1("foo", 1.0))
     foo: 1.0
 
+.. skip: end
+
 Or
 
-    >>> from typing import NamedTuple
-    ...
-    >>> class NamedValueClass2(NamedTuple):
-    ...     name: str
-    ...     value: float
-    ...
-    >>> print_value(NamedValueClass2("foo", 1.0))
+.. code-block:: python
+
+    from typing import NamedTuple
+
+
+    class NamedValueClass2(NamedTuple):
+        name: str
+        value: float
+
+
+    v = NamedValueClass2("foo", 1.0)
+
+.. sybil doesn't have a __name__ in globals()
+.. skip: start
+
+    >>> isinstance(v, NamedValue)
+    True
+
+    >>> print_value(v)
     foo: 1.0
+
+.. skip: end
 
 
 Note again that neither ``NamedValueClass1`` nor ``NamedValueClass2`` inherit
@@ -168,36 +210,45 @@ from ``NamedValue``. This is the power of structural subtyping with
 Returning to our ``add`` function, we can now use a :class:`~typing.Protocol` to
 describe any of the Array libraries.
 
-    >>> class Array(Protocol):
-    ...
-    ...     @property
-    ...     def shape(self) -> tuple[int, ...]:
-    ...         ...
-    ...
-    ...     @property
-    ...     def dtype(self) -> Any:
-    ...         ...
-    ...
-    ...     ...
-    ...
-    ...     def __add__(self, other: Array) -> Array:
-    ...         ...
+.. code-block:: python
+
+    from typing import Any
+
+
+    class Array(Protocol):
+        @property
+        def shape(self) -> tuple[int, ...]:
+            ...
+
+        @property
+        def dtype(self) -> Any:
+            ...
+
+        ...
+
+        def __add__(self, other: "Array") -> "Array":
+            ...
 
 
 Applying this to our ``add`` function, we get the following.
 
-    >>> from typing import TypeVar, Union, Protocol
-    >>> from numbers import Number
-    >>> import numpy as np
-    ...
-    >>> T = TypeVar("T", bound=Union[Number, Array])
+.. code-block:: python
 
-    >>> def add(x: T, y: T) -> T:
-    ...     return x + y
+    from typing import TypeVar, Union, Protocol
+    from numbers import Number
+    import numpy as np
+
+    T = TypeVar("T", bound=Union[Number, Array])
+
+
+    def add(x: T, y: T) -> T:
+        return x + y
+
+::
 
     >>> add(1.0, 2.0)
     3.0
-    ...
+
     >>> add(np.array([1, 2]), np.array([3, 4]))
     array([4, 6])
 

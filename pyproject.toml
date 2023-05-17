@@ -38,6 +38,7 @@
     "furo",
     "numpydoc",
     "tomli",
+    "sybil",
   ]
 
 [project.urls]
@@ -102,7 +103,7 @@
   warn_redundant_casts = true
   warn_unused_configs = true
   warn_unreachable = true
-  exclude = '''(^|/)tests/|(^/)docs/'''
+  exclude = '''(^|/)tests/|(^/)docs/|(^/)conftest\.py'''
 
   [[tool.mypy.overrides]]
     module = "tests/*"
@@ -113,14 +114,11 @@
     ignore_errors = true
 
   [[tool.mypy.overrides]]
-    module = "tomli.*"
+    module = [
+      "tomli.*",
+      "sybil.*",
+    ]
     ignore_missing_imports = true
-
-
-[tool.pytest.ini_options]
-filterwarnings = [
-  "ignore:The numpy.array_api submodule is still experimental. See NEP 47.:UserWarning"
-]
 
 
 [tool.ruff]

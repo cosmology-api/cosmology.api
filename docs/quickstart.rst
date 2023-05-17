@@ -140,21 +140,26 @@ all be Array types.
     defaulted to ``ReturnT | float``.
 
 
-The attribute-related protocols have only the return-type parameter.
+The attribute-related interfaces have only the return-type parameter.
 
+.. skip: next
 .. code-block:: python
 
-    class HasOmegaDE0(Protocol[Array]):
+    from typing import Generic
+
+
+    class HasOmegaDE0(Generic[Array]):
         @property
         def Omega_de0(self) -> Array:
             ...
 
 
-The method-related protocols have both parameters.
+The method-related interfaces have both parameters.
 
+.. skip: next
 .. code-block:: python
 
-    class HasOmegaDE(Protocol[Array, InputT]):
+    class HasOmegaDE(Generic[Array, InputT]):
         @property
         def Omega_de(self, z: InputT) -> Array:
             ...
@@ -214,7 +219,14 @@ decorated with the :func:`typing.runtime_checkable` decorator.
     existence of all attributes and methods, not that they have the correct
     input / output types nor the correct implementation.
 
+.. invisible-code-block: python
+
+    from cosmology.api._array_api import Array
+
 .. code-block:: python
+
+    from cosmology.api import HasOmegaDE0, HasOmegaDE
+
 
     def myfunc(cosmo: HasOmegaDE0[Array] | HasOmegaDE[Array, Array]) -> Array:
         if isinstance(cosmo, HasOmegaDE0):
