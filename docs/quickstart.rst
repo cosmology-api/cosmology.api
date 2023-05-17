@@ -175,7 +175,7 @@ dtypes.:
 
 .. code-block:: python
 
-    from typing_extensions import TypeAlias
+    from typing_extensions import TypeAlias  # Use `typing.TypeAlias` in Python 3.10+
     import numpy.typing as npt
     from numpy import float64
 
@@ -200,7 +200,7 @@ dtypes.:
         return np.sqrt(cosmo.Omega_de0 / 3)
 
 
-Note the :class:`typing.TypeAlias`. We recommend using type aliases to decrease
+Note the :class:`~typing.TypeAlias`. We recommend using type aliases to decrease
 the verbosity and increase readability of the function type hints.
 
 
@@ -236,8 +236,8 @@ decorated with the :func:`typing.runtime_checkable` decorator.
             return cosmo.Omega_de(0)
 
 
-Going Further
--------------
+Next Steps
+----------
 
 The :doc:`Protocols </api/protocols>` allow you to specify and inspect which
 attributes are supported by a given cosmology object.
