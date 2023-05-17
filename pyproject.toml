@@ -33,6 +33,7 @@
     "pytest",
     "pytest-cov",
     "sybil",
+    "typing_extensions",
   ]
   docs = [
     "sphinx",
@@ -40,6 +41,7 @@
     "numpydoc",
     "tomli",
     "sybil",
+    "typing_extensions",
   ]
 
 [project.urls]
