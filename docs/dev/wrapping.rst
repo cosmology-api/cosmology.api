@@ -233,6 +233,7 @@ whatever is most convenient for your use case. For this example we will create a
 "mixin" class for :class:`~cosmology.api.MatterComponent` that may be used in
 either scenario.
 
+.. skip: next if(sys.version_info < (3, 10), reason="py310+")
 .. code-block:: python
 
     class MatterMixin:
