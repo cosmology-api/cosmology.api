@@ -32,7 +32,7 @@ any supporting library. For example
        cosmo: StandardCosmology[Array, Array], z: Array
    ) -> Array:
        # Do some cosmology with any object that implements the API
-       if cosmo.Omega_k != 0:
+       if cosmo.Omega_k0 != 0:
            raise ValueError("This function only works for flat cosmologies")
        return cosmo.comoving_distance(z) / (1 + z)
 
