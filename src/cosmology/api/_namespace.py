@@ -33,7 +33,9 @@ class CosmologyNamespace(Protocol):
 
     We can check what is missing from the library.
 
-        >>> print(set(dir(CosmologyNamespace)) - set(dir(astropy_cosmology)))
+        >>> print(
+        ...     set(n for n in dir(CosmologyNamespace) if not n.startswith('_'))
+        ...     - set(dir(astropy_cosmology)))
         {'constants'}
 
     Most libraries are not yet Cosmology API compatible. There are compatibility

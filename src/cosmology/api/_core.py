@@ -35,13 +35,6 @@ class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
         useful for identifying the cosmology instance, for example logging the
         name in an analysis pipeline, presenting helpful error messages, and
         for plotting.
-
-        Examples
-        --------
-        .. code-block:: python
-
-            cosmo = CosmologyClass(..., name="Planck18")
-            cosmo.name
         """
         ...
 

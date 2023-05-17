@@ -142,11 +142,12 @@ Array API will work.
 
 .. code-block:: python
 
-    from typing import Any, TypeAlias
+    from typing import Any, Union
+    from typing_extensions import TypeAlias
     import numpy as np
 
     Array: TypeAlias = np.ndarray[Any, np.floating[Any]]
-    InputT: TypeAlias = Array | float
+    InputT: TypeAlias = Union[Array, float]
 
 
     class ExampleLibraryWrapper(BaseExampleLibraryWrapper):

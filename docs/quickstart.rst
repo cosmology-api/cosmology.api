@@ -176,7 +176,7 @@ dtypes.:
 
 .. code-block:: python
 
-    from typing import TypeAlias
+    from typing_extensions import TypeAlias
     import numpy.typing as npt
     from numpy import float64
 
