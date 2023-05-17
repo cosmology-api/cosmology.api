@@ -105,7 +105,7 @@ fully-featured cosmology object. The intermediate-level example uses the
 cosmology object with dark energy related attributes and methods. The low-level
 example uses the :class:`~cosmology.api.HasOmegaDE0` protocol, which describes
 an object with the attribute :attr:`~cosmology.api.HasOmegaDE0.Omega_de0`. All
-three type annotations describe an oject with the attribute
+three type annotations describe an object with the attribute
 :attr:`~cosmology.api.HasOmegaDE0.Omega_de0`, which is why all three examples
 work. However, the intermediate and high-level examples use protocols that
 describe additional attributes and methods that are not required by the
@@ -160,7 +160,6 @@ The method-related interfaces have both parameters.
 .. code-block:: python
 
     class HasOmegaDE(Protocol[Array, InputT]):
-        @property
         def Omega_de(self, z: InputT) -> Array:
             ...
 
