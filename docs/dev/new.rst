@@ -158,7 +158,7 @@ The following example shows more correct outputs to the
         def constants(self) -> CosmologyConstantsNamespace:
             return self.__cosmology_namespace__.constants
 
-.. skip: next if(sys.version_info < (3, 10), reason="py3.10+")
+.. skip: start if(sys.version_info < (3, 10), reason="py3.10+")
 
     >>> from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
     >>> mycosmo = MyCosmology()
@@ -166,3 +166,5 @@ The following example shows more correct outputs to the
     True
     >>> isinstance(mycosmo.constants, CosmologyConstantsNamespace)
     True
+
+.. skip: end
