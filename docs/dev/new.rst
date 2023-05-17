@@ -51,23 +51,36 @@ instances to be considered subclasses and instances of the protocol!
 
 As an example, let's look at the base :class:`~cosmology.api.Cosmology` protocol.
 
-    >>> from dataclasses import dataclass
+.. invisible-code-block: python
 
-    >>> @dataclass
-    >>> class MyCosmology:  # NOT a subclass of Cosmology!
-    ...     name: str | None
-    ...
-    ...     @property
-    ...     def __cosmology_namespace__(self):
-    ...         return None  # Technically incorrect, see above warning.
-    ...
-    ...    @property
-    ...    def constants(self):
-    ...        return None  # Technically incorrect, see above warning.
+    import sys
+
+.. skip: next if(sys.version_info < (3, 10), reason="py3.10+")
+.. code-block:: python
+
+    from dataclasses import dataclass
+
+
+    @dataclass
+    class MyCosmology:  # NOT a subclass of Cosmology!
+        name: str | None
+
+        @property
+        def __cosmology_namespace__(self):
+            ...
+
+        @property
+        def constants(self):
+            ...
+
+.. Sybil doesn't have the __name__ in globals
+.. skip: start
 
     >>> from cosmology.api import Cosmology
-    >>> isinstance(MyCosmology, Cosmology)
+    >>> issubclass(MyCosmology, Cosmology)
     True
+
+.. skip: end
 
 
 The above example is also a good introduction to the
@@ -81,33 +94,77 @@ for users, the cosmology class should also have a ``constants`` attribute, which
 is a :class:`~cosmology.api.CosmologyConstantsNamespace`, which allows users to
 see the constants used by the cosmology. Normally the ``constants`` attribute
 just returns ``self.__cosmology_namespace__.constants``, but this is not a
-strict requirement, allowing for more flexibility in the implementation such as
-implementing different constants.
+strict requirement, allowing for more flexibility, such as implementing
+different constants.
 
 The following example shows more correct outputs to the
-``__cosmology_namespace__`` and ``constants`` attributes. We don't recommend
-building dynamic libraries and modules and do it here only for demonstration
-purposes.
+``__cosmology_namespace__`` and ``constants`` attributes.
 
-    >>> from typing import SimpleNamespace
+.. skip: next
+.. code-block:: python
+
+    # library/__init__.py
+    from . import constants
+
+    ...
+
+
+.. skip: next
+.. code-block:: python
+
+    # library/constants.py
+    G = 1  # pc km2 s-2 Msol-1
+    c = 3e5  # km s-1
+
+.. skip: next
+.. code-block:: python
+
+    from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
+
+
+    @dataclass
+    class MyCosmology:  # NOT a subclass of Cosmology!
+        name: str | None
+
+        @property
+        def __cosmology_namespace__(self) -> CosmologyNamespace:
+            import library
+
+            return library
+
+        @property
+        def constants(self) -> CosmologyConstantsNamespace:
+            return self.__cosmology_namespace__.constants
+
+
+.. skip: next if(sys.version_info < (3, 10), reason="py3.10+")
+.. invisible-code-block: python
+
+    from types import SimpleNamespace
+    from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
+
+    constants = SimpleNamespace(G=1, c=2)
+    library = SimpleNamespace(constants=constants)
+
+    @dataclass
+    class MyCosmology:  # NOT a subclass of Cosmology!
+        name: str | None = None
+
+        @property
+        def __cosmology_namespace__(self) -> CosmologyNamespace:
+            return library
+
+        @property
+        def constants(self) -> CosmologyConstantsNamespace:
+            return self.__cosmology_namespace__.constants
+
+.. skip: start if(sys.version_info < (3, 10), reason="py3.10+")
+
     >>> from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
-
-    >>> constants = SimpleNamespace(G=1, c=2)
-    >>> library = SimpleNamespace(constants=constants)
-
-    >>> @dataclass
-    >>> class MyCosmology:  # NOT a subclass of Cosmology!
-    ...     name: str | None
-    ...
-    ...     @property
-    ...     def __cosmology_namespace__(self) -> CosmologyNamespace:
-    ...         return library
-    ...
-    ...    @property
-    ...    def constants(self) -> CosmologyConstantsNamespace:
-    ...        return self.__cosmology_namespace__.constants
-
-    >>> isinstance(MyCosmology.__cosmology_namespace__, CosmologyNamespace)
+    >>> mycosmo = MyCosmology()
+    >>> isinstance(mycosmo.__cosmology_namespace__, CosmologyNamespace)
     True
-    >>> isinstance(MyCosmology.constants, CosmologyConstantsNamespace)
+    >>> isinstance(mycosmo.constants, CosmologyConstantsNamespace)
     True
+
+.. skip: end

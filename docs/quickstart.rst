@@ -1,15 +1,30 @@
 Quick Start
 ===========
 
-The Cosmology API is a collection of runtime-checkable Protocols that describe
-the parts of the interface of a cosmology object. The Protocols can be used to
-describe and build functions that work with any compatible cosmology library
-(and any Array libraries that cosmology library might support), without even
-having the cosmology library as a hard dependency.
+The Cosmology API is a collection of runtime-checkable Protocols that define the
+interface of a cosmology object. The Protocols can be used to describe and build
+functions that work with any compatible cosmology library (and any Array
+libraries that cosmology library might support), without even having a single
+cosmology library as a run-time dependency.
+
+If you didn't understand the previous paragraph, don't worry, the
+:doc:`Introduction to Python Typing and Protocols </introduction>` explains the
+concepts in more detail. Alternatively, we hope the examples in this Quick
+Start are sufficient that you can just jump right in.
 
 
 Protocol hierarchy
 ------------------
+
+When you are writing a function it's important to consider what the function
+needs to do and what it needs to do it. For example, a function that computes
+the Hubble parameter :math:`H(z)` needs the Hubble constant :math:`H_0` and all
+the component densities :math:`\Omega_{X,0}`. Other functions might need
+significantly fewer attributes and methods. The Cosmology API Protocols are
+designed to allow you to specify exactly what your function needs, from single
+attributes and methods to fully-featured cosmology objects. We organize the
+Protocols in a hierarchy, from the most general to the most specific, so you can
+choose the level of detail that best suits your needs.
 
 The cosmology protocols are grouped in levels:
 
@@ -31,25 +46,20 @@ lower-level protocols allow for a more precise description of what a function
 uses. For example, a function requiring only :math:`H_0` and
 :math:`\Omega_{m,0}` can use the corresponding low-level protocols
 :class:`~cosmology.api.HasH0` and :class:`~cosmology.api.HasOmegaM0`, instead of
-the all-encompassing :class:`~cosmology.api.StandardCosmology`.
+the high-level, all-encompassing :class:`~cosmology.api.StandardCosmology`.
 
 The last level, the "meta" level, is most useful for developers of cosmology
 libraries and is described in the :doc:`developers section </dev/new>`.
 
 
-Static Type Hints
------------------
+Type Annotations
+----------------
 
 When writing a function it's often useful to specify the types of the inputs and
 the outputs.  This is done using type hints.  If you are familiar with type
-hints: why they are useful, how they can speed up your code, help you avoid
-errors, and more, read on; if you are unfamiliar with type hints, we recommend
-you peruse the following resources:
-
-* `PEP 484 -- Type Hints <https://www.python.org/dev/peps/pep-0484/>`_
-* `mypyc <https://mypyc.readthedocs.io/en/latest/>`_
-
-Now that we all agree type hints are useful, let's look at how to use them with
+hints, read on; if you are unfamiliar with type hints, we recommend reading the
+:doc:`previous section </introduction>` which explains the concepts in more
+detail. Having agreed type hints are useful, let's look at how to use them with
 the Cosmology API.
 
 As an example, let's say we want to write a function for the Hubble parameter
@@ -60,7 +70,7 @@ with the protocols at each of the hierarchy levels:
 
 .. code-block:: python
 
-    from cosmology.api import StandardCosmology
+    from cosmology.api import StandardCosmology  # probably everything you need
 
 
     def hubble_constant(cosmo: StandardCosmology) -> float:
@@ -87,17 +97,33 @@ with the protocols at each of the hierarchy levels:
         return float(np.sqrt(cosmo.Omega_de0 / 3))
 
 
-If you have a static type checker handy and use it on the previous examples it
-should be complaining that :class:`~cosmology.api.StandardCosmology`,
-:class:`~cosmology.api.DarkEnergyComponent`, and
-:class:`~cosmology.api.HasOmegaDE0` are missing type hints.
+Even though the function is the same in each of the three examples, the type
+annotations are different. The high-level example uses the
+:class:`~cosmology.api.StandardCosmology` protocol, which describes a
+fully-featured cosmology object. The intermediate-level example uses the
+:class:`~cosmology.api.DarkEnergyComponent` protocol, which describes a
+cosmology object with dark energy related attributes and methods. The low-level
+example uses the :class:`~cosmology.api.HasOmegaDE0` protocol, which describes
+an object with the attribute :attr:`~cosmology.api.HasOmegaDE0.Omega_de0`. All
+three type annotations describe an object with the attribute
+:attr:`~cosmology.api.HasOmegaDE0.Omega_de0`, which is why all three examples
+work. However, the intermediate and high-level examples use protocols that
+describe additional attributes and methods that are not required by the
+function. The low-level example uses the most precise protocol that describes
+only what the function needs.
 
-The Cosmology API Protocols are `generic
+If you have a type checker handy and use it on the previous examples it should
+be complaining that :class:`~cosmology.api.StandardCosmology`,
+:class:`~cosmology.api.DarkEnergyComponent`, and
+:class:`~cosmology.api.HasOmegaDE0` are missing type hints. This is because the
+Cosmology API Protocols are `generic
 <https://peps.python.org/pep-0484/#generics>`_ with respect to the return types
 -- of the objects attributes and methods -- and the input types of the methods.
-The Cosmology API is built on the `Array API
-<https://data-apis.org/array-api/latest/>`_ and the return types must all be
-Array types.
+This means that the return types and input types are not specified in the
+protocol. Instead, the return types and input types are specified when the
+protocol is used. The types are restricted, as the Cosmology API is built on the
+`Array API <https://data-apis.org/array-api/latest/>`_ and the return types must
+all be Array types.
 
 .. note::
 
@@ -114,9 +140,13 @@ Array types.
     defaulted to ``ReturnT | float``.
 
 
-The attribute-related protocols have only the return-type parameter.
+The attribute-related interfaces have only the return-type parameter.
 
+.. skip: next
 .. code-block:: python
+
+    from typing import Protocol
+
 
     class HasOmegaDE0(Protocol[Array]):
         @property
@@ -124,12 +154,12 @@ The attribute-related protocols have only the return-type parameter.
             ...
 
 
-The method-related protocols have both parameters.
+The method-related interfaces have both parameters.
 
+.. skip: next
 .. code-block:: python
 
     class HasOmegaDE(Protocol[Array, InputT]):
-        @property
         def Omega_de(self, z: InputT) -> Array:
             ...
 
@@ -145,7 +175,7 @@ dtypes.:
 
 .. code-block:: python
 
-    from typing import TypeAlias
+    from typing_extensions import TypeAlias  # Use `typing.TypeAlias` in Python 3.10+
     import numpy.typing as npt
     from numpy import float64
 
@@ -155,37 +185,49 @@ dtypes.:
     def hubble_constant(cosmo: HasOmegaDE0[Array]) -> Array:
         return np.sqrt(cosmo.Omega_de0 / 3)
 
-- Intermediate-level and High-level:
+- Intermediate-level:
 
 .. code-block:: python
 
     def hubble_constant(cosmo: DarkEnergyComponent[Array, Array]) -> Array:
         return np.sqrt(cosmo.Omega_de0 / 3)
 
+- High-level:
+
+.. code-block:: python
 
     def hubble_constant(cosmo: StandardCosmology[Array, Array]) -> Array:
         return np.sqrt(cosmo.Omega_de0 / 3)
 
 
-Note the :class:`typing.TypeAlias`. We recommend using type aliases to decrease
+Note the :class:`~typing.TypeAlias`. We recommend using type aliases to decrease
 the verbosity and increase readability of the function type hints.
 
 
-Runtime Checks
---------------
+Run-time Checks
+---------------
 
 The Cosmology API can also be used for runtime introspection --
-:func:`isinstance` and :func:`issubclass` -- since all the protocols are decorated
-with the :func:`typing.runtime_checkable` decorator.
+:func:`isinstance` and :func:`issubclass` -- since all the protocols are
+decorated with the :func:`typing.runtime_checkable` decorator.
 
 .. warning::
 
-    :func:`typing.runtime_checkable` allows for _structural_ checks only,
+    :func:`typing.runtime_checkable` allows for *structural* checks only,
     meaning :func:`isinstance` and :func:`issubclass` will only verify the
     existence of all attributes and methods, not that they have the correct
     input / output types nor the correct implementation.
 
+.. invisible-code-block: python
+
+    import sys
+    from cosmology.api._array_api import Array
+
+.. skip: next if(sys.version_info < (3, 10), reason="py3.10+")
 .. code-block:: python
+
+    from cosmology.api import HasOmegaDE0, HasOmegaDE
+
 
     def myfunc(cosmo: HasOmegaDE0[Array] | HasOmegaDE[Array, Array]) -> Array:
         if isinstance(cosmo, HasOmegaDE0):
@@ -194,10 +236,12 @@ with the :func:`typing.runtime_checkable` decorator.
             return cosmo.Omega_de(0)
 
 
-Going Further
--------------
+Next Steps
+----------
 
-The :doc:`reference </api/reference>` provides a flat list of all attributes
-which can potentially be supported by cosmology instances.  Conversely, the
-protocols allow you to specify and inspect which attributes are supported by a
-given cosmology object.
+The :doc:`Protocols </api/protocols>` allow you to specify and inspect which
+attributes are supported by a given cosmology object.
+
+The :doc:`reference </api/reference>` provides a flat
+list of all attributes which can potentially be supported by cosmology
+instances.

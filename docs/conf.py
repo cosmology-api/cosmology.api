@@ -58,6 +58,7 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "numpydoc",
+    "sphinx_copybutton",
     "sphinx_ext_autosummary_context",
     "sphinx_ext_cosmology_api",
 ]
@@ -170,3 +171,7 @@ numpydoc_xref_ignore = {
     "positional-only",
     "keyword-only",
 }
+
+# -- copybutton extension ------------------------------------------------------
+
+copybutton_exclude = ".linenos, .gp, .go"
