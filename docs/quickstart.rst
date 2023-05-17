@@ -214,7 +214,7 @@ decorated with the :func:`typing.runtime_checkable` decorator.
 
 .. warning::
 
-    :func:`typing.runtime_checkable` allows for _structural_ checks only,
+    :func:`typing.runtime_checkable` allows for *structural* checks only,
     meaning :func:`isinstance` and :func:`issubclass` will only verify the
     existence of all attributes and methods, not that they have the correct
     input / output types nor the correct implementation.
