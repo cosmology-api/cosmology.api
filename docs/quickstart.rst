@@ -145,10 +145,10 @@ The attribute-related interfaces have only the return-type parameter.
 .. skip: next
 .. code-block:: python
 
-    from typing import Generic
+    from typing import Protocol
 
 
-    class HasOmegaDE0(Generic[Array]):
+    class HasOmegaDE0(Protocol[Array]):
         @property
         def Omega_de0(self) -> Array:
             ...
@@ -159,7 +159,7 @@ The method-related interfaces have both parameters.
 .. skip: next
 .. code-block:: python
 
-    class HasOmegaDE(Generic[Array, InputT]):
+    class HasOmegaDE(Protocol[Array, InputT]):
         @property
         def Omega_de(self, z: InputT) -> Array:
             ...
