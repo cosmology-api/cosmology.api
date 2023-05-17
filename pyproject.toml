@@ -36,11 +36,12 @@
     "typing_extensions",
   ]
   docs = [
-    "sphinx",
     "furo",
     "numpydoc",
-    "tomli",
+    "sphinx",
+    "sphinx-copybutton",
     "sybil",
+    "tomli",
     "typing_extensions",
   ]
 
