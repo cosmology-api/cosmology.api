@@ -167,8 +167,7 @@ can be used as an argument to ``print_value``.
     v = NamedValueClass1("foo", 1.0)
 
 .. sybil doesn't have a __name__ in globals()
-.. skip: start
-::
+.. skip: next
 
     >>> isinstance(v, NamedValue)
     True
@@ -176,7 +175,6 @@ can be used as an argument to ``print_value``.
     >>> print_value(NamedValueClass1("foo", 1.0))
     foo: 1.0
 
-.. skip: end
 
 Or
 
@@ -193,16 +191,13 @@ Or
     v = NamedValueClass2("foo", 1.0)
 
 .. sybil doesn't have a __name__ in globals()
-.. skip: start
-::
+.. skip: next
 
     >>> isinstance(v, NamedValue)
     True
 
     >>> print_value(v)
     foo: 1.0
-
-.. skip: end
 
 
 Note again that neither ``NamedValueClass1`` nor ``NamedValueClass2`` inherit
