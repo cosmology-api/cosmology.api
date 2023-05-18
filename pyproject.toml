@@ -46,9 +46,9 @@
   ]
 
 [project.urls]
-  homepage = "https://cosmology.readthedocs.org"
+  homepage = "https://cosmology.readthedocs.org/projects/api"
   repository = "https://github.com/cosmology-api/cosmology.api"
-  documentation = "https://cosmology.readthedocs.org"
+  documentation = "https://cosmology.readthedocs.org/projects/api"
 
 
 [build-system]
