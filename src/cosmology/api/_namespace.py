@@ -19,7 +19,17 @@ if TYPE_CHECKING:
 
 
 @runtime_checkable
-class CosmologyNamespace(Protocol):
+class HasConstantsNamespace(Protocol):
+    """Protocol for objects that have a constants module."""
+
+    @property
+    def constants(self) -> CosmologyConstantsNamespace:
+        """The constants namespace for this object."""
+        ...
+
+
+@runtime_checkable
+class CosmologyNamespace(HasConstantsNamespace, Protocol):
     """Runtime-checkable Protocol for the Cosmology API namespace.
 
     Examples
@@ -53,8 +63,3 @@ class CosmologyNamespace(Protocol):
     be a `~cosmology.api.CosmologyConstantsNamespace`, but `isinstance` will not
     check this.
     """
-
-    @property
-    def constants(self) -> CosmologyConstantsNamespace:
-        """The cosmology constants API."""
-        ...
