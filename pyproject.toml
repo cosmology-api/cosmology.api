@@ -125,8 +125,30 @@
     ignore_missing_imports = true
 
 
+[tool.pytest.ini_options]
+minversion = 7.0
+testpaths = [
+    "tests",
+    "src/cosmology",
+    "docs",
+]
+text_file_format = "rst"
+addopts = "-p no:doctest"
+markers = [
+    "incompatible_with_mypyc: run when testing mypyc compiled code",
+]
+filterwarnings = [
+    # tomlkit
+    "ignore:The config value",
+    # NumPy
+    "ignore:The numpy.array_api submodule is still experimental. See NEP 47.:UserWarning",
+]
+
+
 [tool.ruff]
+target-version = "py39"
 line-length = 88
+
 select = ["ALL"]
 ignore = [
   "ANN101",  # Missing type annotation for {name} in method  # TODO: report to Ruff
