@@ -141,6 +141,8 @@ ignore = [
   "FBT003",  # Boolean positional value in function call
   "N802",  # Function name {name} should be lowercase
   "PD",  # pandas-vet
+  "TD002",  # Missing author in TODO
+  "TD003",  # Missing issue link on the line following this TODO
 ]
 
 [tool.ruff.per-file-ignores]
