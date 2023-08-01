@@ -38,7 +38,7 @@ def test_compliant_mattercomponent(dists_cls):
     """
     ExampleMatterComponent = make_dataclass(
         "ExampleMatterComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_m0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("Omega_m0",)],
         bases=(dists_cls,),
         namespace={"Omega_m": _return_1arg},
         frozen=True,

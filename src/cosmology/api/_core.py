@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 # The inputs types will have defaults if https://peps.python.org/pep-0696/
 # is accepted.
-InputT = TypeVar("InputT", contravariant=True)
+InputT = TypeVar("InputT", contravariant=True)  # noqa: PLC0105
 
 __all__: list[str] = []
 
