@@ -38,7 +38,7 @@ def test_compliant_darkenergycomponent(dists_cls):
     """
     ExampleDarkEnergyComponent = make_dataclass(
         "ExampleDarkEnergyComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_de0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("Omega_de0",)],
         bases=(dists_cls,),
         namespace={"Omega_de": _return_1arg},
         frozen=True,

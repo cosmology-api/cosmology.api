@@ -139,6 +139,7 @@ ignore = [
   "D213",  # Multi-line docstring summary should start at the second line
   "D401",  # First line of docstring should be in imperative mood
   "FBT003",  # Boolean positional value in function call
+  "FIX002",  # Line contains TODO,
   "N802",  # Function name {name} should be lowercase
   "PD",  # pandas-vet
   "TD002",  # Missing author in TODO

@@ -38,7 +38,7 @@ def test_compliant_totalcomponent(comptotal_cls):
     """
     ExampleTotalComponent = make_dataclass(
         "ExampleTotalComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_tot0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("Omega_tot0",)],
         bases=(comptotal_cls,),
         namespace={"Omega_tot": _return_1arg},
         frozen=True,

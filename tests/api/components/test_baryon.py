@@ -38,7 +38,7 @@ def test_compliant_baryoncomponent(matter_cls):
     """
     ExampleBaryonComponent = make_dataclass(
         "ExampleBaryonComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_b0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("Omega_b0",)],
         bases=(matter_cls,),
         namespace={"Omega_b": _return_1arg},
         frozen=True,

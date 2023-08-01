@@ -38,7 +38,7 @@ def test_compliant_hastcmbs(tcmb_cls):
     """
     ExampleTemperatureCMB = make_dataclass(
         "ExampleTemperatureCMB",
-        [(n, Array, field(default_factory=_default_one)) for n in {"T_cmb0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("T_cmb0",)],
         bases=(tcmb_cls,),
         namespace={"T_cmb": _return_1arg},
         frozen=True,

@@ -32,7 +32,7 @@ def test_compliant_photoncomponent(cosmology_cls):
     """Test that a compliant instance is a `cosmology.api.PhotonComponent`."""
     ExamplePhotonComponent = make_dataclass(
         "ExamplePhotonComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Omega_gamma0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("Omega_gamma0",)],
         bases=(cosmology_cls,),
         namespace={"Omega_gamma": _return_1arg},
         frozen=True,

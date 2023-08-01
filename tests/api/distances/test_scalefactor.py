@@ -32,7 +32,7 @@ def test_compliant_scalefactor(cosmology_cls):
     """Test that a compliant instance is a `cosmology.api.ScaleFactor`."""
     ExampleScaleFactor = make_dataclass(
         "ExampleScaleFactor",
-        [(n, Array, field(default_factory=_default_one)) for n in {"scale_factor0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("scale_factor0",)],
         bases=(cosmology_cls,),
         namespace={"scale_factor": _return_1arg},
         frozen=True,

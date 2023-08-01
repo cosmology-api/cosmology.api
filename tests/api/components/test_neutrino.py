@@ -38,7 +38,7 @@ def test_compliant_neutrinocomponent(dists_cls):
     """
     ExampleNeutrinoComponent = make_dataclass(
         "ExampleNeutrinoComponent",
-        [(n, Array, field(default_factory=_default_one)) for n in {"Neff", "m_nu"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("Neff", "m_nu")],
         bases=(dists_cls,),
         namespace={"Omega_nu0": _return_one, "Omega_nu": _return_1arg},
         frozen=True,

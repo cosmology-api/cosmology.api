@@ -38,7 +38,7 @@ def test_compliant_hubbleparameter(hubble_cls):
     """
     ExampleHubbleParameter = make_dataclass(
         "ExampleHubbleParameter",
-        [(n, Array, field(default_factory=_default_one)) for n in {"H0"}],
+        [(n, Array, field(default_factory=_default_one)) for n in ("H0",)],
         bases=(hubble_cls,),
         namespace={
             "hubble_time": _default_one,
