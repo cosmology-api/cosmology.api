@@ -29,7 +29,8 @@
   ]
   test = [
     "coverage[toml]",
-    "numpy>=1.20",
+    "numpy>=1.21",
+    "packaging",
     "pytest",
     "pytest-cov",
     "sybil",
@@ -110,17 +111,16 @@
   exclude = '''(^|/)tests/|(^/)docs/|(^/)conftest\.py'''
 
   [[tool.mypy.overrides]]
-    module = "tests/*"
-    ignore_errors = true
-
-  [[tool.mypy.overrides]]
-    module = "docs/*"
+    module = [
+      "tests/*",
+      "docs/*",
+    ]
     ignore_errors = true
 
   [[tool.mypy.overrides]]
     module = [
-      "tomli.*",
       "sybil.*",
+      "tomli.*",
     ]
     ignore_missing_imports = true
 
@@ -155,3 +155,7 @@ ignore = [
   "TID252",
 ]
 "test_*.py" = ["D", "N8", "S101"]
+
+[tool.ruff.isort]
+forced-separate = ["tests"]
+required-imports = ["from __future__ import annotations"]

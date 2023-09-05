@@ -1,4 +1,6 @@
 """Monkey-patching autosummary to emit the autosummary-gather-context event."""
+from __future__ import annotations
+
 from inspect import signature
 from typing import TYPE_CHECKING
 
@@ -30,7 +32,7 @@ def generate_autosummary_content_with_context(*args: object, **kwargs: object) -
     return generate_autosummary_content(*args, **kwargs)  # type: ignore[arg-type]
 
 
-def setup(app: "Sphinx") -> None:
+def setup(app: Sphinx) -> None:
     """Monkey-patch the autosummary-gather-context event if not present."""
     # try connecting a mock callback to autosummary-gather-context
     try:

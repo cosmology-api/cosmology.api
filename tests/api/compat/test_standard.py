@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, make_dataclass
+from importlib.metadata import version as get_version
 from typing import TYPE_CHECKING
 
-import numpy.array_api as xp
 import pytest
 from cosmology.api import (
     Cosmology,
@@ -15,6 +15,12 @@ from cosmology.api import (
     StandardCosmology,
     StandardCosmologyWrapper,
 )
+from packaging.version import Version
+
+if Version(get_version("numpy")) >= Version("1.23"):
+    import numpy.array_api as np
+else:
+    import numpy as np
 
 if TYPE_CHECKING:
     from cosmology.api._array_api import Array
@@ -49,7 +55,7 @@ def test_compliant_standard_wrapper(cosmology_ns, standard_attrs, standard_meths
     """
 
     def _return_one(self, /) -> Array:
-        return xp.ones((), dtype=xp.int32)
+        return np.ones((), dtype=np.int32)
 
     def _return_1arg(self, z: Array, /) -> Array:
         return z

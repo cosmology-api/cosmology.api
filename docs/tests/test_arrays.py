@@ -1,4 +1,5 @@
 """Test Array."""
+from __future__ import annotations
 
 import array
 import sys
