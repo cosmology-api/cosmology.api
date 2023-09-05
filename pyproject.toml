@@ -110,17 +110,16 @@
   exclude = '''(^|/)tests/|(^/)docs/|(^/)conftest\.py'''
 
   [[tool.mypy.overrides]]
-    module = "tests/*"
-    ignore_errors = true
-
-  [[tool.mypy.overrides]]
-    module = "docs/*"
+    module = [
+      "tests/*",
+      "docs/*",
+    ]
     ignore_errors = true
 
   [[tool.mypy.overrides]]
     module = [
-      "tomli.*",
       "sybil.*",
+      "tomli.*",
     ]
     ignore_missing_imports = true
 

@@ -1,4 +1,4 @@
-"""Fixtures for the Cosmology API standard."""
+"""Doctest configuration."""
 
 from __future__ import annotations
 
