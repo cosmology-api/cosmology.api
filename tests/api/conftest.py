@@ -5,10 +5,10 @@ from __future__ import annotations
 import functools
 import operator
 from dataclasses import dataclass, field, fields, make_dataclass
+from importlib.metadata import version as get_version
 from types import SimpleNamespace
 from typing import TypeVar
 
-import numpy.array_api as xp
 import pytest
 from cosmology.api import (
     BaryonComponent,
@@ -33,12 +33,18 @@ from cosmology.api import (
     TotalComponent,
 )
 from cosmology.api._array_api import Array
+from packaging.version import Version
+
+if Version(get_version("numpy")) >= Version("1.23"):
+    import numpy.array_api as np
+else:
+    import numpy as np
 
 CT = TypeVar("CT", bound=Cosmology)
 
 
 def _default_one() -> Array:
-    return xp.ones((), dtype=xp.int32)
+    return np.ones((), dtype=np.int32)
 
 
 def _return_one(self, /) -> Array:
