@@ -33,7 +33,7 @@ repos:
       - id: text-unicode-replacement-char
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.0.281"
+    rev: "v0.0.287"
     hooks:
       - id: ruff
         args:
@@ -46,13 +46,13 @@ repos:
         additional_dependencies: [toml]
 
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: 1.15.0
+    rev: 1.16.0
     hooks:
       - id: blacken-docs
         additional_dependencies: [black]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.4.1"
+    rev: "v1.5.1"
     hooks:
       - id: mypy
         args:

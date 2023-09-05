@@ -240,8 +240,6 @@ class ComovingDistanceMeasures(
 ):
     """The object has attributes and methods for comoving distance measures."""
 
-    ...
-
 
 # ============================================================================
 
@@ -323,8 +321,6 @@ class ProperDistanceMeasures(
 ):
     """The object has attributes and methods for proper distance measures."""
 
-    ...
-
 
 # ============================================================================
 
@@ -405,8 +401,6 @@ class LookbackDistanceMeasures(
     Protocol,
 ):
     """The object has attributes and methods for lookback distance measures."""
-
-    ...
 
 
 # ============================================================================
