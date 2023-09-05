@@ -155,3 +155,7 @@ ignore = [
   "TID252",
 ]
 "test_*.py" = ["D", "N8", "S101"]
+
+[tool.ruff.isort]
+forced-separate = ["tests"]
+required-imports = ["from __future__ import annotations"]
