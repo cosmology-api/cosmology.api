@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check base branch
-      uses: actions/github-script@v3
+      uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       with:
         script: |
