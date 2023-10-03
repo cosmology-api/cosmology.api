@@ -10,7 +10,7 @@ from cosmology.api._core import Cosmology, InputT
 __all__: list[str] = []
 
 
-class CosmologyWrapper(Cosmology[Array, InputT], Protocol):  # type: ignore[misc]  # noqa: E501
+class CosmologyWrapper(Cosmology[Array, InputT], Protocol):  # type: ignore[misc]
     """The standard for ``Cosmology`` compatability wrappers.
 
     This is a protocol class that defines an API standard. It is not intended to
