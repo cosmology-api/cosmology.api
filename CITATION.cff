@@ -1,0 +1,39 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Cosmology API
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Nathaniel
+    family-names: Starkman
+    email: n.starkman@mail.utoronto.ca
+    affiliation: University of Toronto
+    orcid: 'https://orcid.org/0000-0003-3954-3291'
+  - given-names: Nicolas
+    family-names: Tessore
+    email: n.tessore@ucl.ac.uk
+    affiliation: University College London
+    orcid: 'https://orcid.org/0000-0002-9696-7931'
+repository-code: 'https://github.com/cosmology-api/cosmology.api'
+url: 'https://cosmology.readthedocs.io/projects/api/en/latest/'
+repository: 'https://github.com/cosmology-api/'
+abstract: >-
+  The Cosmology API for Python provides detailed interfaces
+  for cosmology codes, from individual methods and functions
+  up to fully-featured cosmology objects, even whole
+  libraries.
+keywords:
+  - python
+  - cosmology
+  - astrophysics
+  - science
+  - static typing
+  - API
+license: BSD-3-Clause
+commit: 35bec523aea8f707a7f7da8835dbe03b4240aa0d
+version: v0.1.0
+date-released: '2023-05-17'
