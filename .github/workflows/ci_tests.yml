@@ -48,12 +48,16 @@ jobs:
     needs: initial_checks
     with:
       envs: |
-        - linux: py311-test-cov
-        - linux: py310-test-alldeps
+        # Standard tests
+        - linux: py39-test-cov
+        - linux: py312-test-cov
+        # All deps tests
+        - linux: py311-test-alldeps
           toxargs: '-v --develop'
         - linux: py39-test-oldestdeps-alldeps-cov-clocale
-        - windows: py310-test-alldeps
-        - macos: py310-test-alldeps
+        # Platform test
+        - windows: py311-test-alldeps
+        - macos: py311-test-alldeps
 
       conda: true
       coverage: codecov
