@@ -33,7 +33,7 @@ keywords:
   - science
   - static typing
   - API
-license: BSD-3-Clause-Clear
+license: BSD-3-Clause
 commit: 35bec523aea8f707a7f7da8835dbe03b4240aa0d
 version: v0.1.0
 date-released: '2023-05-17'
