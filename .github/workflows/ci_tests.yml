@@ -49,7 +49,7 @@ jobs:
     with:
       envs: |
         # Standard tests
-        - linux: py39-test-cov
+        - linux: py310-test-cov
         - linux: py312-test-cov
         # All deps tests
         - linux: py311-test-alldeps
