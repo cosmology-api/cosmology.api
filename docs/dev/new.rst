@@ -76,9 +76,9 @@ As an example, let's look at the base :class:`~cosmology.api.Cosmology` protocol
 .. Sybil doesn't have the __name__ in globals
 .. skip: start
 
-    >>> from cosmology.api import Cosmology
-    >>> issubclass(MyCosmology, Cosmology)
-    True
+>>> from cosmology.api import Cosmology
+>>> issubclass(MyCosmology, Cosmology)
+True
 
 .. skip: end
 
@@ -160,11 +160,11 @@ The following example shows more correct outputs to the
 
 .. skip: start if(sys.version_info < (3, 10), reason="py3.10+")
 
-    >>> from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
-    >>> mycosmo = MyCosmology()
-    >>> isinstance(mycosmo.__cosmology_namespace__, CosmologyNamespace)
-    True
-    >>> isinstance(mycosmo.constants, CosmologyConstantsNamespace)
-    True
+>>> from cosmology.api import CosmologyNamespace, CosmologyConstantsNamespace
+>>> mycosmo = MyCosmology()
+>>> isinstance(mycosmo.__cosmology_namespace__, CosmologyNamespace)
+True
+>>> isinstance(mycosmo.constants, CosmologyConstantsNamespace)
+True
 
 .. skip: end
