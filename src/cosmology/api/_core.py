@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol, TypeVar, runtime_checkable
 
 from cosmology.api._array_api import Array
+from cosmology.api._namespace import HasConstantsNamespace
 
 if TYPE_CHECKING:
     from cosmology.api._constants import CosmologyConstantsNamespace
@@ -18,7 +19,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
+class Cosmology(HasConstantsNamespace, Protocol[Array, InputT]):  # type: ignore[misc]
     """Cosmology API Protocol."""
 
     @property
