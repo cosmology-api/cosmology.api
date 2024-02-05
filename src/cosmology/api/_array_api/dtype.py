@@ -27,5 +27,6 @@ class DTypeConformant(Protocol):
         -------
         out: bool
             a boolean indicating whether the data type objects are equal.
+
         """
         ...

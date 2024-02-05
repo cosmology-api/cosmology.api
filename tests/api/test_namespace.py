@@ -1,4 +1,5 @@
 """Test ``cosmology.api.namespace``."""
+
 from __future__ import annotations
 
 from types import SimpleNamespace

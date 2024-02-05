@@ -17,7 +17,6 @@ class HasTCMB0(Protocol[Array]):
     @property
     def T_cmb0(self) -> Array:
         """CMB temperature in K at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -35,8 +34,8 @@ class HasTCMB(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -58,7 +57,6 @@ class HasScaleFactor0(Protocol[Array]):
     @property
     def scale_factor0(self) -> Array:
         """Scale factor at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -78,8 +76,8 @@ class HasScaleFactor(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -99,12 +97,10 @@ class HasComovingDistance(Protocol[Array, InputT]):
     """The object has a comoving distance method."""
 
     @overload
-    def comoving_distance(self, z: InputT, /) -> Array:
-        ...
+    def comoving_distance(self, z: InputT, /) -> Array: ...
 
     @overload
-    def comoving_distance(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def comoving_distance(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def comoving_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Comoving line-of-sight distance :math:`d_c` in Mpc.
@@ -124,8 +120,8 @@ class HasComovingDistance(Protocol[Array, InputT]):
         -------
         Array
             The comoving distance :math:`d_c` in Mpc.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -133,12 +129,10 @@ class HasTransverseComovingDistance(Protocol[Array, InputT]):
     """The object has a comoving transverse distance method."""
 
     @overload
-    def transverse_comoving_distance(self, z: InputT, /) -> Array:
-        ...
+    def transverse_comoving_distance(self, z: InputT, /) -> Array: ...
 
     @overload
-    def transverse_comoving_distance(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def transverse_comoving_distance(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def transverse_comoving_distance(
         self, z1: InputT, z2: InputT | None = None, /
@@ -162,8 +156,8 @@ class HasTransverseComovingDistance(Protocol[Array, InputT]):
         -------
         Array
             The comoving transverse distance :math:`d_M` in Mpc.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -171,12 +165,10 @@ class HasComovingVolume(Protocol[Array, InputT]):
     """The object has a comoving volume method."""
 
     @overload
-    def comoving_volume(self, z: InputT, /) -> Array:
-        ...
+    def comoving_volume(self, z: InputT, /) -> Array: ...
 
     @overload
-    def comoving_volume(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def comoving_volume(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def comoving_volume(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Comoving volume :math:`V_c` in Mpc3.
@@ -197,8 +189,8 @@ class HasComovingVolume(Protocol[Array, InputT]):
         -------
         Array
             The comoving volume :math:`V_c` in Mpc3.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -226,8 +218,8 @@ class HasDifferentialComovingVolume(Protocol[Array, InputT]):
         -------
         Array
             The differential comoving volume :math:`dV_c` in Mpc3 sr-1.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -249,12 +241,10 @@ class HasProperDistance(Protocol[Array, InputT]):
     """The object has a proper distance method."""
 
     @overload
-    def proper_distance(self, z: InputT, /) -> Array:
-        ...
+    def proper_distance(self, z: InputT, /) -> Array: ...
 
     @overload
-    def proper_distance(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def proper_distance(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def proper_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Proper distance :math:`d` in Mpc.
@@ -275,8 +265,8 @@ class HasProperDistance(Protocol[Array, InputT]):
         -------
         Array
             The proper distance :math:`d` in Mpc.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -284,12 +274,10 @@ class HasProperTime(Protocol[Array, InputT]):
     """The object has a proper time method."""
 
     @overload
-    def proper_time(self, z: InputT, /) -> Array:
-        ...
+    def proper_time(self, z: InputT, /) -> Array: ...
 
     @overload
-    def proper_time(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def proper_time(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def proper_time(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Proper time :math:`t` in Gyr.
@@ -309,8 +297,8 @@ class HasProperTime(Protocol[Array, InputT]):
         -------
         Array
             The proper time :math:`t` in Gyr.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -330,12 +318,10 @@ class HasLookbackDistance(Protocol[Array, InputT]):
     """The object has a lookback distance method."""
 
     @overload
-    def lookback_distance(self, z: InputT, /) -> Array:
-        ...
+    def lookback_distance(self, z: InputT, /) -> Array: ...
 
     @overload
-    def lookback_distance(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def lookback_distance(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def lookback_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         r"""Lookback distance :math:`d_T` in Mpc.
@@ -355,8 +341,8 @@ class HasLookbackDistance(Protocol[Array, InputT]):
         -------
         Array
             The lookback distance :math:`d_T` in Mpc.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -364,12 +350,10 @@ class HasLookbackTime(Protocol[Array, InputT]):
     """The object has a lookback time method."""
 
     @overload
-    def lookback_time(self, z: InputT, /) -> Array:
-        ...
+    def lookback_time(self, z: InputT, /) -> Array: ...
 
     @overload
-    def lookback_time(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def lookback_time(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def lookback_time(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         """Lookback time in Gyr.
@@ -390,8 +374,8 @@ class HasLookbackTime(Protocol[Array, InputT]):
         -------
         Array
             The lookback time in Gyr.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -421,8 +405,8 @@ class HasAge(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -430,12 +414,10 @@ class HasAngularDiameterDistance(Protocol[Array, InputT]):
     """The object has an angular diameter distance method."""
 
     @overload
-    def angular_diameter_distance(self, z: InputT, /) -> Array:
-        ...
+    def angular_diameter_distance(self, z: InputT, /) -> Array: ...
 
     @overload
-    def angular_diameter_distance(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def angular_diameter_distance(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def angular_diameter_distance(
         self, z1: InputT, z2: InputT | None = None, /
@@ -464,8 +446,8 @@ class HasAngularDiameterDistance(Protocol[Array, InputT]):
         .. [1] Weinberg, 1972, pp 420-424; Weedman, 1986, pp 421-424.
         .. [2] Weedman, D. (1986). Quasar astronomy, pp 65-67.
         .. [3] Peebles, P. (1993). Principles of Physical Cosmology, pp 325-327.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -473,12 +455,10 @@ class HasLuminosityDistance(Protocol[Array, InputT]):
     """The object has a luminosity distance method."""
 
     @overload
-    def luminosity_distance(self, z: InputT, /) -> Array:
-        ...
+    def luminosity_distance(self, z: InputT, /) -> Array: ...
 
     @overload
-    def luminosity_distance(self, z1: InputT, z2: InputT, /) -> Array:
-        ...
+    def luminosity_distance(self, z1: InputT, z2: InputT, /) -> Array: ...
 
     def luminosity_distance(self, z1: InputT, z2: InputT | None = None, /) -> Array:
         """Redshift-dependent luminosity distance :math:`d_L` in Mpc.
@@ -502,8 +482,8 @@ class HasLuminosityDistance(Protocol[Array, InputT]):
         References
         ----------
         .. [1] Weinberg, 1972, pp 420-424; Weedman, 1986, pp 60-62.
+
         """
-        ...
 
 
 ##############################################################################

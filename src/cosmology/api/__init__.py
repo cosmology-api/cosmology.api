@@ -1,4 +1,5 @@
 """The Cosmology API standard."""
+
 from __future__ import annotations
 
 from cosmology.api._components import (

@@ -22,6 +22,7 @@ class CosmologyWrapper(Cosmology[Array, InputT], Protocol):  # type: ignore[misc
     ----------
     cosmo: object
         The object to wrap.
+
     """
 
     cosmo: object
@@ -38,5 +39,6 @@ class CosmologyWrapper(Cosmology[Array, InputT], Protocol):  # type: ignore[misc
         -------
         object
             The attribute of the wrapped object.
+
         """
         return getattr(self.cosmo, name)

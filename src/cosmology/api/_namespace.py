@@ -52,6 +52,7 @@ class CosmologyNamespace(Protocol):
     of objects, not details like their type. For example, ``constants`` should
     be a `~cosmology.api.CosmologyConstantsNamespace`, but `isinstance` will not
     check this.
+
     """
 
     @property

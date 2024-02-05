@@ -44,6 +44,7 @@ class CosmologyConstantsNamespace(Protocol):
     When used in a runtime check, `isinstance` will only look for the existence
     of objects, not details like their type. For example, ``c`` should be in
     units of kilometers per second, but `isinstance` will not check this.
+
     """
 
     @property

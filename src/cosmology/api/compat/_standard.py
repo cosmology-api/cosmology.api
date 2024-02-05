@@ -28,4 +28,5 @@ class StandardCosmologyWrapper(
     ----------
     cosmo: object
         The object to wrap.
+
     """

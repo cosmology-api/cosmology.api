@@ -24,7 +24,6 @@ class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
     @property
     def __cosmology_namespace__(self) -> CosmologyNamespace:
         """The cosmology namespace for this cosmology object."""
-        ...
 
     @property
     def name(self) -> str | None:
@@ -36,7 +35,6 @@ class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
         name in an analysis pipeline, presenting helpful error messages, and
         for plotting.
         """
-        ...
 
     # ========================================================================
     # Convenience methods
