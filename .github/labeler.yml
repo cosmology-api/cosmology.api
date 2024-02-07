@@ -1,4 +1,3 @@
-# Infrastructure Labels
 Infrastructure:
 - changed-files:
   - any-glob-to-any-file:
@@ -14,7 +13,6 @@ GitHub:
   - any-glob-to-any-file:
     - .github/**/*
 
-# Docs Labels
 Docs:
 - changed-files:
   - any-glob-to-any-file:
