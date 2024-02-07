@@ -1,4 +1,5 @@
 """Monkey-patching autosummary to emit the autosummary-gather-context event."""
+
 from __future__ import annotations
 
 from inspect import signature
@@ -45,9 +46,9 @@ def setup(app: Sphinx) -> None:
         app.disconnect(listener_id)
     else:
         # patch generate_autosummary_docs to call the wrapper above
-        generate_autosummary_docs.__globals__[
-            "generate_autosummary_content"
-        ] = generate_autosummary_content_with_context
+        generate_autosummary_docs.__globals__["generate_autosummary_content"] = (
+            generate_autosummary_content_with_context
+        )
 
         # register the new event
         app.add_event("autosummary-gather-context")

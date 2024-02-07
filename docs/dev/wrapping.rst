@@ -184,16 +184,15 @@ Array API will work. For this example we will add support for
 
         def transverse_comoving_distance(
             self, z1: InputT, z2: InputT | None = None
-        ) -> Array:
-            ...  # up to you to implement this
+        ) -> Array: ...  # up to you to implement this
 
-        def comoving_volume(self, z1: InputT, z2: InputT | None = None) -> Array:
-            ...  # up to you to implement this
+        def comoving_volume(
+            self, z1: InputT, z2: InputT | None = None
+        ) -> Array: ...  # up to you to implement this
 
         def differential_comoving_volume(
             self, z1: InputT, z2: InputT | None = None
-        ) -> Array:
-            ...  # up to you to implement this
+        ) -> Array: ...  # up to you to implement this
 
 
 Great! Now we have a wrapper that implements the base Cosmology API and supports

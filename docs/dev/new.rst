@@ -66,12 +66,10 @@ As an example, let's look at the base :class:`~cosmology.api.Cosmology` protocol
         name: str | None
 
         @property
-        def __cosmology_namespace__(self):
-            ...
+        def __cosmology_namespace__(self): ...
 
         @property
-        def constants(self):
-            ...
+        def constants(self): ...
 
 .. Sybil doesn't have the __name__ in globals
 .. skip: start

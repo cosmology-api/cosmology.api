@@ -150,8 +150,7 @@ The attribute-related interfaces have only the return-type parameter.
 
     class HasOmegaDE0(Protocol[Array]):
         @property
-        def Omega_de0(self) -> Array:
-            ...
+        def Omega_de0(self) -> Array: ...
 
 
 The method-related interfaces have both parameters.
@@ -160,8 +159,7 @@ The method-related interfaces have both parameters.
 .. code-block:: python
 
     class HasOmegaDE(Protocol[Array, InputT]):
-        def Omega_de(self, z: InputT) -> Array:
-            ...
+        def Omega_de(self, z: InputT) -> Array: ...
 
 
 Now we can build the correct ``hubble_constant`` function, e.g. that operates on

@@ -17,7 +17,6 @@ class HasOmegaTot0(Protocol[Array]):
     @property
     def Omega_tot0(self) -> Array:
         r"""Omega total; the total density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -35,8 +34,8 @@ class HasOmegaTot(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -58,7 +57,6 @@ class HasOmegaK0(Protocol[Array]):
     @property
     def Omega_k0(self) -> Array:
         r"""Omega curvature; the effective curvature density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -76,8 +74,8 @@ class HasOmegaK(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -99,7 +97,6 @@ class HasOmegaM0(Protocol[Array]):
     @property
     def Omega_m0(self) -> Array:
         r"""Omega matter; the matter density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -122,8 +119,8 @@ class HasOmegaM(Protocol[Array, InputT]):
         -----
         This does not include neutrinos, even if non-relativistic at the
         redshift of interest; see `Omega_nu`.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -145,7 +142,6 @@ class HasOmegaB0(Protocol[Array]):
     @property
     def Omega_b0(self) -> Array:
         r"""Omega baryon; the baryon density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -163,8 +159,8 @@ class HasOmegaB(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -186,7 +182,6 @@ class HasOmegaNu0(Protocol[Array]):
     @property
     def Omega_nu0(self) -> Array:
         r"""Omega neutrino; the neutrino density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -204,8 +199,8 @@ class HasOmegaNu(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -215,7 +210,6 @@ class HasNeff(Protocol[Array]):
     @property
     def Neff(self) -> Array:
         r"""Effective number of neutrino species."""
-        ...
 
 
 @runtime_checkable
@@ -225,7 +219,6 @@ class HasMNu(Protocol[Array]):
     @property
     def m_nu(self) -> tuple[Array, ...]:
         r"""Neutrino mass(es) in eV."""
-        ...
 
 
 @runtime_checkable
@@ -249,7 +242,6 @@ class HasOmegaDE0(Protocol[Array]):
     @property
     def Omega_de0(self) -> Array:
         r"""Omega dark energy; the dark energy density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -267,8 +259,8 @@ class HasOmegaDE(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
@@ -286,7 +278,6 @@ class HasOmegaDM0(Protocol[Array]):
     @property
     def Omega_dm0(self) -> Array:
         r"""Omega dark matter; the dark matter density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -309,8 +300,8 @@ class HasOmegaDM(Protocol[Array, InputT]):
         -----
         This does not include neutrinos, even if non-relativistic at the
         redshift of interest.
+
         """
-        ...
 
 
 @runtime_checkable
@@ -332,7 +323,6 @@ class HasOmegaGamma0(Protocol[Array]):
     @property
     def Omega_gamma0(self) -> Array:
         r"""Omega gamma; the photon density/critical density at z=0."""
-        ...
 
 
 @runtime_checkable
@@ -350,8 +340,8 @@ class HasOmegaGamma(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable

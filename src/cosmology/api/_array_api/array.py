@@ -194,11 +194,9 @@ class Array(Protocol):
 
     def __setitem__(
         self: Self,
-        key: int
-        | slice
-        | EllipsisType
-        | tuple[int | slice | EllipsisType, ...]
-        | Array,
+        key: (
+            int | slice | EllipsisType | tuple[int | slice | EllipsisType, ...] | Array
+        ),
         value: float | bool | Self,
         /,
     ) -> None:

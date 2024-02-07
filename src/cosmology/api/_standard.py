@@ -59,6 +59,7 @@ class StandardCosmology(
         Returns
         -------
         Array
+
         """
         ...
 
@@ -82,5 +83,6 @@ class StandardCosmology(
         Returns
         -------
         Array
+
         """
         ...

@@ -19,7 +19,6 @@ class HasCriticalDensity0(Protocol[Array]):
     @property
     def critical_density0(self) -> Array:
         """Critical density at z = 0 in Msol Mpc-3."""
-        ...
 
 
 @runtime_checkable
@@ -28,7 +27,6 @@ class HasCriticalDensity(Protocol[Array, InputT]):
 
     def critical_density(self, z: InputT, /) -> Array:
         """Redshift-dependent critical density in Msol Mpc-3."""
-        ...
 
 
 @runtime_checkable
@@ -50,7 +48,6 @@ class HasH0(Protocol[Array]):
     @property
     def H0(self) -> Array:
         """Hubble parameter at redshift 0 in km s-1 Mpc-1."""
-        ...
 
 
 @runtime_checkable
@@ -60,7 +57,6 @@ class HasHubbleDistance(Protocol[Array]):
     @property
     def hubble_distance(self) -> Array:
         """Hubble distance in Mpc."""
-        ...
 
 
 @runtime_checkable
@@ -70,7 +66,6 @@ class HasHubbleTime(Protocol[Array]):
     @property
     def hubble_time(self) -> Array:
         """Hubble time in Gyr."""
-        ...
 
 
 @runtime_checkable
@@ -88,8 +83,8 @@ class HasH(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """  # noqa: D402
-        ...
 
 
 @runtime_checkable
@@ -108,8 +103,8 @@ class HasHoverH0(Protocol[Array, InputT]):
         Returns
         -------
         Array
+
         """
-        ...
 
 
 @runtime_checkable
