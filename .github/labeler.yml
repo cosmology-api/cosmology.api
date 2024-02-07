@@ -1,15 +1,21 @@
 # Infrastructure Labels
 Infrastructure:
-  - .github/**/*
-  - .pre-commit-config.yaml
-  - .readthedocs.yml
-  - .gitignore
-  - pyproject.toml
-  - setup.cfg
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/**/*
+    - .pre-commit-config.yaml
+    - .readthedocs.yml
+    - .gitignore
+    - pyproject.toml
+    - setup.cfg
 
 GitHub:
-  - .github/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/**/*
 
 # Docs Labels
 Docs:
-  - docs/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - docs/**/*
