@@ -10,6 +10,8 @@ from types import SimpleNamespace
 from typing import TypeVar
 
 import pytest
+from packaging.version import Version
+
 from cosmology.api import (
     BaryonComponent,
     ComovingDistanceMeasures,
@@ -33,7 +35,6 @@ from cosmology.api import (
     TotalComponent,
 )
 from cosmology.api._array_api import Array
-from packaging.version import Version
 
 if Version(get_version("numpy")) >= Version("1.23"):
     import numpy.array_api as np

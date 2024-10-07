@@ -7,6 +7,8 @@ from importlib.metadata import version as get_version
 from typing import TYPE_CHECKING
 
 import pytest
+from packaging.version import Version
+
 from cosmology.api import (
     Cosmology,
     CosmologyConstantsNamespace,
@@ -15,7 +17,6 @@ from cosmology.api import (
     StandardCosmology,
     StandardCosmologyWrapper,
 )
-from packaging.version import Version
 
 if Version(get_version("numpy")) >= Version("1.23"):
     import numpy.array_api as np
