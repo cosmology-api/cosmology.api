@@ -10,6 +10,8 @@ from types import SimpleNamespace
 from typing import TypeVar
 
 import pytest
+from packaging.version import Version
+
 from cosmology.api import (
     BaryonComponent,
     ComovingDistanceMeasures,
@@ -33,10 +35,10 @@ from cosmology.api import (
     TotalComponent,
 )
 from cosmology.api._array_api import Array
-from packaging.version import Version
 
-if Version(get_version("numpy")) >= Version("1.23"):
-    import numpy.array_api as np
+np_ve = Version(get_version("numpy"))
+if np_ve >= Version("1.23") and np_ve < Version("2.1"):
+    import numpy.array_api as np  # pragma: no cover
 else:
     import numpy as np
 
@@ -195,7 +197,6 @@ def photon_cls(
 
 
 @pytest.fixture(scope="session")
-@pytest.mark.parametrize("comp_cls", [DarkEnergyComponent])
 def darkenergy_cls(
     cosmology_cls: type[Cosmology],
 ) -> type[DarkEnergyComponent | Cosmology]:

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, make_dataclass
 
 import pytest
+
 from cosmology.api import (
     CosmologyNamespace,
     CosmologyWrapper,

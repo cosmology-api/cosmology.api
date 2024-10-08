@@ -132,7 +132,6 @@ testpaths = [
     "src/cosmology",
     "docs",
 ]
-text_file_format = "rst"
 addopts = "-p no:doctest"
 markers = [
     "incompatible_with_mypyc: run when testing mypyc compiled code",

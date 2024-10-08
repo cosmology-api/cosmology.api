@@ -84,7 +84,7 @@ class HasH(Protocol[Array, InputT]):
         -------
         Array
 
-        """  # noqa: D402
+        """
 
 
 @runtime_checkable
