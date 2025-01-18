@@ -163,6 +163,7 @@ ignore = [
   "FIX002",  # Line contains TODO,
   "N802",  # Function name {name} should be lowercase
   "PD",  # pandas-vet
+  "RUF022", # `__all__` is not sorted
   "TD002",  # Missing author in TODO
   "TD003",  # Missing issue link on the line following this TODO
 ]
