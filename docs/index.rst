@@ -25,14 +25,14 @@ any supporting library. For example
 .. code-block:: python
 
     # No implementation, just a description of the interface!
-    import cosmology.api as cosmo
+    import cosmology.api
 
 
     def flat_angular_diameter_distance(
-        z: Array,
-        cosmo: cosmo.Has[
-            cosmo.Omega_k0[Array],
-            cosmo.comoving_distance[Array],
+        z: cosmology.api.Array,
+        cosmo: cosmology.api.Cosmology[
+            cosmology.api.HasOmegaK0[cosmology.api.Array],
+            cosmology.api.HasComovingDistance[cosmology.api.Array],
         ],
     ) -> Array:
         # Do some cosmology with any object that implements the API

@@ -72,6 +72,10 @@ from cosmology.api._extras import (
 )
 from cosmology.api._namespace import CosmologyNamespace
 from cosmology.api._standard import StandardCosmology
+from cosmology.api.compat import (
+    CosmologyWrapper,
+    StandardCosmologyWrapper,
+)
 
 __all__ = [
     # --- Core ---
@@ -155,6 +159,9 @@ __all__ = [
     "HasAge",
     # --- High-level ---
     "StandardCosmology",
+    # -- Wrappers --
+    "CosmologyWrapper",
+    "StandardCosmologyWrapper",
     # -- Namespaces ---
     "CosmologyNamespace",
     "CosmologyConstantsNamespace",
