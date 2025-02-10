@@ -89,15 +89,19 @@ The method-related interfaces have both parameters.
         def Omega_m(self, z: InputT) -> Array: ...
 
 
-We can hence a working function that expects :math:`\Omega_{m,0}` to be a plain
-Python ``float``:
+We can hence annotate the function to expect :math:`\Omega_{m,0}` to be a
+NumPy array:
 
 .. code-block:: python
 
+    from typing import Any
+    from numpy.typing import NDArray
     from cosmology.api import HasOmegaM0
 
+    Array = NDArray[Any]
 
-    def S_8(sigma_8: float, cosmo: HasOmegaM0[float]) -> float:
+
+    def S_8(sigma_8: float, cosmo: HasOmegaM0[Array]) -> Array:
         return sigma_8 * (cosmo.Omega_m0 / 0.3) ** 0.5
 
 And this should now type-check successfully.
