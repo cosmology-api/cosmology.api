@@ -15,7 +15,7 @@ from cosmology.api._components import (
     PhotonComponent,
     TotalComponent,
 )
-from cosmology.api._core import Cosmology, InputT
+from cosmology.api._core import InputT, _Cosmology
 from cosmology.api._distances import DistanceMeasures
 from cosmology.api._extras import CriticalDensity, HubbleParameter
 
@@ -35,7 +35,7 @@ class StandardCosmology(
     HubbleParameter[Array, InputT],
     CriticalDensity[Array, InputT],
     DistanceMeasures[Array, InputT],
-    Cosmology[Array, InputT],
+    _Cosmology[Array, InputT],
     Protocol,
 ):
     """API Protocol for the standard cosmology and expected set of components.

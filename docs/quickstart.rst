@@ -33,7 +33,7 @@ The cosmology protocols are grouped in levels:
 * Intermediate-level :doc:`component protocols </api/components>` which
   describe individual functional groups such as e.g. the physical matter and
   baryon components, or the Hubble parameters :math:`H_0` and :math:`H(z)`.
-* Low-level :doc:`attribute protocols </api/attributes>` which describe the
+* Low-level :doc:`attribute protocols </api/protocols>` which describe the
   existence of individual methods and properties.
 * Meta-level :doc:`namespace protocols </api/namespaces>` which describe the
   cosmology API itself and any API-conforming packages.

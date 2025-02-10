@@ -31,7 +31,11 @@ from cosmology.api._components import (
     TotalComponent,
 )
 from cosmology.api._constants import CosmologyConstantsNamespace
-from cosmology.api._core import Cosmology
+from cosmology.api._core import (
+    Array,
+    Cosmology,
+    InputT,
+)
 from cosmology.api._distances import (
     ComovingDistanceMeasures,
     DistanceMeasures,
@@ -68,14 +72,12 @@ from cosmology.api._extras import (
 )
 from cosmology.api._namespace import CosmologyNamespace
 from cosmology.api._standard import StandardCosmology
-from cosmology.api.compat import (
-    CosmologyWrapper,
-    StandardCosmologyWrapper,
-)
 
 __all__ = [
+    # --- Core ---
+    "Array",
     "Cosmology",
-    "StandardCosmology",
+    "InputT",
     # --- Components ---
     # total
     "HasOmegaTot",
@@ -151,9 +153,8 @@ __all__ = [
     "HasLuminosityDistance",
     "HasAngularDiameterDistance",
     "HasAge",
-    # -- Wrappers --
-    "CosmologyWrapper",
-    "StandardCosmologyWrapper",
+    # --- High-level ---
+    "StandardCosmology",
     # -- Namespaces ---
     "CosmologyNamespace",
     "CosmologyConstantsNamespace",

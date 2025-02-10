@@ -25,7 +25,6 @@ class ArrayLibraries(Enum):
 
 def get_array_from_library(name: ArrayLibraries) -> tuple[str, object]:  # noqa: PLR0911
     """Import an array library."""
-
     if name == ArrayLibraries.array:
         vrsn = "{}.{}.{}".format(*sys.version_info[:3])
 

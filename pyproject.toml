@@ -22,6 +22,7 @@
     "Programming Language :: Python :: 3",
   ]
   dependencies = [
+      "typing-protocol-intersection",
   ]
 
 [project.optional-dependencies]
@@ -96,6 +97,8 @@
 [tool.mypy]
   python_version = 3.9
 
+  plugins = "typing_protocol_intersection.mypy_plugin"
+
   namespace_packages = true
   explicit_package_bases = true
   mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
@@ -148,9 +151,9 @@ filterwarnings = [
 target-version = "py39"
 line-length = 88
 
+[tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-  "ANN101",  # Missing type annotation for {name} in method  # TODO: report to Ruff
   "ARG001",  # Unused function argument
   "ARG002",  # Unused method argument
   "COM812",  # trailing-comma-missing
@@ -168,7 +171,7 @@ ignore = [
   "TD003",  # Missing issue link on the line following this TODO
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "src/cosmology/api/_array_api/*.py" = ["A002", "A003", "D212", "D205", "E501", "N801"]
 "docs/*.py" = ["INP001"]
 "tests/*.py" = [
@@ -178,6 +181,6 @@ ignore = [
 ]
 "test_*.py" = ["D", "N8", "S101"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 forced-separate = ["tests"]
 required-imports = ["from __future__ import annotations"]

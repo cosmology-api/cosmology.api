@@ -7,7 +7,6 @@ list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
-
 import os
 import sys
 import tomli
@@ -45,8 +44,6 @@ version = release.partition("-")[0]
 
 # -- General configuration ---------------------------------------------------
 
-sys.path.append(os.path.abspath("./_ext"))
-
 # By default, highlight as Python 3.
 highlight_language = "python3"
 
@@ -58,9 +55,6 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "numpydoc",
-    "sphinx_copybutton",
-    "sphinx_ext_autosummary_context",
-    "sphinx_ext_cosmology_api",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
