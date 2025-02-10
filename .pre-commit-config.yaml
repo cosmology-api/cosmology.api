@@ -53,4 +53,3 @@ repos:
         args:
           - --strict
           - --allow-subclassing-any
-        additional_dependencies: [typing-protocol-intersection]

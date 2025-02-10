@@ -22,7 +22,6 @@
     "Programming Language :: Python :: 3",
   ]
   dependencies = [
-      "typing-protocol-intersection",
   ]
 
 [project.optional-dependencies]
@@ -96,8 +95,6 @@
 
 [tool.mypy]
   python_version = 3.9
-
-  plugins = "typing_protocol_intersection.mypy_plugin"
 
   namespace_packages = true
   explicit_package_bases = true

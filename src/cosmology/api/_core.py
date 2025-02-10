@@ -2,15 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = [
-    "Array",
-    "Cosmology",
-    "InputT",
-]
-
 from typing import TYPE_CHECKING, Protocol, TypeVar, runtime_checkable
-
-from typing_protocol_intersection import ProtocolIntersection as Cosmology
 
 from cosmology.api._array_api import Array
 
@@ -22,9 +14,11 @@ if TYPE_CHECKING:
 # is accepted.
 InputT = TypeVar("InputT", contravariant=True)  # noqa: PLC0105
 
+__all__: list[str] = []
+
 
 @runtime_checkable
-class _Cosmology(Protocol[Array, InputT]):  # type: ignore[misc] # noqa: PYI046
+class Cosmology(Protocol[Array, InputT]):  # type: ignore[misc]
     """Cosmology API Protocol."""
 
     @property
