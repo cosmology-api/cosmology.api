@@ -13,117 +13,44 @@ concepts in more detail. Alternatively, we hope the examples in this Quick
 Start are sufficient that you can just jump right in.
 
 
-Protocol hierarchy
-------------------
-
-When you are writing a function it's important to consider what the function
-needs to do and what it needs to do it. For example, a function that computes
-the Hubble parameter :math:`H(z)` needs the Hubble constant :math:`H_0` and all
-the component densities :math:`\Omega_{X,0}`. Other functions might need
-significantly fewer attributes and methods. The Cosmology API Protocols are
-designed to allow you to specify exactly what your function needs, from single
-attributes and methods to fully-featured cosmology objects. We organize the
-Protocols in a hierarchy, from the most general to the most specific, so you can
-choose the level of detail that best suits your needs.
-
-The cosmology protocols are grouped in levels:
-
-* High-level :doc:`cosmology protocols </api/cosmology>` which
-  describe fully-featured cosmology objects.
-* Intermediate-level :doc:`component protocols </api/components>` which
-  describe individual functional groups such as e.g. the physical matter and
-  baryon components, or the Hubble parameters :math:`H_0` and :math:`H(z)`.
-* Low-level :doc:`attribute protocols </api/protocols>` which describe the
-  existence of individual methods and properties.
-* Meta-level :doc:`namespace protocols </api/namespaces>` which describe the
-  cosmology API itself and any API-conforming packages.
-
-
-The high and intermediate-level protocols are optimally for pipelines that
-perform functions requiring many attributes and methods of a Cosmology. Of
-course, the protocols can also be used in simple functions. However, the
-lower-level protocols allow for a more precise description of what a function
-uses. For example, a function requiring only :math:`H_0` and
-:math:`\Omega_{m,0}` can use the corresponding low-level protocols
-:class:`~cosmology.api.HasH0` and :class:`~cosmology.api.HasOmegaM0`, instead of
-the high-level, all-encompassing :class:`~cosmology.api.StandardCosmology`.
-
-The last level, the "meta" level, is most useful for developers of cosmology
-libraries and is described in the :doc:`developers section </dev/new>`.
-
-
 Type Annotations
 ----------------
 
 When writing a function it's often useful to specify the types of the inputs and
 the outputs.  This is done using type hints.  If you are familiar with type
 hints, read on; if you are unfamiliar with type hints, we recommend reading the
-:doc:`previous section </introduction>` which explains the concepts in more
+:doc:`introduction </introduction>`, which explains the concepts in more
 detail. Having agreed type hints are useful, let's look at how to use them with
 the Cosmology API.
 
-As an example, let's say we want to write a function for the Hubble parameter
-:math:`H(z)` in the dark-energy-dominated era. This can be equivalently written
-with the protocols at each of the hierarchy levels:
-
-- High-level:
-
-.. code-block:: python
-
-    from cosmology.api import StandardCosmology  # probably everything you need
-
-
-    def hubble_constant(cosmo: StandardCosmology) -> float:
-        return float(np.sqrt(cosmo.Omega_de0 / 3))
-
-- Intermediate-level:
+As an example, let's say we want to write a function that computes :math:`S_8 =
+\sigma_8 \, \sqrt{\Omega_{m,0}/0.3}` as a function of :math:`\sigma_8`, with
+:math:`\Omega_{m,0}` coming from the current cosmology.  Using the Cosmology
+API, such a function can be annotated as:
 
 .. code-block:: python
 
-    from cosmology.api import DarkEnergyComponent
+    from cosmology.api import HasOmegaM0
 
 
-    def hubble_constant(cosmo: DarkEnergyComponent) -> float:
-        return float(np.sqrt(cosmo.Omega_de0 / 3))
+    def S_8(sigma_8: float, cosmo: HasOmegaM0) -> float:
+        return sigma_8 * (cosmo.Omega_m0 / 0.3) ** 0.5
 
-- Low-level:
+Here, the annotation with the :class:`~cosmology.api.HasOmegaM0` protocol
+declares that the ``cosmo`` object must have an attribute
+:attr:`~cosmology.api.HasOmegaM0.Omega_m0`, which is subsequently used by the
+function.
 
-.. code-block:: python
-
-    from cosmology.api import HasOmegaDE0
-
-
-    def hubble_constant(cosmo: HasOmegaDE0) -> float:
-        return float(np.sqrt(cosmo.Omega_de0 / 3))
-
-
-Even though the function is the same in each of the three examples, the type
-annotations are different. The high-level example uses the
-:class:`~cosmology.api.StandardCosmology` protocol, which describes a
-fully-featured cosmology object. The intermediate-level example uses the
-:class:`~cosmology.api.DarkEnergyComponent` protocol, which describes a
-cosmology object with dark energy related attributes and methods. The low-level
-example uses the :class:`~cosmology.api.HasOmegaDE0` protocol, which describes
-an object with the attribute :attr:`~cosmology.api.HasOmegaDE0.Omega_de0`. All
-three type annotations describe an object with the attribute
-:attr:`~cosmology.api.HasOmegaDE0.Omega_de0`, which is why all three examples
-work. However, the intermediate and high-level examples use protocols that
-describe additional attributes and methods that are not required by the
-function. The low-level example uses the most precise protocol that describes
-only what the function needs.
-
-If you have a type checker handy and use it on the previous examples it should
-be complaining that :class:`~cosmology.api.StandardCosmology`,
-:class:`~cosmology.api.DarkEnergyComponent`, and
-:class:`~cosmology.api.HasOmegaDE0` are missing type hints. This is because the
-Cosmology API Protocols are `generic
-<https://peps.python.org/pep-0484/#generics>`_ with respect to the return types
--- of the objects attributes and methods -- and the input types of the methods.
-This means that the return types and input types are not specified in the
-protocol. Instead, the return types and input types are specified when the
-protocol is used. The types are restricted, as the Cosmology API is built on the
-`Array API <https://data-apis.org/array-api/latest/>`_ and the return types must
-all be Array types.
+If you have a type checker handy, and use it on the previous example, it might
+complain that :class:`~cosmology.api.HasOmegaM0` is missing a type hint. This
+is because the Cosmology API Protocols are `generic
+<https://typing.readthedocs.io/en/latest/reference/generics.html>`_ with
+respect to the types of its attributes and methods.  This means that the return
+types and input types are not specified in the protocol. Instead, the return
+types and input types are specified when the protocol is used. The types are
+restricted, as the Cosmology API is built on the `Array API
+<https://data-apis.org/array-api/latest/>`_ and the return types must all be
+Array types.
 
 .. note::
 
@@ -148,9 +75,9 @@ The attribute-related interfaces have only the return-type parameter.
     from typing import Protocol
 
 
-    class HasOmegaDE0(Protocol[Array]):
+    class HasOmegaM0(Protocol[Array]):
         @property
-        def Omega_de0(self) -> Array: ...
+        def Omega_m0(self) -> Array: ...
 
 
 The method-related interfaces have both parameters.
@@ -158,48 +85,64 @@ The method-related interfaces have both parameters.
 .. skip: next
 .. code-block:: python
 
-    class HasOmegaDE(Protocol[Array, InputT]):
-        def Omega_de(self, z: InputT) -> Array: ...
+    class HasOmegaM(Protocol[Array, InputT]):
+        def Omega_m(self, z: InputT) -> Array: ...
 
 
-Now we can build the correct ``hubble_constant`` function, e.g. that operates on
-`numpy.ndarray
-<https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html>`_ with
-`float64
-<https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64>`_
-dtypes.:
-
-- Low-level:
+We can hence a working function that expects :math:`\Omega_{m,0}` to be a plain
+Python ``float``:
 
 .. code-block:: python
 
-    from typing_extensions import TypeAlias  # Use `typing.TypeAlias` in Python 3.10+
-    import numpy.typing as npt
-    from numpy import float64
-
-    Array: TypeAlias = npt.NDArray[float64]
+    from cosmology.api import HasOmegaM0
 
 
-    def hubble_constant(cosmo: HasOmegaDE0[Array]) -> Array:
-        return np.sqrt(cosmo.Omega_de0 / 3)
+    def S_8(sigma_8: float, cosmo: HasOmegaM0[float]) -> float:
+        return sigma_8 * (cosmo.Omega_m0 / 0.3) ** 0.5
 
-- Intermediate-level:
+And this should now type-check successfully.
+
+
+Combining Protocols
+-------------------
+
+When you are writing a function it's important to consider what the function
+needs to do and what it needs to do it. For example, a function that computes
+the Hubble parameter :math:`H(z)` needs the Hubble constant :math:`H_0` and all
+the component densities :math:`\Omega_{X,0}`. Other functions might need
+significantly fewer attributes and methods. The Cosmology API defines a set of
+:doc:`Protocols </api/protocols>` that are designed to allow you to specify
+exactly what your code needs, by combining multiple protocols into your own
+bespoke Cosmology interface:
 
 .. code-block:: python
 
-    def hubble_constant(cosmo: DarkEnergyComponent[Array, Array]) -> Array:
-        return np.sqrt(cosmo.Omega_de0 / 3)
+    from typing import Any, Protocol
+    from numpy.typing import NDArray
+    from cosmology.api import HasComovingDistance, HasH0
 
-- High-level:
-
-.. code-block:: python
-
-    def hubble_constant(cosmo: StandardCosmology[Array, Array]) -> Array:
-        return np.sqrt(cosmo.Omega_de0 / 3)
+    # my code is working with NumPy arrays
+    Array = NDArray[Any]
 
 
-Note the :class:`~typing.TypeAlias`. We recommend using type aliases to decrease
-the verbosity and increase readability of the function type hints.
+    # the cosmology interface for my code
+    class Cosmology(
+        HasComovingDistance[Array, Array],
+        HasH0[Array],
+        Protocol,
+    ): ...
+
+
+    # my code uses my cosmology interface
+    def my_function(z: Array, cosmo: Cosmology) -> Array:
+        """Do my computation using my Cosmology interface."""
+        ...
+
+This mix-and-match approach allows you to describe the minimal set of methods
+and attributes that a cosmology code needs to support for your code.  It also
+means your code will work with any Cosmology API-compliant library as soon as
+it supports the features you need, even if it doesn't support some other
+features that the API describes.
 
 
 Run-time Checks
@@ -240,6 +183,5 @@ Next Steps
 The :doc:`Protocols </api/protocols>` allow you to specify and inspect which
 attributes are supported by a given cosmology object.
 
-The :doc:`reference </api/reference>` provides a flat
-list of all attributes which can potentially be supported by cosmology
-instances.
+The :doc:`reference </api/reference>` provides a flat list of all attributes
+which can potentially be supported by cosmology instances.

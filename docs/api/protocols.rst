@@ -7,6 +7,10 @@ Protocols
 This page contains a list of all individual protocols for methods and
 properties.  The names of these protocols are of the form *Has<Attribute>*.
 
+See :doc:`/api/reference` for a flat list of methods and attributes defined
+by these protocols.
+
+
 Hubble parameter
 ----------------
 

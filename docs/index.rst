@@ -24,16 +24,24 @@ any supporting library. For example
 .. skip: next
 .. code-block:: python
 
+    from typing import Protocol
+
     # No implementation, just a description of the interface!
     import cosmology.api
 
 
+    # combine standard methods into an interface for your code
+    class Cosmology(
+        cosmology.api.HasOmegaK0[Array],
+        cosmology.api.HasComovingDistance[Array],
+        Protocol,
+    ): ...
+
+
+    # use the cosmology interface with your function
     def flat_angular_diameter_distance(
-        z: cosmology.api.Array,
-        cosmo: cosmology.api.Cosmology[
-            cosmology.api.HasOmegaK0[cosmology.api.Array],
-            cosmology.api.HasComovingDistance[cosmology.api.Array],
-        ],
+        z: Array,
+        cosmo: Cosmology[Array],
     ) -> Array:
         # Do some cosmology with any object that implements the API
         if cosmo.Omega_k0 != 0:

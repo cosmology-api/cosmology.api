@@ -3,6 +3,12 @@ Reference
 
 .. currentmodule:: cosmology.api
 
+This page contains a list of all methods and attributes that a Cosmology
+instance might support.
+
+Each item on this list is described in an associated :doc:`protocol
+</api/protocols>`.
+
 
 Hubble parameter
 ----------------
