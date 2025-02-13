@@ -24,17 +24,29 @@ any supporting library. For example
 .. skip: next
 .. code-block:: python
 
-   # No implementation, just a description of the interface!
-   from cosmology.api import StandardCosmology
+    from typing import Protocol
+
+    # No implementation, just a description of the interface!
+    import cosmology.api
 
 
-   def flat_angular_diameter_distance(
-       cosmo: StandardCosmology[Array, Array], z: Array
-   ) -> Array:
-       # Do some cosmology with any object that implements the API
-       if cosmo.Omega_k0 != 0:
-           raise ValueError("This function only works for flat cosmologies")
-       return cosmo.comoving_distance(z) / (1 + z)
+    # combine standard methods into an interface for your code
+    class Cosmology(
+        cosmology.api.HasOmegaK0[Array],
+        cosmology.api.HasComovingDistance[Array],
+        Protocol,
+    ): ...
+
+
+    # use the cosmology interface with your function
+    def flat_angular_diameter_distance(
+        z: Array,
+        cosmo: Cosmology[Array],
+    ) -> Array:
+        # Do some cosmology with any object that implements the API
+        if cosmo.Omega_k0 != 0:
+            raise ValueError("This function only works for flat cosmologies")
+        return cosmo.comoving_distance(z) / (1 + z)
 
 
 .. note::
@@ -76,8 +88,9 @@ There are a few types of people who might find themselves reading this:
    :caption: API
    :hidden:
 
-   api/protocols
    api/reference
+   api/protocols
+   api/groupings
 
 .. toctree::
    :caption: Developers

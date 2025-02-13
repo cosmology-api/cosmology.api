@@ -13,7 +13,7 @@ At a higher level of abstraction, the sum of components makes a :doc:`cosmology
 </api/cosmology>`.
 
 At a lower level of abstraction, a component consists of individual
-:doc:`attributes </api/attributes>`.
+:doc:`attributes </api/protocols>`.
 
 Physical Components
 -------------------
