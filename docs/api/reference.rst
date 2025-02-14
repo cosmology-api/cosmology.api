@@ -147,3 +147,13 @@ Cosmic microwave background
 
    ~HasTCMB.T_cmb
    ~HasTCMB0.T_cmb0
+
+
+Perturbations
+-------------
+
+.. autosummary::
+   :toctree: reference
+   :template: reference
+
+   ~HasGrowthFactor.growth_factor

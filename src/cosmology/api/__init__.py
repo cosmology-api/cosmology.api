@@ -67,6 +67,9 @@ from cosmology.api._extras import (
     HubbleParameter,
 )
 from cosmology.api._namespace import CosmologyNamespace
+from cosmology.api._perturbations import (
+    HasGrowthFactor,
+)
 from cosmology.api._standard import StandardCosmology
 from cosmology.api.compat import (
     CosmologyWrapper,
@@ -157,4 +160,6 @@ __all__ = [
     # -- Namespaces ---
     "CosmologyNamespace",
     "CosmologyConstantsNamespace",
+    # --- Perturbations ---
+    "HasGrowthFactor",
 ]
