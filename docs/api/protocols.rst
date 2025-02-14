@@ -103,3 +103,9 @@ Cosmic microwave background
 
 .. autoclass:: HasTCMB
 .. autoclass:: HasTCMB0
+
+
+Perturbations
+-------------
+
+.. autoclass:: HasGrowthFactor
