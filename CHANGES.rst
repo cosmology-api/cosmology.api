@@ -341,3 +341,6 @@ Changelog (``cosmology.api``)
 
 - Documentation
     - format, layout, and rendering extensions (#40) [@@ntessore]
+
+- ``HasInverseComovingDistance`` (#113) [@paddyroddy]
+    - ``inv_comving_distance`` (#113) [@paddyroddy]
