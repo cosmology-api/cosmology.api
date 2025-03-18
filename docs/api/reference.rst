@@ -33,6 +33,7 @@ Distance
 
    ~HasAngularDiameterDistance.angular_diameter_distance
    ~HasComovingDistance.comoving_distance
+   ~HasInverseComovingDistance.inv_comoving_distance
    ~HasHubbleDistance.hubble_distance
    ~HasLookbackDistance.lookback_distance
    ~HasLuminosityDistance.luminosity_distance

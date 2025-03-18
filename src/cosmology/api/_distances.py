@@ -125,6 +125,29 @@ class HasComovingDistance(Protocol[Array, InputT]):
 
 
 @runtime_checkable
+class HasInverseComovingDistance(Protocol[Array, InputT]):
+    """The object has a inverse comoving distance method."""
+
+    def inv_comoving_distance(self, dc: InputT, /) -> Array:
+        r"""Redshift at a given comoving line-of-sight distance.
+
+        The redshift at a comoving distance along the line-of-sight
+        between two objects.
+
+        Parameters
+        ----------
+        dc : Array, positional-only
+            The comoving line-of-sight distance :math:`d_c` in Mpc.
+
+        Returns
+        -------
+        Array
+            The redshift at a given comoving line-of-sight distance.
+
+        """
+
+
+@runtime_checkable
 class HasTransverseComovingDistance(Protocol[Array, InputT]):
     """The object has a comoving transverse distance method."""
 
@@ -225,6 +248,7 @@ class HasDifferentialComovingVolume(Protocol[Array, InputT]):
 @runtime_checkable
 class ComovingDistanceMeasures(
     HasComovingDistance[Array, InputT],
+    HasInverseComovingDistance[Array, InputT],
     HasTransverseComovingDistance[Array, InputT],
     HasComovingVolume[Array, InputT],
     HasDifferentialComovingVolume[Array, InputT],
