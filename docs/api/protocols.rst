@@ -26,12 +26,17 @@ Distance
 
 .. autoclass:: HasAngularDiameterDistance
 .. autoclass:: HasComovingDistance
-.. autoclass:: HasInverseComovingDistance
 .. autoclass:: HasHubbleDistance
 .. autoclass:: HasLookbackDistance
 .. autoclass:: HasLuminosityDistance
 .. autoclass:: HasProperDistance
 .. autoclass:: HasTransverseComovingDistance
+
+
+Inverse distance
+----------------
+
+.. autoclass:: HasInverseComovingDistance
 
 
 Volume
