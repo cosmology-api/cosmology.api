@@ -33,12 +33,23 @@ Distance
 
    ~HasAngularDiameterDistance.angular_diameter_distance
    ~HasComovingDistance.comoving_distance
-   ~HasInverseComovingDistance.inv_comoving_distance
    ~HasHubbleDistance.hubble_distance
    ~HasLookbackDistance.lookback_distance
    ~HasLuminosityDistance.luminosity_distance
    ~HasProperDistance.proper_distance
    ~HasTransverseComovingDistance.transverse_comoving_distance
+
+
+Inverse distance
+----------------
+
+These functions return a redshift given a distance.
+
+.. autosummary::
+   :toctree: reference
+   :template: reference
+
+   ~HasInverseComovingDistance.inv_comoving_distance
 
 
 Volume
