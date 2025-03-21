@@ -7,37 +7,28 @@ list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
-import os
-import sys
-import tomli
 
-sys.path.append(os.path.abspath("../src"))
+def parse_package_authors(author_email):
+    """Get names from a package's Author-email field."""
+    import email, email.policy
+
+    msg = email.message_from_string(f"To: {author_email}", policy=email.policy.default)
+    return ", ".join(address.display_name for address in msg["to"].addresses)
 
 
 # -- Project information -----------------------------------------------------
 
+import importlib.metadata
 
-def read_pyproject():
-    """Get author information from package metadata."""
-    with open(os.path.abspath("../pyproject.toml"), "rb") as f:
-        toml = tomli.load(f)
+metadata = importlib.metadata.metadata("cosmology.api")
 
-    project = dict(toml["project"])
-    version = project["version"]
-    authors = ", ".join(d["name"] for d in project["authors"])
-
-    return version, authors
-
-
-package_version, package_authors = read_pyproject()
-
-project = "cosmology.api"
-author = package_authors
-copyright = f"2023, {author}"
+project = metadata["Name"]
+author = parse_package_authors(metadata["Author-email"])
+copyright = f"2025, {author}"
 
 
 # The full version, including alpha/beta/rc tags.
-release = package_version
+release = metadata["Version"]
 # The short X.Y version.
 version = release.partition("-")[0]
 
