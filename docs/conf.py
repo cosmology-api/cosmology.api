@@ -7,6 +7,15 @@ list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
+
+def parse_package_authors(author_email):
+    """Get names from a package's Author-email field."""
+    import email, email.policy
+
+    msg = email.message_from_string(f"To: {author_email}", policy=email.policy.default)
+    return ", ".join(address.display_name for address in msg["to"].addresses)
+
+
 # -- Project information -----------------------------------------------------
 
 import importlib.metadata
@@ -14,7 +23,7 @@ import importlib.metadata
 metadata = importlib.metadata.metadata("cosmology.api")
 
 project = metadata["Name"]
-author = metadata["Author-email"]
+author = parse_package_authors(metadata["Author-email"])
 copyright = f"2025, {author}"
 
 
