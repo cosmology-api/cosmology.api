@@ -63,6 +63,6 @@ def standardcosmo_wrapper_cls(
         [("cosmo", object)],
         bases=(cosmology_wrapper_cls, StandardCosmologyWrapper),
         namespace={n: property(_return_one) for n in standard_attrs}
-        | {n: _return_1arg for n in standard_meths},
+        | dict.fromkeys(standard_meths, _return_1arg),
         frozen=True,
     )

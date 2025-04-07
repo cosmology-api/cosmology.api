@@ -78,7 +78,7 @@ def test_compliant_standard_wrapper(cosmology_ns, standard_attrs, standard_meths
         "ExampleStandardCosmologyWrapper",
         [("cosmo", object)],
         namespace={n: property(_return_one) for n in standard_attrs}
-        | {n: _return_1arg for n in standard_meths}
+        | dict.fromkeys(standard_meths, _return_1arg)
         | {
             "__cosmology_namespace__": property(_cosmology_namespace_),
             "name": property(name),
