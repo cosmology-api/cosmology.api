@@ -80,7 +80,7 @@ def make_cls(
         [(n, Array, field(default_factory=_default_one)) for n in fields],
         bases=bases,
         namespace={n: property(_return_one) for n in comp_attrs - fields}
-        | {n: _return_1arg for n in comp_meths},
+        | dict.fromkeys(comp_meths, _return_1arg),
         frozen=True,
     )
 
@@ -298,7 +298,7 @@ def dists_cls(
         [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(),
         namespace={n: property(_return_one) for n in dists_attrs - flds}
-        | {n: _return_1arg for n in dists_meths},
+        | dict.fromkeys(dists_meths, _return_1arg),
         frozen=True,
     )
 
@@ -365,7 +365,7 @@ def standard_cls(
         [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=bases,  # only inherit from Background to not have the properties
         namespace={n: property(_return_one) for n in standard_attrs - flds}
-        | {n: _return_1arg for n in standard_meths},
+        | dict.fromkeys(standard_meths, _return_1arg),
         frozen=True,
     )
 

@@ -43,7 +43,7 @@ def test_compliant_dists(dists_cls, dists_attrs, dists_meths):
         [(n, Array, field(default_factory=_default_one)) for n in flds],
         bases=(dists_cls,),
         namespace={n: property(_return_one) for n in dists_attrs - set(flds)}
-        | {n: _return_1arg for n in dists_meths},
+        | dict.fromkeys(dists_meths, _return_1arg),
         frozen=True,
     )
 

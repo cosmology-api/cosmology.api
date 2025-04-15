@@ -1,5 +1,4 @@
-# ruff: noqa
-
+# ruff: noqa: A001, ANN001, ANN201, E402, ERA001
 """Configuration file for the Sphinx documentation builder.
 
 This file only contains a selection of the most common options. For a full
@@ -7,10 +6,13 @@ list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
+from __future__ import annotations
+
 
 def parse_package_authors(author_email):
     """Get names from a package's Author-email field."""
-    import email, email.policy
+    import email
+    import email.policy
 
     msg = email.message_from_string(f"To: {author_email}", policy=email.policy.default)
     return ", ".join(address.display_name for address in msg["to"].addresses)

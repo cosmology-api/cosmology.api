@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol, TypeVar, runtime_checkable
+from typing import TYPE_CHECKING, Protocol, runtime_checkable
+
+from typing_extensions import Self
 
 if TYPE_CHECKING:
     # STDLIB
@@ -11,9 +13,6 @@ if TYPE_CHECKING:
 
 
 __all__: list[str] = []
-
-
-Self = TypeVar("Self", bound="Array")
 
 
 @runtime_checkable

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Protocol, TypeVar, runtime_checkable
 
+from typing_extensions import Self
+
 __all__: list[str] = []
 
 DType = TypeVar("DType", bound="DTypeConformant")
@@ -11,7 +13,7 @@ DType = TypeVar("DType", bound="DTypeConformant")
 class DTypeConformant(Protocol):
     """Runtime-checkable protocol for the dtype."""
 
-    def __eq__(self: DType, other: DType, /) -> bool:
+    def __eq__(self, other: Self, /) -> bool:
         """
         Computes the truth value of ``self == other`` in order to test for data
         type object equality.
