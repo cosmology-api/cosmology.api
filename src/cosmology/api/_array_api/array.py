@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from typing_extensions import Self
-
 if TYPE_CHECKING:
     # STDLIB
-    from types import EllipsisType  # type: ignore[attr-defined]
+    from types import EllipsisType
+    from typing import Self
 
     # LOCAL
     from .dtype import DTypeConformant
