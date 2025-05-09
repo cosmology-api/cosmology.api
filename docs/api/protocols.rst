@@ -14,6 +14,7 @@ by these protocols.
 Hubble parameter
 ----------------
 
+.. autoclass:: HasLittleH
 .. autoclass:: HasH
 .. autoclass:: HasH0
 .. autoclass:: HasHoverH0

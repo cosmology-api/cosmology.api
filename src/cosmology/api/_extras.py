@@ -42,6 +42,15 @@ class CriticalDensity(
 
 
 @runtime_checkable
+class HasLittleH(Protocol[Array]):
+    r"""The object has a "little h" Hubble parameter attribute :math:`h`."""
+
+    @property
+    def h(self) -> Array:
+        """Hubble parameter :math:`h` today."""
+
+
+@runtime_checkable
 class HasH0(Protocol[Array]):
     r"""The object has a Hubble parameter attribute -- :math:`H_0`."""
 
