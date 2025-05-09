@@ -65,6 +65,7 @@ from cosmology.api._extras import (
     HasHoverH0,
     HasHubbleDistance,
     HasHubbleTime,
+    HasLittleH,
     HubbleParameter,
 )
 from cosmology.api._namespace import CosmologyNamespace
@@ -121,6 +122,7 @@ __all__ = [
     "HasCriticalDensity",
     "CriticalDensity",
     # hubble parameter
+    "HasLittleH",
     "HasH0",
     "HasHubbleDistance",
     "HasHubbleTime",

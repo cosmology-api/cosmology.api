@@ -17,6 +17,7 @@ Hubble parameter
    :toctree: reference
    :template: reference
 
+   ~HasLittleH.h
    ~HasH.H
    ~HasH0.H0
    ~HasHoverH0.H_over_H0
