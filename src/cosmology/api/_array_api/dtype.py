@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import Protocol, TypeVar, runtime_checkable
+from typing import TYPE_CHECKING, Protocol, TypeVar, runtime_checkable
 
-from typing_extensions import Self
+if TYPE_CHECKING:
+    from typing import Self
+
+    DType = TypeVar("DType", bound="DTypeConformant")
 
 __all__: list[str] = []
-
-DType = TypeVar("DType", bound="DTypeConformant")
 
 
 @runtime_checkable
