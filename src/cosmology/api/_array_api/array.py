@@ -15,7 +15,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class Array(Protocol):
+class Array(Protocol):  # noqa: PLW1641
     """Runtime checkable protocol for conformance with the array API."""
 
     @property

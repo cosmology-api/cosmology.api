@@ -8,12 +8,12 @@ list see the documentation:
 
 from __future__ import annotations
 
+import email
+import email.policy
+
 
 def parse_package_authors(author_email):
     """Get names from a package's Author-email field."""
-    import email
-    import email.policy
-
     msg = email.message_from_string(f"To: {author_email}", policy=email.policy.default)
     return ", ".join(address.display_name for address in msg["to"].addresses)
 
