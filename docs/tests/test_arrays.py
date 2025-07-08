@@ -31,39 +31,39 @@ def get_array_from_library(name: ArrayLibraries) -> tuple[str, object]:  # noqa:
         return vrsn, array.array("f", [1.0, 2.0, 3.0])
 
     elif name == ArrayLibraries.numpy:  # noqa: RET505
-        import numpy as np
+        import numpy as np  # noqa: PLC0415
 
         return np.__version__, np.linspace(0, 1, 10, dtype=np.float64)
 
     elif name == ArrayLibraries.jax:
-        import jax
-        import jax.numpy as jnp
+        import jax  # noqa: PLC0415
+        import jax.numpy as jnp  # noqa: PLC0415
 
         return jax.__version__, jnp.linspace(0, 1, 10)
 
     elif name == ArrayLibraries.torch:
-        import torch
+        import torch  # noqa: PLC0415
 
         return torch.__version__, torch.linspace(0, 1, 10, dtype=torch.float64)
 
     elif name == ArrayLibraries.zarr:
-        import zarr
+        import zarr  # noqa: PLC0415
 
         return zarr.__version__, zarr.zeros((100, 100), chunks=(10, 10), dtype="f4")[:]
 
     elif name == ArrayLibraries.dask:
-        import dask
-        import dask.array as da
+        import dask  # noqa: PLC0415
+        import dask.array as da  # noqa: PLC0415
 
         return dask.__version__, da.linspace(0, 1, 10, dtype="float")
 
     elif name == ArrayLibraries.tensorflow:
-        import tensorflow as tf
+        import tensorflow as tf  # noqa: PLC0415
 
         return tf.__version__, tf.linspace(0, 1, 10)
 
     elif name == ArrayLibraries.xarray:
-        import xarray as xr
+        import xarray as xr  # noqa: PLC0415
 
         return xr.__version__, xr.DataArray([1.0, 2.0, 3.0])
     return None

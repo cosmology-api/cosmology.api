@@ -11,7 +11,7 @@ __all__: list[str] = []
 
 
 @runtime_checkable
-class DTypeConformant(Protocol):
+class DTypeConformant(Protocol):  # noqa: PLW1641
     """Runtime-checkable protocol for the dtype."""
 
     def __eq__(self, other: Self, /) -> bool:
