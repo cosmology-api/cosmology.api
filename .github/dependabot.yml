@@ -20,14 +20,4 @@ updates:
       interval: "monthly"
     groups:
       python-dev-dependencies:
-        patterns:
-          - "coverage*"
-          - "numpy*"
-          - "packaging*"
-          - "pytest*"
-          - "sybil*"
-          - "typing_extensions*"
-          - "furo*"
-          - "numpydoc*"
-          - "sphinx*"
-          - "tomli*"
+        dependency-type: "development"
