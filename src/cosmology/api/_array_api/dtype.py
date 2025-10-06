@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol, TypeVar, runtime_checkable
 
 if TYPE_CHECKING:
-    from typing import Self
+    from typing_extensions import Self
 
     DType = TypeVar("DType", bound="DTypeConformant")
 

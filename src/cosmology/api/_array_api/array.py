@@ -3,11 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
 if TYPE_CHECKING:
-    # STDLIB
     from types import EllipsisType
-    from typing import Self
 
-    # LOCAL
+    from typing_extensions import Self
+
     from .dtype import DTypeConformant
 
 

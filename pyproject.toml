@@ -91,7 +91,7 @@ build.targets.wheel.packages = ["src/cosmology"]
 version.source = "vcs"
 
 [tool.mypy]
-  python_version = 3.10
+  python_version = "3.10"
 
   namespace_packages = true
   explicit_package_bases = true
