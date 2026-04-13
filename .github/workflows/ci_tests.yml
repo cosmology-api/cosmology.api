@@ -59,7 +59,7 @@ jobs:
         - windows: py311-test-alldeps
         # - macos: py311-test-alldeps  # TODO: https://github.com/OpenAstronomy/github-actions-workflows/issues/197
 
-      conda: true
+      conda: false
       coverage: codecov
       fail-fast: true
     secrets:
