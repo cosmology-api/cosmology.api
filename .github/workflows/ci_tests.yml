@@ -59,6 +59,7 @@ jobs:
         - windows: py311-test-alldeps
         # - macos: py311-test-alldeps  # TODO: https://github.com/OpenAstronomy/github-actions-workflows/issues/197
 
+      toxdeps: tox<4
       conda: true
       coverage: codecov
       fail-fast: true
