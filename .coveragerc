@@ -1,0 +1,29 @@
+# Coverage configuration.
+#
+# This lives in a dedicated .coveragerc (INI) rather than pyproject.toml so
+# that it can be read by any coverage install. The OpenAstronomy tox workflow
+# runs `coverage combine`/`coverage xml` in the repo root via `uvx coverage`,
+# which installs a bare `coverage` without the `[toml]` extra. On Python < 3.11
+# (no stdlib tomllib) that build cannot parse a pyproject.toml config and fails
+# with "Can't read 'pyproject.toml' without TOML support".
+[run]
+omit = tests/*
+
+[report]
+exclude_lines =
+    # Have to re-enable the standard pragma
+    # and branches that don't pertain to this version of Python
+    pragma: no cover
+    pragma: py{ignore_python_version}
+    # Don't complain if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+    # Don't complain if non-runnable code isn't run
+    if __name__ == .__main__.:
+    # Don't complain about abstract methods, they aren't run:
+    @(abc\.)?abstractmethod
+    # Exclude type check blocks and Protocol contents, they aren't run:
+    if TYPE_CHECKING:
+    \.\.\.
+    # Don't complain about IPython completion helper
+    def _ipython_key_completions_
