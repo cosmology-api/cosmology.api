@@ -52,12 +52,12 @@ jobs:
         - linux: py310-test-cov
         - linux: py312-test-cov
         # All deps tests
-        - linux: py311-test-alldeps
+        - linux: py311-test-alldeps-cov
           toxargs: '-v --develop'
         - linux: py39-test-oldestdeps-alldeps-cov-clocale
         # Platform test
-        - windows: py311-test-alldeps
-        # - macos: py311-test-alldeps  # TODO: https://github.com/OpenAstronomy/github-actions-workflows/issues/197
+        - windows: py311-test-alldeps-cov
+        # - macos: py311-test-alldeps-cov  # TODO: https://github.com/OpenAstronomy/github-actions-workflows/issues/197
 
       conda: false
       coverage: codecov
