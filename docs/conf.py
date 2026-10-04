@@ -57,7 +57,8 @@ templates_path = ["_templates"]
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+# make_logo.py makes _static/favicon.svg; it is a tool, not part of the site.
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**/make_logo.py"]
 
 # This is added to the end of RST files - a good place to put substitutions to
 # be used globally.
@@ -98,6 +99,8 @@ html_title = f"{project} v{release}"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+html_logo = "_static/favicon.svg"  # made by _static/make_logo.py
+html_favicon = "_static/favicon.svg"
 
 
 # -- autodoc extension -------------------------------------------------------
