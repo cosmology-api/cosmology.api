@@ -1,3 +1,4 @@
+# Copyright (c) 2022, Nathaniel Starkman and Nicolas Tessore
 """Fixtures for the Cosmology API standard."""
 
 from __future__ import annotations

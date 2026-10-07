@@ -151,6 +151,7 @@ ignore = [
 "tests/*.py" = [
   "ANN",
   "PLR0913",  # Too many arguments to function call
+  "PLR0917",  # Too many positional arguments
   "TID252",
 ]
 "test_*.py" = ["D", "N8", "S101"]

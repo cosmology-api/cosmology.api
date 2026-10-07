@@ -2,6 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = ["resvg-py"]
 # ///
+# Copyright (c) 2022, Nathaniel Starkman and Nicolas Tessore
 """Draw the cosmology.api logo: the cosmology-api organisation's mark.
 
 A hexagon holding three linked cubes, as on the organisation's avatar, in its

@@ -1,3 +1,4 @@
+# Copyright (c) 2022, Nathaniel Starkman and Nicolas Tessore
 """The Cosmology API."""
 
 from __future__ import annotations

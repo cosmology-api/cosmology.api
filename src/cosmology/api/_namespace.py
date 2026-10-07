@@ -1,3 +1,4 @@
+# Copyright (c) 2022, Nathaniel Starkman and Nicolas Tessore
 """The Cosmology API Namespace.
 
 This module describes the namespace of a Cosmology-API compatible library. There

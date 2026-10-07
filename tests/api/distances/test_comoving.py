@@ -1,3 +1,4 @@
+# Copyright (c) 2022, Nathaniel Starkman and Nicolas Tessore
 """Test ``cosmology.api.core``."""
 
 from __future__ import annotations

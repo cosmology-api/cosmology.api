@@ -33,7 +33,7 @@ repos:
       - id: text-unicode-replacement-char
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.15.20"
+    rev: "v0.16.10"
     hooks:
       - id: ruff
         args:
@@ -47,7 +47,7 @@ repos:
         additional_dependencies: [black]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v2.1.0"
+    rev: "v2.4.0"
     hooks:
       - id: mypy
         args:
