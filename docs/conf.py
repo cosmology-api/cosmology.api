@@ -1,3 +1,4 @@
+# Copyright (c) 2022, Nathaniel Starkman and Nicolas Tessore
 # ruff: noqa: A001, ANN001, ANN201, E402, ERA001
 """Configuration file for the Sphinx documentation builder.
 
